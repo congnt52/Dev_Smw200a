@@ -20,7 +20,8 @@ namespace _5GAutoTool
     }
     public class LogAdapter
     {
-        private static readonly System.Threading.SemaphoreSlim _logFileLock = new System.Threading.SemaphoreSlim(1, 1);
+        //private static readonly System.Threading.SemaphoreSlim _logFileLock = new System.Threading.SemaphoreSlim(1, 1);
+        private static readonly object _logFileLock = new object();
         private ListView _listView;
         private TextBox _searchTextBox;
         private Label _searchCountLabel;
@@ -253,12 +254,63 @@ namespace _5GAutoTool
         //    }
         //}
 
-        public async Task SaveLogToFile(
-    string timestamp,
-    LogLevel logLvl,
-    string logMessage,
-    string device = "",
-    string source = "")
+        //    public async Task SaveLogToFile(
+        //string timestamp,
+        //LogLevel logLvl,
+        //string logMessage,
+        //string device = "",
+        //string source = "")
+        //    {
+        //        string strLogLevel =
+        //            logLvl != LogLevel.DASH ? $"[{logLvl}]" : "";
+
+        //        string strLogDevice =
+        //            !string.IsNullOrEmpty(device) ? $"[{device}]" : "";
+
+        //        string serial = mainForm.LogSessionSerial;
+        //        string sessionTime = mainForm.LogSessionTime;
+        //        string date = mainForm.LogSessionDate;
+
+        //        string directoryPath = Path.Combine(
+        //            mainForm.directionPathTemplate,
+        //            "logs",
+        //            date);
+
+        //        string filepath = Path.Combine(
+        //            directoryPath,
+        //            $"{serial}_{date}_{sessionTime}.txt");
+
+        //        string text =
+        //            $"{timestamp}\t{strLogLevel}\t{strLogDevice}\t{logMessage}\t{source}";
+
+        //        await _logFileLock.WaitAsync();
+
+        //        try
+        //        {
+        //            Directory.CreateDirectory(directoryPath);
+
+        //            using (FileStream fs = new FileStream(
+        //                filepath,
+        //                FileMode.Append,
+        //                FileAccess.Write,
+        //                FileShare.Read))
+        //            using (StreamWriter sWriter =
+        //                new StreamWriter(fs, Encoding.UTF8))
+        //            {
+        //                await sWriter.WriteLineAsync(text);
+        //            }
+        //        }
+        //        finally
+        //        {
+        //            _logFileLock.Release();
+        //        }
+        //    }
+        public Task SaveLogToFile(
+        string timestamp,
+        LogLevel logLvl,
+        string logMessage,
+        string device = "",
+        string source = "")
         {
             string strLogLevel =
                 logLvl != LogLevel.DASH ? $"[{logLvl}]" : "";
@@ -282,9 +334,7 @@ namespace _5GAutoTool
             string text =
                 $"{timestamp}\t{strLogLevel}\t{strLogDevice}\t{logMessage}\t{source}";
 
-            await _logFileLock.WaitAsync();
-
-            try
+            lock (_logFileLock)
             {
                 Directory.CreateDirectory(directoryPath);
 
@@ -293,16 +343,15 @@ namespace _5GAutoTool
                     FileMode.Append,
                     FileAccess.Write,
                     FileShare.Read))
-                using (StreamWriter sWriter =
+                using (StreamWriter writer =
                     new StreamWriter(fs, Encoding.UTF8))
                 {
-                    await sWriter.WriteLineAsync(text);
+                    writer.WriteLine(text);
+                    writer.Flush();
                 }
             }
-            finally
-            {
-                _logFileLock.Release();
-            }
+
+            return Task.CompletedTask;
         }
         public async void Log(string text, LogLevel logLevel = LogLevel.INFO, string device = "", string source = "")
         {
@@ -387,42 +436,97 @@ namespace _5GAutoTool
         //            }
         //        });
         //    }
-        private async Task Append(
-        string timestamp,
-        LogLevel logLevel,
-        string logMessage,
-        string device = "",
-        string source = "")
-        {
-            await SaveLogToFile(
-                timestamp,
-                logLevel,
-                logMessage,
-                device,
-                source);
+        //private async Task Append(
+        //string timestamp,
+        //LogLevel logLevel,
+        //string logMessage,
+        //string device = "",
+        //string source = "")
+        //{
+        //    await SaveLogToFile(
+        //        timestamp,
+        //        logLevel,
+        //        logMessage,
+        //        device,
+        //        source);
 
-            await Task.Run(() =>
+        //    await Task.Run(() =>
+        //    {
+        //        if (_listView.InvokeRequired)
+        //        {
+        //            _listView.Invoke(new Action(() =>
+        //                AddLogToListView(
+        //                    timestamp,
+        //                    logLevel,
+        //                    logMessage,
+        //                    device,
+        //                    source)));
+        //        }
+        //        else
+        //        {
+        //            AddLogToListView(
+        //                timestamp,
+        //                logLevel,
+        //                logMessage,
+        //                device,
+        //                source);
+        //        }
+        //    });
+        //}
+        private async Task Append(
+    string timestamp,
+    LogLevel logLevel,
+    string logMessage,
+    string device = "",
+    string source = "")
+        {
+            try
             {
-                if (_listView.InvokeRequired)
-                {
-                    _listView.Invoke(new Action(() =>
-                        AddLogToListView(
-                            timestamp,
-                            logLevel,
-                            logMessage,
-                            device,
-                            source)));
-                }
-                else
-                {
-                    AddLogToListView(
-                        timestamp,
-                        logLevel,
-                        logMessage,
-                        device,
-                        source);
-                }
-            });
+                // Ghi file trước khi hiển thị.
+                await SaveLogToFile(
+                    timestamp,
+                    logLevel,
+                    logMessage,
+                    device,
+                    source);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.TraceError(
+                    "Save log failed: " + ex.ToString());
+
+                logMessage += " [SAVE LOG FAILED: "
+                    + ex.Message + "]";
+            }
+
+            if (_listView == null ||
+                _listView.IsDisposed ||
+                !_listView.IsHandleCreated)
+            {
+                return;
+            }
+
+            Action updateLog = () =>
+            {
+                if (_listView.IsDisposed)
+                    return;
+
+                AddLogToListView(
+                    timestamp,
+                    logLevel,
+                    logMessage,
+                    device,
+                    source);
+            };
+
+            if (_listView.InvokeRequired)
+            {
+                _listView.BeginInvoke(updateLog);
+            }
+            else
+            {
+                updateLog();
+            }
         }
         private void AddLogToListView(string timestamp, LogLevel logLevel, string logMessage, string device = "", string source = "")
         {
@@ -530,80 +634,80 @@ namespace _5GAutoTool
 
         */
 
-        public async Task SaveLogToFile(
-            string timestamp,
-            LogLevel logLvl,
-            string logMessage,
-            string device = "",
-            string source = "")
-        {
-            string strLogLevel =
-                (logLvl != LogLevel.DASH) ? $"[{logLvl}]" : "";
+        //public async Task SaveLogToFile(
+        //    string timestamp,
+        //    LogLevel logLvl,
+        //    string logMessage,
+        //    string device = "",
+        //    string source = "")
+        //{
+        //    string strLogLevel =
+        //        (logLvl != LogLevel.DASH) ? $"[{logLvl}]" : "";
 
-            string strLogDevice =
-                !string.IsNullOrEmpty(device) ? $"[{device}]" : "";
+        //    string strLogDevice =
+        //        !string.IsNullOrEmpty(device) ? $"[{device}]" : "";
 
-            // Giữ nguyên định dạng log cũ
-            string text =
-                $"{timestamp}:{strLogLevel}\t{strLogDevice}:{logMessage}";
+        //    // Giữ nguyên định dạng log cũ
+        //    string text =
+        //        $"{timestamp}:{strLogLevel}\t{strLogDevice}:{logMessage}";
 
-            // Chờ quyền ghi file trước khi xác định đường dẫn
-            //await _logFileLock.WaitAsync();
+        //    // Chờ quyền ghi file trước khi xác định đường dẫn
+        //    //await _logFileLock.WaitAsync();
 
-            //try
-            //{
-            //    string serial = mainForm.LogSessionSerial;
-            //    string sessionTime = mainForm.LogSessionTime;
+        //    //try
+        //    //{
+        //    //    string serial = mainForm.LogSessionSerial;
+        //    //    string sessionTime = mainForm.LogSessionTime;
 
-            //    string date = DateTime.Now.ToString("ddMMyyyy");
+        //    //    string date = DateTime.Now.ToString("ddMMyyyy");
 
-            //    string directoryPath = Path.Combine(
-            //        mainForm.directionPathTemplate,
-            //        "logs",
-            //        date);
+        //    //    string directoryPath = Path.Combine(
+        //    //        mainForm.directionPathTemplate,
+        //    //        "logs",
+        //    //        date);
 
-            //    Directory.CreateDirectory(directoryPath);
+        //    //    Directory.CreateDirectory(directoryPath);
 
-            //    // Mỗi phiên đo có một file riêng
-            //    string filepath = Path.Combine(
-            //        directoryPath,
-            //        $"{serial}_{date}_{sessionTime}.txt");
-            string serial = mainForm.LogSessionSerial;
-            string sessionTime = mainForm.LogSessionTime;
+        //    //    // Mỗi phiên đo có một file riêng
+        //    //    string filepath = Path.Combine(
+        //    //        directoryPath,
+        //    //        $"{serial}_{date}_{sessionTime}.txt");
+        //    string serial = mainForm.LogSessionSerial;
+        //    string sessionTime = mainForm.LogSessionTime;
 
-            string date = DateTime.Now.ToString("ddMMyyyy");
+        //    string date = DateTime.Now.ToString("ddMMyyyy");
 
-            string directoryPath = Path.Combine(
-                mainForm.directionPathTemplate,
-                "logs",
-                date);
+        //    string directoryPath = Path.Combine(
+        //        mainForm.directionPathTemplate,
+        //        "logs",
+        //        date);
 
-            string filepath = Path.Combine(
-                directoryPath,
-                $"{serial}_{date}_{sessionTime}.txt");
+        //    string filepath = Path.Combine(
+        //        directoryPath,
+        //        $"{serial}_{date}_{sessionTime}.txt");
 
-            await _logFileLock.WaitAsync();
+        //    await _logFileLock.WaitAsync();
 
-            try
-            {
-                Directory.CreateDirectory(directoryPath);
+        //    try
+        //    {
+        //        Directory.CreateDirectory(directoryPath);
 
-                using (FileStream fs = new FileStream(
-                    filepath,
-                    FileMode.Append,
-                    FileAccess.Write,
-                    FileShare.Read))
-                using (StreamWriter sWriter =
-                    new StreamWriter(fs, Encoding.UTF8))
-                {
-                    await sWriter.WriteLineAsync(text);
-                }
-            }
-            finally
-            {
-                _logFileLock.Release();
-            }
-        }
+        //        using (FileStream fs = new FileStream(
+        //            filepath,
+        //            FileMode.Append,
+        //            FileAccess.Write,
+        //            FileShare.Read))
+        //        using (StreamWriter sWriter =
+        //            new StreamWriter(fs, Encoding.UTF8))
+        //        {
+        //            await sWriter.WriteLineAsync(text);
+        //        }
+        //    }
+        //    finally
+        //    {
+        //        _logFileLock.Release();
+        //    }
+        //}
 
         private Color GetLogLevelColor(LogLevel logLevel)
         {

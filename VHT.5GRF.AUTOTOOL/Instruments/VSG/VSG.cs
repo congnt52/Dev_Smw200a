@@ -1651,7 +1651,7 @@ namespace _5GAutoTool
             }
             else if (instrumentVSG == "SMW200A")
             {
-                smw200a.NarrowbandLowerBlockingSignal();
+                smw200a.SetRbOffset("2", RBOffset);
             }
             else if (instrumentVSG == "M9410A")
             {
@@ -1695,7 +1695,7 @@ namespace _5GAutoTool
                 //sgs100a.RFOnOff(0);
                 System.Threading.Thread.Sleep(1); //08.01.2024 -test chu ky 100ms
                 sgs100a.SetFreq(freqSet);
-                sgs100a.SetPower("7");
+                sgs100a.SetPower("-15");
                 //sgs100a.RFOnOff(1);
             }
             else if (instrumentVSG == "SMB100A")
@@ -1752,16 +1752,26 @@ namespace _5GAutoTool
                 N5172b.MODOnOff(1);
                 N5172b.RFOnOff(1);
             }
+            //else if (instrumentVSG == "SMW200A")
+            //{
+            //    smw200a.GeneralIMDSignalLower();
+            //    System.Threading.Thread.Sleep(2000);
+            //    //System.Threading.Thread.Sleep(4000);
+            //    smw200a.SetFreq(2, freqSet);
+            //    System.Threading.Thread.Sleep(4000);
+            //    //smw200a.SetPower(2, powerSet);
+            //    //System.Threading.Thread.Sleep(4000);
+            //   // smw200a.RFOnOff(2, 1);
+            //}
             else if (instrumentVSG == "SMW200A")
             {
                 smw200a.GeneralIMDSignalLower();
+
                 System.Threading.Thread.Sleep(2000);
-                //System.Threading.Thread.Sleep(4000);
+
                 smw200a.SetFreq(2, freqSet);
+
                 System.Threading.Thread.Sleep(4000);
-                //smw200a.SetPower(2, powerSet);
-                //System.Threading.Thread.Sleep(4000);
-               // smw200a.RFOnOff(2, 1);
             }
 
             //smw200a.SetFreq(2, freqSet);
@@ -1811,16 +1821,28 @@ namespace _5GAutoTool
                // N5172b.MODOnOff(1);
                // N5172b.RFOnOff(1);
             }
+            //else if (instrumentVSG == "SMW200A")
+            //{
+            //    smw200a.GeneralIMDSignalUpper();
+            //    System.Threading.Thread.Sleep(2000);
+            //    //smw200a.SetFreq(2, freqSet);
+            //    //System.Threading.Thread.Sleep(2000);
+            //    //smw200a.SetPower(2, powerSet);
+            //    //System.Threading.Thread.Sleep(500);
+            //    //smw200a.RFOnOff(2, 1);
+            //}
+
             else if (instrumentVSG == "SMW200A")
             {
                 smw200a.GeneralIMDSignalUpper();
+
                 System.Threading.Thread.Sleep(2000);
-                //smw200a.SetFreq(2, freqSet);
-                //System.Threading.Thread.Sleep(2000);
-                //smw200a.SetPower(2, powerSet);
-                //System.Threading.Thread.Sleep(500);
-                //smw200a.RFOnOff(2, 1);
+
+                smw200a.SetFreq(2, freqSet);
+
+                System.Threading.Thread.Sleep(4000);
             }
+
         }
         public void LoadIMDUpper()
         {
@@ -1865,16 +1887,30 @@ namespace _5GAutoTool
                 //N5172b.MODOnOff(1);
                 //N5172b.RFOnOff(1);
             }
+            //else if (instrumentVSG == "SMW200A")
+            //{
+
+            //    System.Threading.Thread.Sleep(2000);
+            //    //smw200a.SetFreq(2, freqSet);
+            //    //System.Threading.Thread.Sleep(2000);
+            //    //smw200a.SetPower(2, powerSet);
+            //    //System.Threading.Thread.Sleep(500);
+            //    //smw200a.RFOnOff(2, 1);
+            //}
+
             else if (instrumentVSG == "SMW200A")
             {
-                
+                smw200a.NarrowBandUpperIMDSignal();
+
                 System.Threading.Thread.Sleep(2000);
-                //smw200a.SetFreq(2, freqSet);
-                //System.Threading.Thread.Sleep(2000);
-                //smw200a.SetPower(2, powerSet);
-                //System.Threading.Thread.Sleep(500);
-                //smw200a.RFOnOff(2, 1);
+
+                smw200a.SetFreq(2, freqSet);
+
+                smw200a.SetRbOffset("2", RBOffset);
+
+                System.Threading.Thread.Sleep(4000);
             }
+
             else if ((instrumentVSG == "M9410A"))
             {
                 m9410a.NarrowBandUpperIMDSignal(Bw);
@@ -1914,16 +1950,30 @@ namespace _5GAutoTool
                // N5172b.RFOnOff(1);
             }
 
+            //else if (instrumentVSG == "SMW200A")
+            //{
+            //    smw200a.NarrowBandLowerIMDSignal();
+            //    System.Threading.Thread.Sleep(2000);
+            //    //smw200a.SetFreq(2, freqSet);
+            //    //System.Threading.Thread.Sleep(2000);
+            //    //smw200a.SetPower(2, powerSet);
+            //    //System.Threading.Thread.Sleep(500);
+            //    //smw200a.RFOnOff(2, 1);
+            //}
+
             else if (instrumentVSG == "SMW200A")
             {
                 smw200a.NarrowBandLowerIMDSignal();
+
                 System.Threading.Thread.Sleep(2000);
-                //smw200a.SetFreq(2, freqSet);
-                //System.Threading.Thread.Sleep(2000);
-                //smw200a.SetPower(2, powerSet);
-                //System.Threading.Thread.Sleep(500);
-                //smw200a.RFOnOff(2, 1);
+
+                smw200a.SetFreq(2, freqSet);
+
+                smw200a.SetRbOffset("2", RBOffset);
+
+                System.Threading.Thread.Sleep(4000);
             }
+
         }
         // tin hieu TX IMD 10Mhz
         public void SetTXIMDWaveform(string powerSet, string freqSet)
@@ -2008,7 +2058,7 @@ namespace _5GAutoTool
             else if (instrumentVSG == "SMW200A")
             {
                 //smw200a.IQOnOff(index, 0);
-                //smw200a.RFOnOff(index, 0);
+                smw200a.RFOnOff(index, 0);
             }
         }
 

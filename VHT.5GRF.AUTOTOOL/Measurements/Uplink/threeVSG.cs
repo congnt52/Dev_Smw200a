@@ -84,6 +84,11 @@ namespace _5GAutoTool
             string isPower = (_isPower + _isATT).ToString(); //công suất tai cong output cua VSG2 IS
             // Set cw power to VSG3
             string cwPower = (_cwPower + _cwATT).ToString();
+            bool isSmwDualSource =
+    vsg1.Model == "SMW200A" &&
+    vsg2.Model == "SMW200A" &&
+    !string.IsNullOrWhiteSpace(vsg1.IpAddress) &&
+    vsg1.IpAddress == vsg2.IpAddress;
             try
             {
                 if (mainForm.measurementBackgroundWorker.CancellationPending)
@@ -133,49 +138,158 @@ namespace _5GAutoTool
                 //        return;
                 //}
                 // Configure WS and IS
+                //try
+                //{
+                //    if (direction == "UPPER")
+                //        vsg1.LoadIMDUpper();   // WS RB Offset = 82
+                //    else
+                //        vsg1.LoadIMDLower();   // WS RB Offset = 0
+
+                //    if (mode == "GenIMD")
+                //    {
+                //        if (direction == "UPPER")
+                //            vsg2.SetGeneralIMDWaveformUpper(
+                //                isPower, isFreq, Bandwidth);
+                //        else
+                //            vsg2.SetGeneralIMDWaveformLower(
+                //                isPower, isFreq, Bandwidth);
+                //    }
+                //    else if (mode == "NBIMD")
+                //    {
+                //        if (direction == "UPPER")
+                //            vsg2.SetNBUpperIMDWaveform(
+                //                isPower, isFreq, IsRBOffset, Bandwidth);
+                //        else
+                //            vsg2.SetNBLowerIMDWaveform(
+                //                isPower, isFreq, IsRBOffset, Bandwidth);
+                //    }
+
+                //    Log($"[{mode}] PORT{setPort} {direction}: VSG1 and VSG2 configured");
+                //}
+                //catch (Exception ex)
+                //{
+                //    Log($"[{mode}] PORT{setPort} ERROR: {ex.Message}", LogLevel.ERROR);
+
+                //    if (!mainForm.AllowImdNoDevice)
+                //        return;
+                //}
+
+
+                // Configure WS and IS
                 try
                 {
-                    if (direction == "UPPER")
-                        vsg1.LoadIMDUpper();   // WS RB Offset = 82
-                    else
-                        vsg1.LoadIMDLower();   // WS RB Offset = 0
+                    if (isSmwDualSource)
+                    {
+                        // Tat CW truoc khi recall state SMW.
+                        vsg3.OnOffSignal(0);
 
-                    if (mode == "GenIMD")
-                    {
-                        if (direction == "UPPER")
-                            vsg2.SetGeneralIMDWaveformUpper(
-                                isPower, isFreq, Bandwidth);
-                        else
-                            vsg2.SetGeneralIMDWaveformLower(
-                                isPower, isFreq, Bandwidth);
+                        // SMW200A: State da chua ca WS va IS.
+                        if (mode == "GenIMD")
+                        {
+                            if (direction == "UPPER")
+                                vsg1.SetGeneralIMDWaveformUpper(
+                                    isPower, isFreq, Bandwidth);
+                            else
+                                vsg1.SetGeneralIMDWaveformLower(
+                                    isPower, isFreq, Bandwidth);
+                        }
+                        else if (mode == "NBIMD")
+                        {
+                            if (direction == "UPPER")
+                                vsg1.SetNBUpperIMDWaveform(
+                                    isPower, isFreq, IsRBOffset, Bandwidth);
+                            else
+                                vsg1.SetNBLowerIMDWaveform(
+                                    isPower, isFreq, IsRBOffset, Bandwidth);
+                        }
+
+                        Log($"[{mode}] SMW200A Source 1 WS, Source 2 IS");
                     }
-                    else if (mode == "NBIMD")
+                    else
                     {
+                        // Giu nguyen luong 3 may do cu.
                         if (direction == "UPPER")
-                            vsg2.SetNBUpperIMDWaveform(
-                                isPower, isFreq, IsRBOffset, Bandwidth);
+                            vsg1.LoadIMDUpper();
                         else
-                            vsg2.SetNBLowerIMDWaveform(
-                                isPower, isFreq, IsRBOffset, Bandwidth);
+                            vsg1.LoadIMDLower();
+
+                        if (mode == "GenIMD")
+                        {
+                            if (direction == "UPPER")
+                                vsg2.SetGeneralIMDWaveformUpper(
+                                    isPower, isFreq, Bandwidth);
+                            else
+                                vsg2.SetGeneralIMDWaveformLower(
+                                    isPower, isFreq, Bandwidth);
+                        }
+                        else if (mode == "NBIMD")
+                        {
+                            if (direction == "UPPER")
+                                vsg2.SetNBUpperIMDWaveform(
+                                    isPower, isFreq, IsRBOffset, Bandwidth);
+                            else
+                                vsg2.SetNBLowerIMDWaveform(
+                                    isPower, isFreq, IsRBOffset, Bandwidth);
+                        }
                     }
 
                     Log($"[{mode}] PORT{setPort} {direction}: VSG1 and VSG2 configured");
                 }
                 catch (Exception ex)
                 {
-                    Log($"[{mode}] PORT{setPort} ERROR: {ex.Message}", LogLevel.ERROR);
+                    Log($"[{mode}] PORT{setPort} ERROR: {ex.Message}",
+                        LogLevel.ERROR);
 
-                    if (!mainForm.AllowImdNoDevice)
+                    if (isSmwDualSource || !mainForm.AllowImdNoDevice)
                         return;
                 }
+
 
                 if (mainForm.measurementBackgroundWorker.CancellationPending)
                     return;
 
                 // Configure CW
+                //try
+                //{
+                //    vsg3.SetCWWaveform(cwPower, cwFreq, rf);
+
+                //    Log($"[{mode}] PORT{setPort} {direction}: VSG3 configured");
+                //}
+                //catch (Exception ex)
+                //{
+                //    Log($"[{mode}] PORT{setPort} VSG3 ERROR: " +
+                //        ex.Message, LogLevel.ERROR);
+
+                //    if (!mainForm.AllowImdNoDevice)
+                //        return;
+                //}
+
+
+                // Configure CW
                 try
                 {
-                    vsg3.SetCWWaveform(cwPower, cwFreq, rf);
+                    if (isSmwDualSource && vsg3.Model == "SGS100A")
+                    {
+                        vsg3.OnOffSignal(0);
+
+                        vsg3.SetFreq(cwFreq);
+
+                        vsg3.SetPower(cwPower);
+
+                        // Chi bat RF sau khi xac nhan
+                        // Frequency va Power da duoc set dung.
+                        vsg3.OnOffSignal(rf);
+
+                        Log($"[{mode}] SGS100A CW Frequency = " +
+                            $"{double.Parse(cwFreq) / 1e6} MHz");
+
+                        Log($"[{mode}] SGS100A CW Power = {cwPower} dBm");
+                    }
+                    else
+                    {
+                        // Giu nguyen luong may do cu.
+                        vsg3.SetCWWaveform(cwPower, cwFreq, rf);
+                    }
 
                     Log($"[{mode}] PORT{setPort} {direction}: VSG3 configured");
                 }
@@ -184,9 +298,10 @@ namespace _5GAutoTool
                     Log($"[{mode}] PORT{setPort} VSG3 ERROR: " +
                         ex.Message, LogLevel.ERROR);
 
-                    if (!mainForm.AllowImdNoDevice)
+                    if (isSmwDualSource || !mainForm.AllowImdNoDevice)
                         return;
                 }
+
 
                 if (mainForm.measurementBackgroundWorker.CancellationPending)
                     return;
@@ -251,6 +366,32 @@ namespace _5GAutoTool
                 Log($"[{mode}] PORT{setPort}: " +
                     $"Measurement ERROR: {ex.Message}",
                     LogLevel.ERROR);
+            }
+
+            finally
+            {
+                if (isSmwDualSource)
+                {
+                    try
+                    {
+                        bbu.StopProcess();
+                    }
+                    catch (Exception ex)
+                    {
+                        Log($"[{mode}] StopProcess ERROR: {ex.Message}",
+                            LogLevel.ERROR);
+                    }
+
+                    try
+                    {
+                        vsg3.OnOffSignal(0);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log($"[{mode}] CW OFF ERROR: {ex.Message}",
+                            LogLevel.ERROR);
+                    }
+                }
             }
 
 

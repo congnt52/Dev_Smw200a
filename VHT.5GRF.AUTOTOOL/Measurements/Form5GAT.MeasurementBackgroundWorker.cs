@@ -2986,7 +2986,13 @@ namespace _5GAutoTool
                                    // GeneralDataSetupRX(testcaseInTesting.Text, testingPort, out attSetVal);
                                    // VSG1.AttenuatorLevel = attSetVal;
                                     VSG1.SetFrequencyValue = double.Parse(setFrequency);
-
+                                    if (VSG1.Model == "SMW200A" &&
+                                                VSG3 != null &&
+                                                VSG3.Model == "SGS100A" &&
+                                                VSG3.IsConnected)
+                                            {
+                                                VSG3.OnOffSignal(0);
+                                                }
                                     try
                                     {
                                         GeneralDataSetupRX(
@@ -3058,7 +3064,39 @@ namespace _5GAutoTool
                                         Log($"{VSG2.Alias}:  f={VSG2.SetFrequencyValue / 1e6}MHz");
                                      //   Log($"{VSG2.Alias}: CSV Path:{VSG2.AttenuatorCSVpath}");
                                     }
-                                    if (arrRBoffsetR.Length > 0)
+
+                                    if (VSG1.Model == "SMW200A" &&
+                                        VSG2.Model == "SMW200A" &&
+                                        VSG1.IpAddress == VSG2.IpAddress)
+                                    {
+                                        string rbOffsets = arrRBoffsetR.Length > 0
+                                            ? string.Join(",", arrRBoffsetR)
+                                            : "0";
+
+                                        Measurement.twoVSGMode(
+                                            VSG1, VSG2, BBU,
+                                            "NBB",
+                                            wsRbOffset,
+                                            rbOffsets,
+                                            stepdB,
+                                            attSetVal.ToString(),
+                                            testingPort,
+                                            wsPower,
+                                            setFrequency,
+                                            isPower,
+                                            isFreqUpper,
+                                            null, null,
+                                            setBandwidth,
+                                            wsTrigDelay,
+                                            out tp);
+
+                                        minTP = Math.Min(minTP, tp);
+                                    }
+                                    else if (arrRBoffsetR.Length > 0)
+
+
+
+                                        //if (arrRBoffsetR.Length > 0)
                                     {
                                         for (int step1NBB = 0; step1NBB < arrRBoffsetR.Length; step1NBB++)
                                         {
@@ -3103,7 +3141,37 @@ namespace _5GAutoTool
                                         Log($"{VSG2.Alias}: Set ATT_Port{testingPort}={VSG2.AttenuatorLevel} dB at f={VSG2.SetFrequencyValue / 1e6}MHz");
                                         Log($"{VSG2.Alias}: CSV Path:{VSG2.AttenuatorCSVpath}");
                                     }
-                                    if (arrRBoffsetL.Length > 0)
+
+                                    if (VSG1.Model == "SMW200A" &&
+                                        VSG2.Model == "SMW200A" &&
+                                        VSG1.IpAddress == VSG2.IpAddress)
+                                    {
+                                        string rbOffsets = arrRBoffsetL.Length > 0
+                                            ? string.Join(",", arrRBoffsetL)
+                                            : "0";
+
+                                        Measurement.twoVSGMode(
+                                            VSG1, VSG2, BBU,
+                                            "NBB",
+                                            wsRbOffset,
+                                            rbOffsets,
+                                            stepdB,
+                                            attSetVal.ToString(),
+                                            testingPort,
+                                            wsPower,
+                                            setFrequency,
+                                            isPower,
+                                            isFreqLower,
+                                            null, null,
+                                            setBandwidth,
+                                            wsTrigDelay,
+                                            out tp);
+
+                                        minTP = Math.Min(minTP, tp);
+                                    }
+                                    else if (arrRBoffsetL.Length > 0)
+
+                                      //  if (arrRBoffsetL.Length > 0)
                                     {
                                         for (int step2NBB = 0; step2NBB < arrRBoffsetL.Length; step2NBB++)
                                         {
@@ -3218,7 +3286,29 @@ namespace _5GAutoTool
 
                                         if (measurementBackgroundWorker.CancellationPending) return;
                                         System.Threading.Thread.Sleep(1);
-                                        Measurement.twoVSGMode(VSG1, VSG2, BBU, "OOB2", wsOffsetR, IS1RBOffsetR, stepOOBB, attSetVal.ToString(), testingPort, wsPower, setFrequency, isPower, isFreq.ToString(), isFreqLowerSpec, isFreqUpperSpec, setBandwidth, wsTrigDelay, out tp);
+                                        //Measurement.twoVSGMode(VSG1, VSG2, BBU, "OOB2", wsOffsetR, IS1RBOffsetR, stepOOBB, attSetVal.ToString(), testingPort, wsPower, setFrequency, isPower, isFreq.ToString(), isFreqLowerSpec, isFreqUpperSpec, setBandwidth, wsTrigDelay, out tp);
+
+                                        VSG vsgCW = VSG1.Model == "SMW200A"
+                                            ? VSG3
+                                            : VSG2;
+
+                                        if (vsgCW == null || !vsgCW.IsConnected)
+                                        {
+                                            throw new InvalidOperationException(
+                                                "[OOB2] CW generator is not connected");
+                                        }
+
+                                        Log($"[OOB2] CW Generator: {vsgCW.Model} - {vsgCW.IpAddress}");
+
+                                        Measurement.twoVSGMode(
+                                            VSG1, vsgCW, BBU, "OOB2",
+                                            wsOffsetR, IS1RBOffsetR,
+                                            stepOOBB, attSetVal.ToString(),
+                                            testingPort, wsPower, setFrequency,
+                                            isPower, isFreq.ToString(),
+                                            isFreqLowerSpec, isFreqUpperSpec,
+                                            setBandwidth, wsTrigDelay, out tp);
+
                                     }
                                     else
                                     {
@@ -3312,7 +3402,29 @@ namespace _5GAutoTool
 
                                         if (measurementBackgroundWorker.CancellationPending) return;
                                         System.Threading.Thread.Sleep(1);
-                                        Measurement.twoVSGMode(VSG1, VSG2, BBU, "OOB1", wsOffsetR, IS1RBOffsetR, stepOOBB, attSetVal.ToString(), testingPort, wsPower, setFrequency, isPower, isFreq.ToString(), isFreqLowerSpec, isFreqUpperSpec, setBandwidth, wsTrigDelay, out tp);
+                                        // Measurement.twoVSGMode(VSG1, VSG2, BBU, "OOB1", wsOffsetR, IS1RBOffsetR, stepOOBB, attSetVal.ToString(), testingPort, wsPower, setFrequency, isPower, isFreq.ToString(), isFreqLowerSpec, isFreqUpperSpec, setBandwidth, wsTrigDelay, out tp);
+
+                                        VSG vsgCW = VSG1.Model == "SMW200A"
+                                            ? VSG3
+                                            : VSG2;
+
+                                        if (vsgCW == null || !vsgCW.IsConnected)
+                                        {
+                                            throw new InvalidOperationException(
+                                                "[OOB1] CW generator is not connected");
+                                        }
+
+                                        Log($"[OOB1] CW Generator: {vsgCW.Model} - {vsgCW.IpAddress}");
+
+                                        Measurement.twoVSGMode(
+                                            VSG1, vsgCW, BBU, "OOB1",
+                                            wsOffsetR, IS1RBOffsetR,
+                                            stepOOBB, attSetVal.ToString(),
+                                            testingPort, wsPower, setFrequency,
+                                            isPower, isFreq.ToString(),
+                                            isFreqLowerSpec, isFreqUpperSpec,
+                                            setBandwidth, wsTrigDelay, out tp);
+
                                     }
                                     else
                                     {

@@ -550,7 +550,7 @@ namespace _5GAutoTool
                 //====================
                 string path = "/var/user/test3gpp/NAB_DFT-s-OFDM_1rb_15kHz_QPSK_lower_edge.savrcltxt";
                 string cmd = $":SYST:RCL '{path}'";
-                bool tmp = SendCmdStatus(cmd);
+                bool tmp = SendCmdStatusIBB(cmd);
                 if (tmp)
                 {
                     Log($"{Alias} SMW Recall File: {path}");
@@ -579,11 +579,15 @@ namespace _5GAutoTool
                 //====================
                 string path = "/var/user/congnt52/50MHz/NRBlocking_low.savrcltxt";
                 string cmd = $":SYST:RCL '{path}'";
-                bool tmp = SendCmdStatus(cmd);
+                bool tmp = SendCmdStatusIBB(cmd);
                 if (tmp)
                 {
                     Log($"{Alias} SMW Recall File: {path}");
                 }
+                //smw.WriteString(":SOUR2:BB:NR5G:UBWP:USER0:CELL0:UL:BWP0:FRC:STAT 0");
+               // smw.WriteString($":SOUR2:BB:NR5G:SCH:CELL0:SUBF0:USER0:BWP0:ALL0:RBOF {rbOffset}");
+                //Log($"SMW200A Set RB Offset at: {rbOffset}");
+                SetRbOffset("2", rbOffset);
             }
             catch (Exception)
             {
@@ -600,7 +604,7 @@ namespace _5GAutoTool
                 System.Threading.Thread.Sleep(100);
                 string path = "/var/user/congnt52/50MHz/NRBlocking_high.savrcltxt";
                 string cmd = $":SYST:RCL '{path}'";
-                bool tmp = SendCmdStatus(cmd);
+                bool tmp = SendCmdStatusIBB(cmd);
                 if (tmp)
                 {
                     Log($"{Alias} SMW Recall File: {path}");
@@ -663,73 +667,128 @@ namespace _5GAutoTool
                 Log($"ERROR: {Alias} SMW load file fail", LogLevel.ERROR);
             }
         }
+        //public void GeneralIMDSignalLower()
+        //{
+        //    try
+        //    {
+        //        string path = "/var/user/congnt52/GeneralIMD_low.savrcltxt";
+        //        string cmd = $":SYST:RCL '{path}'";
+        //        bool tmp = SendCmdStatus(cmd);
+        //        if (tmp)
+        //        {
+        //            Log($"{Alias} SMW Recall File: {path}");
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        Log($"ERROR: {Alias} SMW load file fail", LogLevel.ERROR);
+        //    }
+        //}
+
         public void GeneralIMDSignalLower()
         {
-            try
-            {
-                string path = "/var/user/congnt52/GeneralIMD_low.savrcltxt";
-                string cmd = $":SYST:RCL '{path}'";
-                bool tmp = SendCmdStatus(cmd);
-                if (tmp)
-                {
-                    Log($"{Alias} SMW Recall File: {path}");
-                }
-            }
-            catch (Exception)
-            {
-                Log($"ERROR: {Alias} SMW load file fail", LogLevel.ERROR);
-            }
-        }
-        public void GeneralIMDSignalUpper()
-        {
-            try
-            {
-                string path = "/var/user/congnt52/50MHz/GeneralIMD_high.savrcltxt";
-                string cmd = $":SYST:RCL '{path}'";
-                bool tmp = SendCmdStatus(cmd);
-                if (tmp)
-                {
-                    Log($"{Alias} SMW Recall File: {path}");
-                }
-            }
-            catch (Exception)
-            {
-                Log($"ERROR: {Alias} SMW load file fail", LogLevel.ERROR);
-            }
+            string path = "/var/user/congnt52/GeneralIMD_low.savrcltxt";
+
+            string cmd = $":SYST:RCL '{path}'";
+
+            if (!SendCmdStatusIBB(cmd))
+                throw new InvalidOperationException(
+                    $"{Alias} SMW load file fail: {path}");
+
+            Log($"{Alias} SMW Recall File: {path}");
         }
 
+        //public void GeneralIMDSignalUpper()
+        //{
+        //    try
+        //    {
+        //        string path = "/var/user/congnt52/50MHz/GeneralIMD_high.savrcltxt";
+        //        string cmd = $":SYST:RCL '{path}'";
+        //        bool tmp = SendCmdStatus(cmd);
+        //        if (tmp)
+        //        {
+        //            Log($"{Alias} SMW Recall File: {path}");
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        Log($"ERROR: {Alias} SMW load file fail", LogLevel.ERROR);
+        //    }
+        //}
+
+        public void GeneralIMDSignalUpper()
+        {
+            string path = "/var/user/congnt52/50MHz/GeneralIMD_high.savrcltxt";
+
+            string cmd = $":SYST:RCL '{path}'";
+
+            if (!SendCmdStatusIBB(cmd))
+                throw new InvalidOperationException(
+                    $"{Alias} SMW load file fail: {path}");
+
+            Log($"{Alias} SMW Recall File: {path}");
+        }
+
+
         // phát tín hiệu Narrowband IMD upper edger
+        //public void NarrowBandUpperIMDSignal()
+        //{
+        //    try
+        //    {
+        //        if (mainForm.measurementBackgroundWorker.CancellationPending) return;
+        //        System.Threading.Thread.Sleep(100);
+        //        smw.WriteString(":SYST:RCL '/var/user/test3gpp/IMD_Nar_DFT-s-OFDM_1rb_30kHz_QPSK_upper_edge.savrcltxt'");
+        //        Log("SMW200A Recell File: :SYST:RCL '/var/user/test3gpp/IMD_Nar_DFT-s-OFDM_1rb_30kHz_QPSK_upper_edge.savrcltxt'");
+        //    }
+        //    catch (Exception)
+        //    {
+        //        Log("ERROR: SMW200A load file fail", LogLevel.ERROR);
+        //    }
+        //}
+
         public void NarrowBandUpperIMDSignal()
         {
-            try
-            {
-                if (mainForm.measurementBackgroundWorker.CancellationPending) return;
-                System.Threading.Thread.Sleep(100);
-                smw.WriteString(":SYST:RCL '/var/user/test3gpp/IMD_Nar_DFT-s-OFDM_1rb_30kHz_QPSK_upper_edge.savrcltxt'");
-                Log("SMW200A Recell File: :SYST:RCL '/var/user/test3gpp/IMD_Nar_DFT-s-OFDM_1rb_30kHz_QPSK_upper_edge.savrcltxt'");
-            }
-            catch (Exception)
-            {
-                Log("ERROR: SMW200A load file fail", LogLevel.ERROR);
-            }
+            string path = "/var/user/congnt52/50MHz/GeneralIMD_high.savrcltxt";
+
+            string cmd = $":SYST:RCL '{path}'";
+
+            if (!SendCmdStatusIBB(cmd))
+                throw new InvalidOperationException(
+                    $"{Alias} SMW load file fail: {path}");
+
+            Log($"{Alias} SMW Recall File: {path}");
         }
 
 
         // phát tín hiệu Narrowband IMD lower edger
+        //public void NarrowBandLowerIMDSignal()
+        //{
+        //    try
+        //    {
+        //        if (mainForm.measurementBackgroundWorker.CancellationPending) return;
+        //        System.Threading.Thread.Sleep(100);
+        //        smw.WriteString(":SYST:RCL '/var/user/test3gpp/IMD_Nar_DFT-s-OFDM_1rb_30kHz_QPSK_lower_edge.savrcltxt'");
+        //        Log("SMW200A Recell File: :SYST:RCL '/var/user/test3gpp/IMD_Nar_DFT-s-OFDM_1rb_30kHz_QPSK_lower_edge.savrcltxt'");
+        //    }
+        //    catch (Exception)
+        //    {
+        //        Log("ERROR: SMW200A load file fail", LogLevel.ERROR);
+        //    }
+        //}
+
         public void NarrowBandLowerIMDSignal()
         {
-            try
-            {
-                if (mainForm.measurementBackgroundWorker.CancellationPending) return;
-                System.Threading.Thread.Sleep(100);
-                smw.WriteString(":SYST:RCL '/var/user/test3gpp/IMD_Nar_DFT-s-OFDM_1rb_30kHz_QPSK_lower_edge.savrcltxt'");
-                Log("SMW200A Recell File: :SYST:RCL '/var/user/test3gpp/IMD_Nar_DFT-s-OFDM_1rb_30kHz_QPSK_lower_edge.savrcltxt'");
-            }
-            catch (Exception)
-            {
-                Log("ERROR: SMW200A load file fail", LogLevel.ERROR);
-            }
+            string path = "/var/user/congnt52/50MHz/GeneralIMD_low.savrcltxt";
+
+            string cmd = $":SYST:RCL '{path}'";
+
+            if (!SendCmdStatusIBB(cmd))
+                throw new InvalidOperationException(
+                    $"{Alias} SMW load file fail: {path}");
+
+            Log($"{Alias} SMW Recall File: {path}");
         }
+
 
         // phat tin hieu TX IMD NRTM1.1 BW 10Mhz 
         public void TXIMDSignal()

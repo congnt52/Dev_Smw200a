@@ -897,45 +897,65 @@ namespace _5GAutoTool
                 Log("Export file fail", LogLevel.ERROR);
             }
         }
+        //public void ExportLogToTxt()
+        //{
+        //    try
+        //    {
+        //        string filename = "";
+        //        string directoryPath = $@"C:\test3gpp\OQC\32T32R10W\results\{testCase}\{DateTime.Now.ToString("ddMMyyyy")}";
+
+        //        filename = $"{RruSerial.Trim()}_LOG_{DateTime.Now.ToString("HHmm")}_{DateTime.Now.ToString("ddMMyyyy")}.txt";
+        //        string filePath = $@"{directoryPath}\{filename}";
+        //        using (StreamWriter writer = new StreamWriter(filePath))
+        //        {
+        //            //print headers
+        //            //for(int i = 0; i < lvwLog.Columns.Count; i++)
+        //            //{
+        //            //    writer.Write(lvwLog.Columns[i].Text);
+        //            //    if(i < lvwLog.Columns.Count - 1)
+        //            //    {
+        //            //        writer.Write("\t");
+        //            //    }
+        //            //}
+        //            //writer.WriteLine();
+
+        //            //print data
+        //            foreach(ListViewItem item in lvwLog.Items)
+        //            {
+        //                writer.Write(item.Text);
+        //                for(int i = 1;i < lvwLog.Columns.Count;i++)
+        //                {
+        //                    writer.Write("\t" + item.SubItems[i].Text);
+        //                }
+        //                writer.WriteLine();
+        //            }
+        //        }
+        //        Log($"Logfile exported to: {filePath}", LogLevel.INFO);
+
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        Log("Export logfile: FAIL! " + ex.Message, LogLevel.ERROR);
+        //    }
+        //}
         public void ExportLogToTxt()
         {
-            try
+            string directoryPath = System.IO.Path.Combine(
+                directionPathTemplate,
+                "logs",
+                LogSessionDate);
+
+            string filePath = System.IO.Path.Combine(
+                directoryPath,
+                $"{LogSessionSerial}_{LogSessionDate}_{LogSessionTime}.txt");
+
+            if (System.IO.File.Exists(filePath))
             {
-                string filename = "";
-                string directoryPath = $@"C:\test3gpp\OQC\32T32R10W\results\{testCase}\{DateTime.Now.ToString("ddMMyyyy")}";
-
-                filename = $"{RruSerial.Trim()}_LOG_{DateTime.Now.ToString("HHmm")}_{DateTime.Now.ToString("ddMMyyyy")}.txt";
-                string filePath = $@"{directoryPath}\{filename}";
-                using (StreamWriter writer = new StreamWriter(filePath))
-                {
-                    //print headers
-                    //for(int i = 0; i < lvwLog.Columns.Count; i++)
-                    //{
-                    //    writer.Write(lvwLog.Columns[i].Text);
-                    //    if(i < lvwLog.Columns.Count - 1)
-                    //    {
-                    //        writer.Write("\t");
-                    //    }
-                    //}
-                    //writer.WriteLine();
-
-                    //print data
-                    foreach(ListViewItem item in lvwLog.Items)
-                    {
-                        writer.Write(item.Text);
-                        for(int i = 1;i < lvwLog.Columns.Count;i++)
-                        {
-                            writer.Write("\t" + item.SubItems[i].Text);
-                        }
-                        writer.WriteLine();
-                    }
-                }
-                Log($"Logfile exported to: {filePath}", LogLevel.INFO);
-
+                Log($"Full logfile: {filePath}", LogLevel.INFO);
             }
-            catch(Exception ex)
+            else
             {
-                Log("Export logfile: FAIL! " + ex.Message, LogLevel.ERROR);
+                Log($"Logfile not found: {filePath}", LogLevel.ERROR);
             }
         }
 

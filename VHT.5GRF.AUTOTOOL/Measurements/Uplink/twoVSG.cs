@@ -143,8 +143,15 @@ namespace _5GAutoTool
                             {
                                vsg1.SetOOBWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
                                 vsg1.TypeOfSignal = "DFT-s-OFDM";
+                                if (vsg1.Model == "SMW200A")
+                                {
+                                    vsg1.OffSignal(2);
+
+                                    Log("[OOB2] SMW200A Source 2 OFF");
+                                    Log($"[OOB2] CW Generator: {vsg2.Model}");
+                                }
                                 //vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
-                              //  if (vsg1.Model == "SMW200A") vsg1.OffSignal(2);
+                                //  if (vsg1.Model == "SMW200A") vsg1.OffSignal(2);
                                 List<string[]> oobMeasRange = new List<string[]>();
                                 oobMeasRange.Add(new string[] { "", isLowerFreqRange, isUpperFreqRange });
                                 List<string[]> oobExRange = new List<string[]>();
@@ -211,17 +218,26 @@ namespace _5GAutoTool
 
                         case "OOB1": // Co-location Blocking - WA BS, n40
                             {
+                                if (vsg1.Model == "SMW200A")
+                                {
+                                    // vsg1.SetOOBWaveform(
+                                    //     isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
+                                    vsg1.OffSignal(2);
+
+                                    Log("[OOB2] SMW200A Source 2 OFF");
+                                    Log($"[OOB2] CW Generator: {vsg2.Model}");
+                                }
                                 // Keep wanted-signal setup consistent with OOB2.
-                               // vsg1.SetOOBWaveform(
-                               //     isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
+                                
 
                                 vsg1.TypeOfSignal = "DFT-s-OFDM";
-                          //      vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
+                                //      vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
 
-                          //      if (vsg1.Model == "SMW200A")
-                            //        vsg1.OffSignal(2);
+                                //      if (vsg1.Model == "SMW200A")
+                                //        vsg1.OffSignal(2);
 
                                 // Read Co-location DL bands from Excel Sheet2.
+                               
                                 getISCoLocationRangeFromExcel();
 
                                 if (oobCoISsweepRanges == null ||
@@ -327,31 +343,260 @@ namespace _5GAutoTool
 
                         case "NBB":
                             {
+
+                                if (vsg1.Model == "SMW200A" &&
+                                    vsg2.Model == "SMW200A" &&
+                                    vsg1.IpAddress == vsg2.IpAddress)
+                                {
+                                    TP = -1;
+
+                                    string[] rbOffsets = IsRBOffset.Split(
+                                        new char[] { ',' },
+                                        StringSplitOptions.RemoveEmptyEntries);
+
+                                    if (rbOffsets.Length == 0)
+                                        rbOffsets = new string[] { "0" };
+
+                                    bool testMacStarted = false;
+                                    bool startRequested = false;
+
+                                    double minNbbTP = 101;
+
+                                    try
+                                    {
+                                        if (mainForm.measurementBackgroundWorker
+                                            .CancellationPending)
+                                            return;
+
+                                        vsg2.TypeOfSignal = "DFT-s-OFDM_1RB";
+
+                                        // 1. Recall state duy nhất một lần.
+                                        if (double.Parse(isFreq) > double.Parse(wsFreq))
+                                        {
+                                            vsg1.SetNBBUpperWaveform(
+                                                isPowerStr, isFreq,
+                                                rbOffsets[0].Trim(), Bandwidth);
+                                        }
+                                        else
+                                        {
+                                            vsg1.SetNBBLowerWaveform(
+                                                isPowerStr, isFreq,
+                                                rbOffsets[0].Trim(), Bandwidth);
+                                        }
+
+                                        // 2. Set Frequency Source 2 duy nhất một lần.
+                                        vsg2.setParameter(
+                                            2, isPowerStr, isFreq, TriggerDelay);
+
+                                        // 3. Start RXSENS_V2 duy nhất một lần.
+                                        Log("[NBB] Starting RXSENS_V2");
+
+                                        startRequested = true;
+
+                                        testMacStarted = bbu.STR_RXSENS_V2(
+                                            Bandwidth,
+                                            WsRBOffset,
+                                            currPort.StreamIndex);
+
+                                        if (!testMacStarted)
+                                        {
+                                            throw new InvalidOperationException(
+                                                "[NBB] STR_RXSENS_V2 failed");
+                                        }
+
+                                        // 4. Sweep toàn bộ IS RB Offset.
+                                        foreach (string offset in rbOffsets)
+                                        {
+                                            if (mainForm.measurementBackgroundWorker
+                                                .CancellationPending)
+                                                return;
+
+                                            string rbOffset = offset.Trim();
+
+                                            Log($"[NBB] Set IS RBOffset = {rbOffset}");
+
+                                            // Chỉ đổi RB Offset Source 2.
+                                            // Không recall lại state.
+                                            vsg2.SetNBBWaveform(
+                                                isPowerStr,
+                                                isFreq,
+                                                rbOffset,
+                                                Bandwidth);
+
+                                            // Chờ tín hiệu và kết quả đo ổn định.
+                                            for (int waited = 0;
+                                                 waited < 10000;
+                                                 waited += 500)
+                                            {
+                                                if (mainForm.measurementBackgroundWorker
+                                                    .CancellationPending)
+                                                    return;
+
+                                                System.Threading.Thread.Sleep(500);
+                                            }
+
+                                            // 5. Đọc throughput từ tiến trình đang chạy.
+                                            string nbbThroughput = "";
+
+                                            bbu.RXSENS_V2(out nbbThroughput);
+
+                                            double pointTP =
+                                                GetthroughputFromString(
+                                                    nbbThroughput, setPort);
+
+                                            if (double.IsNaN(pointTP) ||
+                                                double.IsInfinity(pointTP) ||
+                                                pointTP < 0 ||
+                                                pointTP > 100)
+                                            {
+                                                throw new InvalidOperationException(
+                                                    $"[NBB] Invalid TP at RBOffset={rbOffset}");
+                                            }
+
+                                            // 6. Ghi kết quả từng RB Offset.
+                                            double csvTP;
+
+                                            writeCSVThroughputValue(
+                                                mode,
+                                                setPort,
+                                                wsFreq,
+                                                wsPowerStr,
+                                                WsRBOffset,
+                                                isFreq,
+                                                isPowerStr,
+                                                rbOffset,
+                                                nbbThroughput,
+                                                out csvTP);
+
+                                            minNbbTP = Math.Min(minNbbTP, pointTP);
+
+                                            Log($"[NBB] IS RBOffset={rbOffset}, " +
+                                                $"TP={pointTP}%, MinTP={minNbbTP}%");
+                                        }
+
+                                        // 7. Trả về kết quả xấu nhất.
+                                        TP = minNbbTP;
+
+                                        Log($"[NBB] Sweep completed. MinTP={TP}%");
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        TP = -1;
+
+                                        Log("[NBB] ERROR: " + ex.Message,
+                                            LogLevel.ERROR);
+                                    }
+                                    finally
+                                    {
+                                        // 8. Chỉ stop sau khi sweep hoàn thành
+                                        // hoặc khi có lỗi / cancellation.
+                                        if (startRequested)
+                                        {
+                                            Log("[NBB] Stopping RXSENS_V2");
+
+                                            bbu.STOP_L1TESTMAC();
+                                        }
+                                    }
+
+                                    break;
+                                }
+
                                 bool manualVSG = INB2_MANUAL_VSG;
 
-                                Log("[NBB] Starting Narrowband Blocking");
-                                Log($"[NBB] IS Frequency = {isFreq}");
-                                Log($"[NBB] IS RBOffset = {IsRBOffset}");
+                                //Log("[NBB] Starting Narrowband Blocking");
+                                //Log($"[NBB] IS Frequency = {isFreq}");
+                                //Log($"[NBB] IS RBOffset = {IsRBOffset}");
 
-                                vsg2.TypeOfSignal = "DFT-s-OFDM_1RB";
+                                //vsg2.TypeOfSignal = "DFT-s-OFDM_1RB";
 
-                                // Try sending instrument commands.
-                                // Continue DU measurement if VSG is unavailable.
+                                //// Try sending instrument commands.
+                                //// Continue DU measurement if VSG is unavailable.
+                                //try
+                                //{
+                                //    vsg1.SetWSACSWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
+
+                                //    if (vsg2.Model == "N5172B")
+                                //    {
+                                //        vsg2.SetNBBWaveform(isPowerStr, isFreq, IsRBOffset, Bandwidth);
+                                //    }
+                                //    else
+                                //    vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
+
+                                //    vsg2.setParameter(2, isPowerStr, isFreq, TriggerDelay);
+
+                                //    Log("[NBB] Instrument commands completed");
+                                //}
+                                //catch (Exception ex)
+                                //{
+                                //    if (!manualVSG)
+                                //        throw;
+
+                                //    Log("[NBB] Instrument unavailable: " +
+                                //        ex.Message, LogLevel.WARN);
+
+                                //    Log("[NBB] Continuing with DU throughput measurement");
+                                //}
+
+
+                                bool isSmwDualSource =
+                                    vsg1.Model == "SMW200A" &&
+                                    vsg2.Model == "SMW200A" &&
+                                    !string.IsNullOrWhiteSpace(vsg1.IpAddress) &&
+                                    string.Equals(
+                                        vsg1.IpAddress,
+                                        vsg2.IpAddress,
+                                        StringComparison.OrdinalIgnoreCase);
+
                                 try
                                 {
-                                    vsg1.SetWSACSWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
-                                    vsg2.Model = "N5172B";
-                                    vsg2.SetNBBWaveform(isPowerStr,isFreq,IsRBOffset,Bandwidth);
+                                    if (isSmwDualSource)
+                                    {
+                                        bool isUpper =
+                                            double.Parse(isFreq) > double.Parse(wsFreq);
 
-                                    vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
+                                        // Recall state chứa cả WS và IS.
+                                        if (isUpper)
+                                        {
+                                            vsg1.SetNBBUpperWaveform(
+                                                isPowerStr, isFreq,
+                                                IsRBOffset, Bandwidth);
+                                        }
+                                        else
+                                        {
+                                            vsg1.SetNBBLowerWaveform(
+                                                isPowerStr, isFreq,
+                                                IsRBOffset, Bandwidth);
+                                        }
 
-                                    vsg2.setParameter(2, isPowerStr, isFreq, TriggerDelay);
+                                        // Chỉ thay đổi tần số IS.
+                                        vsg2.setParameter(
+                                            2, isPowerStr, isFreq, TriggerDelay);
+
+                                        Log("[NBB] SMW200A dual-source configured");
+                                    }
+                                    else
+                                    {
+                                        // Giữ luồng máy đo cũ.
+                                        vsg1.SetWSACSWaveform(
+                                            isPower, isFreq, WsRBOffset,
+                                            Bandwidth, TriggerDelay);
+
+                                        vsg2.SetNBBWaveform(
+                                            isPowerStr, isFreq,
+                                            IsRBOffset, Bandwidth);
+
+                                        vsg1.setParameter(
+                                            1, wsPower, wsFreq, TriggerDelay);
+
+                                        vsg2.setParameter(
+                                            2, isPowerStr, isFreq, TriggerDelay);
+                                    }
 
                                     Log("[NBB] Instrument commands completed");
                                 }
                                 catch (Exception ex)
                                 {
-                                    if (!manualVSG)
+                                    if (isSmwDualSource || !manualVSG)
                                         throw;
 
                                     Log("[NBB] Instrument unavailable: " +
