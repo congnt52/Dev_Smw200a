@@ -1695,7 +1695,7 @@ namespace _5GAutoTool
                 //sgs100a.RFOnOff(0);
                 System.Threading.Thread.Sleep(1); //08.01.2024 -test chu ky 100ms
                 sgs100a.SetFreq(freqSet);
-              // sgs100a.SetPower(powerSet);
+                sgs100a.SetPower("7");
                 //sgs100a.RFOnOff(1);
             }
             else if (instrumentVSG == "SMB100A")

@@ -280,6 +280,8 @@ namespace _5GAutoTool
         }
         private async Task Append(string timestamp, LogLevel logLevel, string logMessage, string device = "", string source = "")
         {
+            // Save to log file
+            await SaveLogToFile(timestamp, logLevel, logMessage, device, source);
             await Task.Run(() =>
             {
                 if (_listView.InvokeRequired)
@@ -292,8 +294,8 @@ namespace _5GAutoTool
                 }
             });
 
-            // Save to log file
-            await SaveLogToFile(timestamp, logLevel, logMessage, device, source);
+            //// Save to log file
+            //await SaveLogToFile(timestamp, logLevel, logMessage, device, source);
         }
 
         private void AddLogToListView(string timestamp, LogLevel logLevel, string logMessage, string device = "", string source = "")
@@ -420,26 +422,45 @@ namespace _5GAutoTool
                 $"{timestamp}:{strLogLevel}\t{strLogDevice}:{logMessage}";
 
             // Chờ quyền ghi file trước khi xác định đường dẫn
+            //await _logFileLock.WaitAsync();
+
+            //try
+            //{
+            //    string serial = mainForm.LogSessionSerial;
+            //    string sessionTime = mainForm.LogSessionTime;
+
+            //    string date = DateTime.Now.ToString("ddMMyyyy");
+
+            //    string directoryPath = Path.Combine(
+            //        mainForm.directionPathTemplate,
+            //        "logs",
+            //        date);
+
+            //    Directory.CreateDirectory(directoryPath);
+
+            //    // Mỗi phiên đo có một file riêng
+            //    string filepath = Path.Combine(
+            //        directoryPath,
+            //        $"{serial}_{date}_{sessionTime}.txt");
+            string serial = mainForm.LogSessionSerial;
+            string sessionTime = mainForm.LogSessionTime;
+
+            string date = DateTime.Now.ToString("ddMMyyyy");
+
+            string directoryPath = Path.Combine(
+                mainForm.directionPathTemplate,
+                "logs",
+                date);
+
+            string filepath = Path.Combine(
+                directoryPath,
+                $"{serial}_{date}_{sessionTime}.txt");
+
             await _logFileLock.WaitAsync();
 
             try
             {
-                string serial = mainForm.LogSessionSerial;
-                string sessionTime = mainForm.LogSessionTime;
-
-                string date = DateTime.Now.ToString("ddMMyyyy");
-
-                string directoryPath = Path.Combine(
-                    mainForm.directionPathTemplate,
-                    "logs",
-                    date);
-
                 Directory.CreateDirectory(directoryPath);
-
-                // Mỗi phiên đo có một file riêng
-                string filepath = Path.Combine(
-                    directoryPath,
-                    $"{serial}_{date}_{sessionTime}.txt");
 
                 using (FileStream fs = new FileStream(
                     filepath,

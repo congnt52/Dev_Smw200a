@@ -141,7 +141,7 @@ namespace _5GAutoTool
                             break;
                         case "OOB2": // General OOB; CW target -15 dBm at DUT reference plane
                             {
-                               // vsg1.SetOOBWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
+                               vsg1.SetOOBWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
                                 vsg1.TypeOfSignal = "DFT-s-OFDM";
                                 //vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
                               //  if (vsg1.Model == "SMW200A") vsg1.OffSignal(2);

@@ -98,20 +98,21 @@
             this.cboIP1.FormattingEnabled = true;
             this.cboIP1.Items.AddRange(new object[] {
             "10.0.0.222"});
-            this.cboIP1.Location = new System.Drawing.Point(372, 62);
-            this.cboIP1.Margin = new System.Windows.Forms.Padding(4);
+            this.cboIP1.Location = new System.Drawing.Point(496, 76);
+            this.cboIP1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.cboIP1.Name = "cboIP1";
-            this.cboIP1.Size = new System.Drawing.Size(180, 24);
+            this.cboIP1.Size = new System.Drawing.Size(239, 28);
             this.cboIP1.TabIndex = 41;
-            this.cboIP1.Text = "192.168.1.3";
+            this.cboIP1.Text = "172.16.27.140";
             this.cboIP1.SelectedIndexChanged += new System.EventHandler(this.cboIP1_SelectedIndexChanged);
             // 
             // btnOk
             // 
             this.btnOk.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOk.Location = new System.Drawing.Point(461, 296);
+            this.btnOk.Location = new System.Drawing.Point(615, 364);
+            this.btnOk.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(93, 39);
+            this.btnOk.Size = new System.Drawing.Size(124, 48);
             this.btnOk.TabIndex = 40;
             this.btnOk.Text = "CLOSE";
             this.btnOk.UseVisualStyleBackColor = true;
@@ -121,9 +122,10 @@
             // 
             this.btnSend.Enabled = false;
             this.btnSend.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.btnSend.Location = new System.Drawing.Point(461, 226);
+            this.btnSend.Location = new System.Drawing.Point(615, 278);
+            this.btnSend.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(93, 22);
+            this.btnSend.Size = new System.Drawing.Size(124, 27);
             this.btnSend.TabIndex = 38;
             this.btnSend.Text = "SEND";
             this.btnSend.UseVisualStyleBackColor = true;
@@ -159,9 +161,11 @@
             this.grpVSG.Controls.Add(this.picVSG2);
             this.grpVSG.Controls.Add(this.picVSG);
             this.grpVSG.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpVSG.Location = new System.Drawing.Point(588, 31);
+            this.grpVSG.Location = new System.Drawing.Point(784, 38);
+            this.grpVSG.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.grpVSG.Name = "grpVSG";
-            this.grpVSG.Size = new System.Drawing.Size(472, 304);
+            this.grpVSG.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grpVSG.Size = new System.Drawing.Size(629, 374);
             this.grpVSG.TabIndex = 37;
             this.grpVSG.TabStop = false;
             this.grpVSG.Text = "Instruments";
@@ -170,9 +174,10 @@
             // 
             this.lblStatus3.AutoSize = true;
             this.lblStatus3.ForeColor = System.Drawing.Color.Red;
-            this.lblStatus3.Location = new System.Drawing.Point(351, 266);
+            this.lblStatus3.Location = new System.Drawing.Point(468, 327);
+            this.lblStatus3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblStatus3.Name = "lblStatus3";
-            this.lblStatus3.Size = new System.Drawing.Size(98, 20);
+            this.lblStatus3.Size = new System.Drawing.Size(121, 25);
             this.lblStatus3.TabIndex = 7;
             this.lblStatus3.Text = "Not Connect";
             // 
@@ -180,9 +185,10 @@
             // 
             this.lblStatus2.AutoSize = true;
             this.lblStatus2.ForeColor = System.Drawing.Color.Red;
-            this.lblStatus2.Location = new System.Drawing.Point(351, 174);
+            this.lblStatus2.Location = new System.Drawing.Point(468, 214);
+            this.lblStatus2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblStatus2.Name = "lblStatus2";
-            this.lblStatus2.Size = new System.Drawing.Size(98, 20);
+            this.lblStatus2.Size = new System.Drawing.Size(121, 25);
             this.lblStatus2.TabIndex = 7;
             this.lblStatus2.Text = "Not Connect";
             // 
@@ -190,198 +196,220 @@
             // 
             this.lblStatus1.AutoSize = true;
             this.lblStatus1.ForeColor = System.Drawing.Color.Red;
-            this.lblStatus1.Location = new System.Drawing.Point(351, 84);
+            this.lblStatus1.Location = new System.Drawing.Point(468, 103);
+            this.lblStatus1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblStatus1.Name = "lblStatus1";
-            this.lblStatus1.Size = new System.Drawing.Size(98, 20);
+            this.lblStatus1.Size = new System.Drawing.Size(121, 25);
             this.lblStatus1.TabIndex = 7;
             this.lblStatus1.Text = "Not Connect";
             // 
             // lblConnStatus3
             // 
             this.lblConnStatus3.AutoSize = true;
-            this.lblConnStatus3.Location = new System.Drawing.Point(225, 266);
+            this.lblConnStatus3.Location = new System.Drawing.Point(300, 327);
+            this.lblConnStatus3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblConnStatus3.Name = "lblConnStatus3";
-            this.lblConnStatus3.Size = new System.Drawing.Size(60, 20);
+            this.lblConnStatus3.Size = new System.Drawing.Size(74, 25);
             this.lblConnStatus3.TabIndex = 7;
             this.lblConnStatus3.Text = "Status:";
             // 
             // lblConnStatus2
             // 
             this.lblConnStatus2.AutoSize = true;
-            this.lblConnStatus2.Location = new System.Drawing.Point(225, 174);
+            this.lblConnStatus2.Location = new System.Drawing.Point(300, 214);
+            this.lblConnStatus2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblConnStatus2.Name = "lblConnStatus2";
-            this.lblConnStatus2.Size = new System.Drawing.Size(60, 20);
+            this.lblConnStatus2.Size = new System.Drawing.Size(74, 25);
             this.lblConnStatus2.TabIndex = 7;
             this.lblConnStatus2.Text = "Status:";
             // 
             // lblConnStatus1
             // 
             this.lblConnStatus1.AutoSize = true;
-            this.lblConnStatus1.Location = new System.Drawing.Point(225, 84);
+            this.lblConnStatus1.Location = new System.Drawing.Point(300, 103);
+            this.lblConnStatus1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblConnStatus1.Name = "lblConnStatus1";
-            this.lblConnStatus1.Size = new System.Drawing.Size(60, 20);
+            this.lblConnStatus1.Size = new System.Drawing.Size(74, 25);
             this.lblConnStatus1.TabIndex = 7;
             this.lblConnStatus1.Text = "Status:";
             // 
             // lbSearialNumber3
             // 
             this.lbSearialNumber3.AutoSize = true;
-            this.lbSearialNumber3.Location = new System.Drawing.Point(351, 246);
+            this.lbSearialNumber3.Location = new System.Drawing.Point(468, 303);
+            this.lbSearialNumber3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbSearialNumber3.Name = "lbSearialNumber3";
-            this.lbSearialNumber3.Size = new System.Drawing.Size(39, 20);
+            this.lbSearialNumber3.Size = new System.Drawing.Size(52, 25);
             this.lbSearialNumber3.TabIndex = 7;
             this.lbSearialNumber3.Text = "*****";
             // 
             // lbSearialNumber2
             // 
             this.lbSearialNumber2.AutoSize = true;
-            this.lbSearialNumber2.Location = new System.Drawing.Point(351, 154);
+            this.lbSearialNumber2.Location = new System.Drawing.Point(468, 190);
+            this.lbSearialNumber2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbSearialNumber2.Name = "lbSearialNumber2";
-            this.lbSearialNumber2.Size = new System.Drawing.Size(39, 20);
+            this.lbSearialNumber2.Size = new System.Drawing.Size(52, 25);
             this.lbSearialNumber2.TabIndex = 7;
             this.lbSearialNumber2.Text = "*****";
             // 
             // lbSearialNumber1
             // 
             this.lbSearialNumber1.AutoSize = true;
-            this.lbSearialNumber1.Location = new System.Drawing.Point(351, 64);
+            this.lbSearialNumber1.Location = new System.Drawing.Point(468, 79);
+            this.lbSearialNumber1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbSearialNumber1.Name = "lbSearialNumber1";
-            this.lbSearialNumber1.Size = new System.Drawing.Size(39, 20);
+            this.lbSearialNumber1.Size = new System.Drawing.Size(52, 25);
             this.lbSearialNumber1.TabIndex = 7;
             this.lbSearialNumber1.Text = "*****";
             // 
             // lblSerial3
             // 
             this.lblSerial3.AutoSize = true;
-            this.lblSerial3.Location = new System.Drawing.Point(225, 246);
+            this.lblSerial3.Location = new System.Drawing.Point(300, 303);
+            this.lblSerial3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSerial3.Name = "lblSerial3";
-            this.lblSerial3.Size = new System.Drawing.Size(113, 20);
+            this.lblSerial3.Size = new System.Drawing.Size(142, 25);
             this.lblSerial3.TabIndex = 7;
             this.lblSerial3.Text = "Serial Number:";
             // 
             // lblSerial2
             // 
             this.lblSerial2.AutoSize = true;
-            this.lblSerial2.Location = new System.Drawing.Point(225, 154);
+            this.lblSerial2.Location = new System.Drawing.Point(300, 190);
+            this.lblSerial2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSerial2.Name = "lblSerial2";
-            this.lblSerial2.Size = new System.Drawing.Size(113, 20);
+            this.lblSerial2.Size = new System.Drawing.Size(142, 25);
             this.lblSerial2.TabIndex = 7;
             this.lblSerial2.Text = "Serial Number:";
             // 
             // lblSerial1
             // 
             this.lblSerial1.AutoSize = true;
-            this.lblSerial1.Location = new System.Drawing.Point(225, 64);
+            this.lblSerial1.Location = new System.Drawing.Point(300, 79);
+            this.lblSerial1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSerial1.Name = "lblSerial1";
-            this.lblSerial1.Size = new System.Drawing.Size(113, 20);
+            this.lblSerial1.Size = new System.Drawing.Size(142, 25);
             this.lblSerial1.TabIndex = 7;
             this.lblSerial1.Text = "Serial Number:";
             // 
             // lblModel3
             // 
             this.lblModel3.AutoSize = true;
-            this.lblModel3.Location = new System.Drawing.Point(351, 227);
+            this.lblModel3.Location = new System.Drawing.Point(468, 279);
+            this.lblModel3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblModel3.Name = "lblModel3";
-            this.lblModel3.Size = new System.Drawing.Size(39, 20);
+            this.lblModel3.Size = new System.Drawing.Size(52, 25);
             this.lblModel3.TabIndex = 7;
             this.lblModel3.Text = "*****";
             // 
             // lblModel2
             // 
             this.lblModel2.AutoSize = true;
-            this.lblModel2.Location = new System.Drawing.Point(351, 135);
+            this.lblModel2.Location = new System.Drawing.Point(468, 166);
+            this.lblModel2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblModel2.Name = "lblModel2";
-            this.lblModel2.Size = new System.Drawing.Size(39, 20);
+            this.lblModel2.Size = new System.Drawing.Size(52, 25);
             this.lblModel2.TabIndex = 7;
             this.lblModel2.Text = "*****";
             // 
             // lblModel1
             // 
             this.lblModel1.AutoSize = true;
-            this.lblModel1.Location = new System.Drawing.Point(351, 45);
+            this.lblModel1.Location = new System.Drawing.Point(468, 55);
+            this.lblModel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblModel1.Name = "lblModel1";
-            this.lblModel1.Size = new System.Drawing.Size(39, 20);
+            this.lblModel1.Size = new System.Drawing.Size(52, 25);
             this.lblModel1.TabIndex = 7;
             this.lblModel1.Text = "*****";
             // 
             // lblModelText3
             // 
             this.lblModelText3.AutoSize = true;
-            this.lblModelText3.Location = new System.Drawing.Point(225, 227);
+            this.lblModelText3.Location = new System.Drawing.Point(300, 279);
+            this.lblModelText3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblModelText3.Name = "lblModelText3";
-            this.lblModelText3.Size = new System.Drawing.Size(56, 20);
+            this.lblModelText3.Size = new System.Drawing.Size(72, 25);
             this.lblModelText3.TabIndex = 7;
             this.lblModelText3.Text = "Model:";
             // 
             // lblModelText2
             // 
             this.lblModelText2.AutoSize = true;
-            this.lblModelText2.Location = new System.Drawing.Point(225, 135);
+            this.lblModelText2.Location = new System.Drawing.Point(300, 166);
+            this.lblModelText2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblModelText2.Name = "lblModelText2";
-            this.lblModelText2.Size = new System.Drawing.Size(56, 20);
+            this.lblModelText2.Size = new System.Drawing.Size(72, 25);
             this.lblModelText2.TabIndex = 7;
             this.lblModelText2.Text = "Model:";
             // 
             // lblModelText1
             // 
             this.lblModelText1.AutoSize = true;
-            this.lblModelText1.Location = new System.Drawing.Point(225, 45);
+            this.lblModelText1.Location = new System.Drawing.Point(300, 55);
+            this.lblModelText1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblModelText1.Name = "lblModelText1";
-            this.lblModelText1.Size = new System.Drawing.Size(56, 20);
+            this.lblModelText1.Size = new System.Drawing.Size(72, 25);
             this.lblModelText1.TabIndex = 7;
             this.lblModelText1.Text = "Model:";
             // 
             // lblMfrName3
             // 
             this.lblMfrName3.AutoSize = true;
-            this.lblMfrName3.Location = new System.Drawing.Point(351, 207);
+            this.lblMfrName3.Location = new System.Drawing.Point(468, 255);
+            this.lblMfrName3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMfrName3.Name = "lblMfrName3";
-            this.lblMfrName3.Size = new System.Drawing.Size(39, 20);
+            this.lblMfrName3.Size = new System.Drawing.Size(52, 25);
             this.lblMfrName3.TabIndex = 7;
             this.lblMfrName3.Text = "*****";
             // 
             // lblMfrName2
             // 
             this.lblMfrName2.AutoSize = true;
-            this.lblMfrName2.Location = new System.Drawing.Point(351, 115);
+            this.lblMfrName2.Location = new System.Drawing.Point(468, 142);
+            this.lblMfrName2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMfrName2.Name = "lblMfrName2";
-            this.lblMfrName2.Size = new System.Drawing.Size(39, 20);
+            this.lblMfrName2.Size = new System.Drawing.Size(52, 25);
             this.lblMfrName2.TabIndex = 7;
             this.lblMfrName2.Text = "*****";
             // 
             // lblMfrName1
             // 
             this.lblMfrName1.AutoSize = true;
-            this.lblMfrName1.Location = new System.Drawing.Point(351, 25);
+            this.lblMfrName1.Location = new System.Drawing.Point(468, 31);
+            this.lblMfrName1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMfrName1.Name = "lblMfrName1";
-            this.lblMfrName1.Size = new System.Drawing.Size(39, 20);
+            this.lblMfrName1.Size = new System.Drawing.Size(52, 25);
             this.lblMfrName1.TabIndex = 7;
             this.lblMfrName1.Text = "*****";
             // 
             // lblManufacturer3
             // 
             this.lblManufacturer3.AutoSize = true;
-            this.lblManufacturer3.Location = new System.Drawing.Point(225, 207);
+            this.lblManufacturer3.Location = new System.Drawing.Point(300, 255);
+            this.lblManufacturer3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblManufacturer3.Name = "lblManufacturer3";
-            this.lblManufacturer3.Size = new System.Drawing.Size(108, 20);
+            this.lblManufacturer3.Size = new System.Drawing.Size(133, 25);
             this.lblManufacturer3.TabIndex = 7;
             this.lblManufacturer3.Text = "Manufacturer:";
             // 
             // lblManufacturer2
             // 
             this.lblManufacturer2.AutoSize = true;
-            this.lblManufacturer2.Location = new System.Drawing.Point(225, 115);
+            this.lblManufacturer2.Location = new System.Drawing.Point(300, 142);
+            this.lblManufacturer2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblManufacturer2.Name = "lblManufacturer2";
-            this.lblManufacturer2.Size = new System.Drawing.Size(108, 20);
+            this.lblManufacturer2.Size = new System.Drawing.Size(133, 25);
             this.lblManufacturer2.TabIndex = 7;
             this.lblManufacturer2.Text = "Manufacturer:";
             // 
             // lblManufacturer1
             // 
             this.lblManufacturer1.AutoSize = true;
-            this.lblManufacturer1.Location = new System.Drawing.Point(225, 25);
+            this.lblManufacturer1.Location = new System.Drawing.Point(300, 31);
+            this.lblManufacturer1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblManufacturer1.Name = "lblManufacturer1";
-            this.lblManufacturer1.Size = new System.Drawing.Size(108, 20);
+            this.lblManufacturer1.Size = new System.Drawing.Size(133, 25);
             this.lblManufacturer1.TabIndex = 7;
             this.lblManufacturer1.Text = "Manufacturer:";
             // 
@@ -389,9 +417,10 @@
             // 
             this.picVSG3.Image = ((System.Drawing.Image)(resources.GetObject("picVSG3.Image")));
             this.picVSG3.InitialImage = ((System.Drawing.Image)(resources.GetObject("picVSG3.InitialImage")));
-            this.picVSG3.Location = new System.Drawing.Point(17, 213);
+            this.picVSG3.Location = new System.Drawing.Point(23, 262);
+            this.picVSG3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.picVSG3.Name = "picVSG3";
-            this.picVSG3.Size = new System.Drawing.Size(198, 73);
+            this.picVSG3.Size = new System.Drawing.Size(264, 90);
             this.picVSG3.TabIndex = 6;
             this.picVSG3.TabStop = false;
             // 
@@ -399,9 +428,10 @@
             // 
             this.picVSG2.Image = ((System.Drawing.Image)(resources.GetObject("picVSG2.Image")));
             this.picVSG2.InitialImage = ((System.Drawing.Image)(resources.GetObject("picVSG2.InitialImage")));
-            this.picVSG2.Location = new System.Drawing.Point(17, 121);
+            this.picVSG2.Location = new System.Drawing.Point(23, 149);
+            this.picVSG2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.picVSG2.Name = "picVSG2";
-            this.picVSG2.Size = new System.Drawing.Size(198, 73);
+            this.picVSG2.Size = new System.Drawing.Size(264, 90);
             this.picVSG2.TabIndex = 6;
             this.picVSG2.TabStop = false;
             // 
@@ -409,19 +439,20 @@
             // 
             this.picVSG.Image = ((System.Drawing.Image)(resources.GetObject("picVSG.Image")));
             this.picVSG.InitialImage = ((System.Drawing.Image)(resources.GetObject("picVSG.InitialImage")));
-            this.picVSG.Location = new System.Drawing.Point(17, 31);
+            this.picVSG.Location = new System.Drawing.Point(23, 38);
+            this.picVSG.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.picVSG.Name = "picVSG";
-            this.picVSG.Size = new System.Drawing.Size(198, 73);
+            this.picVSG.Size = new System.Drawing.Size(264, 90);
             this.picVSG.TabIndex = 6;
             this.picVSG.TabStop = false;
             // 
             // btnCheckInf
             // 
             this.btnCheckInf.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCheckInf.Location = new System.Drawing.Point(198, 297);
-            this.btnCheckInf.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCheckInf.Location = new System.Drawing.Point(264, 366);
+            this.btnCheckInf.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnCheckInf.Name = "btnCheckInf";
-            this.btnCheckInf.Size = new System.Drawing.Size(95, 38);
+            this.btnCheckInf.Size = new System.Drawing.Size(127, 47);
             this.btnCheckInf.TabIndex = 36;
             this.btnCheckInf.Text = "CONNECT";
             this.btnCheckInf.UseVisualStyleBackColor = true;
@@ -430,10 +461,10 @@
             // txtRespond
             // 
             this.txtRespond.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRespond.Location = new System.Drawing.Point(198, 264);
-            this.txtRespond.Margin = new System.Windows.Forms.Padding(4);
+            this.txtRespond.Location = new System.Drawing.Point(264, 325);
+            this.txtRespond.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.txtRespond.Name = "txtRespond";
-            this.txtRespond.Size = new System.Drawing.Size(356, 22);
+            this.txtRespond.Size = new System.Drawing.Size(473, 26);
             this.txtRespond.TabIndex = 35;
             // 
             // lblResponse
@@ -441,10 +472,10 @@
             this.lblResponse.AutoSize = true;
             this.lblResponse.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblResponse.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblResponse.Location = new System.Drawing.Point(29, 263);
-            this.lblResponse.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblResponse.Location = new System.Drawing.Point(39, 324);
+            this.lblResponse.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblResponse.Name = "lblResponse";
-            this.lblResponse.Size = new System.Drawing.Size(92, 24);
+            this.lblResponse.Size = new System.Drawing.Size(117, 29);
             this.lblResponse.TabIndex = 25;
             this.lblResponse.Text = "Respond:";
             // 
@@ -453,10 +484,10 @@
             this.lblConnPort.AutoSize = true;
             this.lblConnPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblConnPort.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblConnPort.Location = new System.Drawing.Point(305, 186);
-            this.lblConnPort.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblConnPort.Location = new System.Drawing.Point(407, 229);
+            this.lblConnPort.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblConnPort.Name = "lblConnPort";
-            this.lblConnPort.Size = new System.Drawing.Size(48, 24);
+            this.lblConnPort.Size = new System.Drawing.Size(63, 29);
             this.lblConnPort.TabIndex = 28;
             this.lblConnPort.Text = "Port:";
             // 
@@ -465,10 +496,10 @@
             this.lblCmdText.AutoSize = true;
             this.lblCmdText.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCmdText.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblCmdText.Location = new System.Drawing.Point(29, 225);
-            this.lblCmdText.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCmdText.Location = new System.Drawing.Point(39, 277);
+            this.lblCmdText.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblCmdText.Name = "lblCmdText";
-            this.lblCmdText.Size = new System.Drawing.Size(164, 24);
+            this.lblCmdText.Size = new System.Drawing.Size(207, 29);
             this.lblCmdText.TabIndex = 27;
             this.lblCmdText.Text = "Verify Connection:";
             // 
@@ -477,10 +508,10 @@
             this.lblInterface.AutoSize = true;
             this.lblInterface.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInterface.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblInterface.Location = new System.Drawing.Point(30, 186);
-            this.lblInterface.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblInterface.Location = new System.Drawing.Point(40, 229);
+            this.lblInterface.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblInterface.Name = "lblInterface";
-            this.lblInterface.Size = new System.Drawing.Size(86, 24);
+            this.lblInterface.Size = new System.Drawing.Size(111, 29);
             this.lblInterface.TabIndex = 26;
             this.lblInterface.Text = "Interface:";
             // 
@@ -491,10 +522,10 @@
             this.cboPort.Items.AddRange(new object[] {
             "23",
             "22"});
-            this.cboPort.Location = new System.Drawing.Point(372, 186);
-            this.cboPort.Margin = new System.Windows.Forms.Padding(4);
+            this.cboPort.Location = new System.Drawing.Point(496, 229);
+            this.cboPort.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.cboPort.Name = "cboPort";
-            this.cboPort.Size = new System.Drawing.Size(180, 24);
+            this.cboPort.Size = new System.Drawing.Size(239, 28);
             this.cboPort.TabIndex = 31;
             // 
             // cboInterface
@@ -504,10 +535,10 @@
             this.cboInterface.Items.AddRange(new object[] {
             "TCPIB",
             "GPIB"});
-            this.cboInterface.Location = new System.Drawing.Point(199, 186);
-            this.cboInterface.Margin = new System.Windows.Forms.Padding(4);
+            this.cboInterface.Location = new System.Drawing.Point(265, 229);
+            this.cboInterface.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.cboInterface.Name = "cboInterface";
-            this.cboInterface.Size = new System.Drawing.Size(94, 24);
+            this.cboInterface.Size = new System.Drawing.Size(124, 28);
             this.cboInterface.TabIndex = 32;
             // 
             // cboVSGList1
@@ -521,12 +552,12 @@
             "CMW100",
             "SMBV100B",
             "N5172B"});
-            this.cboVSGList1.Location = new System.Drawing.Point(198, 62);
-            this.cboVSGList1.Margin = new System.Windows.Forms.Padding(4);
+            this.cboVSGList1.Location = new System.Drawing.Point(264, 76);
+            this.cboVSGList1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.cboVSGList1.Name = "cboVSGList1";
-            this.cboVSGList1.Size = new System.Drawing.Size(93, 24);
+            this.cboVSGList1.Size = new System.Drawing.Size(123, 28);
             this.cboVSGList1.TabIndex = 33;
-            this.cboVSGList1.Text = "SMBV100B";
+            this.cboVSGList1.Text = "SMW200A";
             this.cboVSGList1.TextChanged += new System.EventHandler(this.cboInstrument_TextChanged);
             // 
             // lblAddress1
@@ -534,10 +565,10 @@
             this.lblAddress1.AutoSize = true;
             this.lblAddress1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAddress1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblAddress1.Location = new System.Drawing.Point(303, 62);
-            this.lblAddress1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblAddress1.Location = new System.Drawing.Point(404, 76);
+            this.lblAddress1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblAddress1.Name = "lblAddress1";
-            this.lblAddress1.Size = new System.Drawing.Size(46, 24);
+            this.lblAddress1.Size = new System.Drawing.Size(60, 29);
             this.lblAddress1.TabIndex = 29;
             this.lblAddress1.Text = "IP 1:";
             // 
@@ -546,10 +577,10 @@
             this.lblVSGName1.AutoSize = true;
             this.lblVSGName1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblVSGName1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblVSGName1.Location = new System.Drawing.Point(29, 62);
-            this.lblVSGName1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblVSGName1.Location = new System.Drawing.Point(39, 76);
+            this.lblVSGName1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblVSGName1.Name = "lblVSGName1";
-            this.lblVSGName1.Size = new System.Drawing.Size(69, 24);
+            this.lblVSGName1.Size = new System.Drawing.Size(87, 29);
             this.lblVSGName1.TabIndex = 30;
             this.lblVSGName1.Text = "VSG 1:";
             // 
@@ -561,9 +592,10 @@
             "*OPC?",
             "FREQ 3700000000 Hz",
             ":POW -10DBM"});
-            this.cboCmd.Location = new System.Drawing.Point(307, 225);
+            this.cboCmd.Location = new System.Drawing.Point(409, 277);
+            this.cboCmd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cboCmd.Name = "cboCmd";
-            this.cboCmd.Size = new System.Drawing.Size(143, 21);
+            this.cboCmd.Size = new System.Drawing.Size(189, 24);
             this.cboCmd.TabIndex = 44;
             this.cboCmd.Text = "*IDN?";
             // 
@@ -572,10 +604,10 @@
             this.lblVSGName2.AutoSize = true;
             this.lblVSGName2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblVSGName2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblVSGName2.Location = new System.Drawing.Point(29, 102);
-            this.lblVSGName2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblVSGName2.Location = new System.Drawing.Point(39, 126);
+            this.lblVSGName2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblVSGName2.Name = "lblVSGName2";
-            this.lblVSGName2.Size = new System.Drawing.Size(69, 24);
+            this.lblVSGName2.Size = new System.Drawing.Size(87, 29);
             this.lblVSGName2.TabIndex = 30;
             this.lblVSGName2.Text = "VSG 2:";
             // 
@@ -590,12 +622,12 @@
             "SMB100A",
             "SMBV100B",
             "N5172B"});
-            this.cboVSGList2.Location = new System.Drawing.Point(198, 102);
-            this.cboVSGList2.Margin = new System.Windows.Forms.Padding(4);
+            this.cboVSGList2.Location = new System.Drawing.Point(264, 126);
+            this.cboVSGList2.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.cboVSGList2.Name = "cboVSGList2";
-            this.cboVSGList2.Size = new System.Drawing.Size(93, 24);
+            this.cboVSGList2.Size = new System.Drawing.Size(123, 28);
             this.cboVSGList2.TabIndex = 33;
-            this.cboVSGList2.Text = "N5172B";
+            this.cboVSGList2.Text = "SGS100A";
             this.cboVSGList2.TextChanged += new System.EventHandler(this.cboInstrument_TextChanged);
             // 
             // lblAddress2
@@ -603,10 +635,10 @@
             this.lblAddress2.AutoSize = true;
             this.lblAddress2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAddress2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblAddress2.Location = new System.Drawing.Point(303, 102);
-            this.lblAddress2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblAddress2.Location = new System.Drawing.Point(404, 126);
+            this.lblAddress2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblAddress2.Name = "lblAddress2";
-            this.lblAddress2.Size = new System.Drawing.Size(46, 24);
+            this.lblAddress2.Size = new System.Drawing.Size(60, 29);
             this.lblAddress2.TabIndex = 29;
             this.lblAddress2.Text = "IP 2:";
             // 
@@ -618,12 +650,12 @@
             "10.61.61.107",
             "10.61.61.108",
             "10.61.61.109"});
-            this.cboIP2.Location = new System.Drawing.Point(372, 102);
-            this.cboIP2.Margin = new System.Windows.Forms.Padding(4);
+            this.cboIP2.Location = new System.Drawing.Point(496, 126);
+            this.cboIP2.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.cboIP2.Name = "cboIP2";
-            this.cboIP2.Size = new System.Drawing.Size(178, 24);
+            this.cboIP2.Size = new System.Drawing.Size(236, 28);
             this.cboIP2.TabIndex = 41;
-            this.cboIP2.Text = "192.168.1.101";
+            this.cboIP2.Text = "169.254.88.40";
             this.cboIP2.SelectedIndexChanged += new System.EventHandler(this.cboIP2_SelectedIndexChanged);
             // 
             // lblVSGName3
@@ -631,10 +663,10 @@
             this.lblVSGName3.AutoSize = true;
             this.lblVSGName3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblVSGName3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblVSGName3.Location = new System.Drawing.Point(31, 144);
-            this.lblVSGName3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblVSGName3.Location = new System.Drawing.Point(41, 177);
+            this.lblVSGName3.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblVSGName3.Name = "lblVSGName3";
-            this.lblVSGName3.Size = new System.Drawing.Size(69, 24);
+            this.lblVSGName3.Size = new System.Drawing.Size(87, 29);
             this.lblVSGName3.TabIndex = 30;
             this.lblVSGName3.Text = "VSG 3:";
             // 
@@ -649,10 +681,10 @@
             "SGS100A",
             "N5173B",
             "SMB100A"});
-            this.cboVSGList3.Location = new System.Drawing.Point(200, 144);
-            this.cboVSGList3.Margin = new System.Windows.Forms.Padding(4);
+            this.cboVSGList3.Location = new System.Drawing.Point(267, 177);
+            this.cboVSGList3.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.cboVSGList3.Name = "cboVSGList3";
-            this.cboVSGList3.Size = new System.Drawing.Size(93, 24);
+            this.cboVSGList3.Size = new System.Drawing.Size(123, 28);
             this.cboVSGList3.TabIndex = 33;
             this.cboVSGList3.Text = "N5173B";
             this.cboVSGList3.SelectedIndexChanged += new System.EventHandler(this.cboVSGList3_SelectedIndexChanged);
@@ -663,10 +695,10 @@
             this.lblAddress3.AutoSize = true;
             this.lblAddress3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAddress3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblAddress3.Location = new System.Drawing.Point(305, 144);
-            this.lblAddress3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblAddress3.Location = new System.Drawing.Point(407, 177);
+            this.lblAddress3.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblAddress3.Name = "lblAddress3";
-            this.lblAddress3.Size = new System.Drawing.Size(46, 24);
+            this.lblAddress3.Size = new System.Drawing.Size(60, 29);
             this.lblAddress3.TabIndex = 29;
             this.lblAddress3.Text = "IP 3:";
             // 
@@ -679,10 +711,10 @@
             "10.61.61.107",
             "10.61.61.108",
             "10.61.61.109"});
-            this.cboIP3.Location = new System.Drawing.Point(372, 144);
-            this.cboIP3.Margin = new System.Windows.Forms.Padding(4);
+            this.cboIP3.Location = new System.Drawing.Point(496, 177);
+            this.cboIP3.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.cboIP3.Name = "cboIP3";
-            this.cboIP3.Size = new System.Drawing.Size(180, 24);
+            this.cboIP3.Size = new System.Drawing.Size(239, 28);
             this.cboIP3.TabIndex = 41;
             this.cboIP3.Text = "192.168.1.102";
             this.cboIP3.SelectedIndexChanged += new System.EventHandler(this.cboIP3_SelectedIndexChanged);
@@ -692,10 +724,10 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label1.Location = new System.Drawing.Point(29, 22);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(39, 27);
+            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(91, 24);
+            this.label1.Size = new System.Drawing.Size(115, 29);
             this.label1.TabIndex = 30;
             this.label1.Text = "Số lượng:";
             // 
@@ -703,9 +735,10 @@
             // 
             this.SL_1VSG.AutoSize = true;
             this.SL_1VSG.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SL_1VSG.Location = new System.Drawing.Point(198, 21);
+            this.SL_1VSG.Location = new System.Drawing.Point(264, 26);
+            this.SL_1VSG.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.SL_1VSG.Name = "SL_1VSG";
-            this.SL_1VSG.Size = new System.Drawing.Size(80, 24);
+            this.SL_1VSG.Size = new System.Drawing.Size(97, 29);
             this.SL_1VSG.TabIndex = 45;
             this.SL_1VSG.Text = "1 VSG";
             this.SL_1VSG.UseVisualStyleBackColor = true;
@@ -716,9 +749,10 @@
             this.SL_2VSG.AutoSize = true;
             this.SL_2VSG.Checked = true;
             this.SL_2VSG.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SL_2VSG.Location = new System.Drawing.Point(307, 21);
+            this.SL_2VSG.Location = new System.Drawing.Point(409, 26);
+            this.SL_2VSG.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.SL_2VSG.Name = "SL_2VSG";
-            this.SL_2VSG.Size = new System.Drawing.Size(80, 24);
+            this.SL_2VSG.Size = new System.Drawing.Size(97, 29);
             this.SL_2VSG.TabIndex = 45;
             this.SL_2VSG.TabStop = true;
             this.SL_2VSG.Text = "2 VSG";
@@ -729,9 +763,10 @@
             // 
             this.SL_3VSG.AutoSize = true;
             this.SL_3VSG.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SL_3VSG.Location = new System.Drawing.Point(416, 21);
+            this.SL_3VSG.Location = new System.Drawing.Point(555, 26);
+            this.SL_3VSG.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.SL_3VSG.Name = "SL_3VSG";
-            this.SL_3VSG.Size = new System.Drawing.Size(80, 24);
+            this.SL_3VSG.Size = new System.Drawing.Size(97, 29);
             this.SL_3VSG.TabIndex = 45;
             this.SL_3VSG.Text = "3 VSG";
             this.SL_3VSG.UseVisualStyleBackColor = true;
@@ -748,19 +783,20 @@
             "VSG1",
             "VSG2",
             "VSG3"});
-            this.cboVSG.Location = new System.Drawing.Point(198, 226);
+            this.cboVSG.Location = new System.Drawing.Point(264, 278);
+            this.cboVSG.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cboVSG.Name = "cboVSG";
-            this.cboVSG.Size = new System.Drawing.Size(95, 21);
+            this.cboVSG.Size = new System.Drawing.Size(125, 24);
             this.cboVSG.TabIndex = 47;
             this.cboVSG.Text = "VSG1";
             // 
             // btnDisconnect
             // 
             this.btnDisconnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDisconnect.Location = new System.Drawing.Point(331, 297);
-            this.btnDisconnect.Margin = new System.Windows.Forms.Padding(4);
+            this.btnDisconnect.Location = new System.Drawing.Point(441, 366);
+            this.btnDisconnect.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnDisconnect.Name = "btnDisconnect";
-            this.btnDisconnect.Size = new System.Drawing.Size(98, 38);
+            this.btnDisconnect.Size = new System.Drawing.Size(131, 47);
             this.btnDisconnect.TabIndex = 48;
             this.btnDisconnect.Text = "DISCONNECT";
             this.btnDisconnect.UseVisualStyleBackColor = true;
@@ -768,9 +804,9 @@
             // 
             // SetupVSG
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1113, 369);
+            this.ClientSize = new System.Drawing.Size(1484, 454);
             this.Controls.Add(this.btnDisconnect);
             this.Controls.Add(this.cboVSG);
             this.Controls.Add(this.SL_3VSG);
@@ -801,6 +837,7 @@
             this.Controls.Add(this.cboVSGList1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblVSGName1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "SetupVSG";
             this.Text = "VSG SET UP";
             this.grpVSG.ResumeLayout(false);

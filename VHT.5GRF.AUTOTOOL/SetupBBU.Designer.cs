@@ -72,7 +72,7 @@
             this.cboIP.Name = "cboIP";
             this.cboIP.Size = new System.Drawing.Size(385, 24);
             this.cboIP.TabIndex = 73;
-            this.cboIP.Text = "192.168.120.195";
+            this.cboIP.Text = "192.168.120.186";
             this.cboIP.SelectedIndexChanged += new System.EventHandler(this.CboIP_SelectedIndexChanged);
             // 
             // grpVSA

@@ -411,7 +411,7 @@ namespace _5GAutoTool
                             LogLevel.WARN);
                         return;
                     }
-                    LogSessionTime = DateTime.Now.ToString("HHmmss");
+                    //LogSessionTime = DateTime.Now.ToString("HHmmss");
                     measurementBackgroundWorker.RunWorkerAsync();
                     timerProcess.Start();
                     btnStart.Enabled = false;

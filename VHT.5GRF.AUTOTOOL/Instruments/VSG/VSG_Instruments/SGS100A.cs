@@ -147,7 +147,7 @@ namespace _5GAutoTool
 
                     if (response == 1)
                     {
-                        Log($"SGS100A: Source power level = {setPower} dBm");
+                        //Log($"SGS100A: Source power level = {setPower} dBm");
                         currPowerLevel = tmp;
                     }
                     else
@@ -195,7 +195,7 @@ namespace _5GAutoTool
                 //sgs100a.WriteString(":SOUR:CORR:VAL?", true);
 
                 // double correction = sgs100a.ReadNumber();
-                double correction = 0;
+                double correction = 22;
                 double standardPower;
                 if (!double.TryParse(isPower, System.Globalization.NumberStyles.Float,
                     System.Globalization.CultureInfo.InvariantCulture, out standardPower))
