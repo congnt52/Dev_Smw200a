@@ -142,15 +142,15 @@ namespace _5GAutoTool
             try
             {
                 stage = "WRITE_COMMAND";
-                Log($"{Alias} [IBB] {stage}");
+              // Log($"{Alias} [IBB] {stage}");
                 smw.WriteString(cmd, true);
 
                 stage = "WRITE_OPC";
-                Log($"{Alias} [IBB] {stage}");
+               // Log($"{Alias} [IBB] {stage}");
                 smw.WriteString("*OPC?", true);
 
                 stage = "READ_OPC";
-                Log($"{Alias} [IBB] {stage}");
+              //  Log($"{Alias} [IBB] {stage}");
                 string response = smw.ReadString();
 
                 Log($"{Alias} [IBB] Response=[{response}], " +

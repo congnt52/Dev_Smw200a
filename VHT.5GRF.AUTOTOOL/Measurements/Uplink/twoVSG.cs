@@ -307,13 +307,22 @@ namespace _5GAutoTool
                             // Keep the existing INB modulated waveform configuration.
                             vsg1.SetIBBWaveform(isPowerStr, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
                             vsg2.TypeOfSignal = "DFT-s-OFDM";
-                            vsg2.SetIBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth);
+                            vsg1.setParameter(2, isPower, isFreq, TriggerDelay);
+                            //if (vsg1.Model != "SMW200A")
+                            //{
+                            //    vsg2.SetIBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth);
+                            //}
+                            //else
+                            //{
+                            //    vsg2.setParameter(2, isPower, isFreq, TriggerDelay);
+                            //}
+
                             //vsg2.setParameter(1, wsPower, wsFreq, TriggerDelay);
                             // Source 2 is set by the sequence at each sweep frequency, with correction.
                             inbMeasurementInSequence(
                                 bbu, vsg2, mode, setPort, 1000000, 1000,
                                 wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset,
-                                "2240", "2295", "2405", "2460", Bandwidth, out TP);
+                                "2280", "2295", "2405", "2420", Bandwidth, out TP);
                          break;
 
                         case "NBB":
@@ -948,12 +957,13 @@ namespace _5GAutoTool
                     string powerText = instrumentPower.ToString("F3", culture);
                     if (vsg2.Model == "SMW200A")
                     { 
-                    //    vsg2.setParameter(2, powerText, freqText, vsg2.TriggerDelay);
+                        vsg2.setParameter(2, powerText, freqText, vsg2.TriggerDelay);
                     }
                     else
                     {
+                        //vsg2.setParameter(2, powerText, freqText, vsg2.TriggerDelay);
                         vsg2.SetFreq(freqText);
-                      //  vsg2.SetPower(powerText);
+                        //vsg2.SetPower(powerText);
                     }
                     //Log("INB2: IS=" + (freqHz / 1e6).ToString("F3", culture) +
                     //    " MHz; correction=" + att.ToString("F3", culture) +
@@ -1087,7 +1097,9 @@ namespace _5GAutoTool
                     catch (Exception ex) { Log("INB2 STOP_L1TESTMAC: " + ex.Message, LogLevel.ERROR); }
                 }
                 L1TestMacV2Start = false;
-                try { vsg2.OnOffSignal(0); }
+                try { 
+                    //vsg2.OnOffSignal(0); 
+                }
                 catch (Exception ex) { Log("INB2 RF OFF: " + ex.Message, LogLevel.ERROR); }
                 if (!completed) TP = -1;
             }

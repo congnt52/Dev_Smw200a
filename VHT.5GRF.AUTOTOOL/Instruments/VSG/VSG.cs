@@ -308,7 +308,7 @@ namespace _5GAutoTool
             }
             else if (instrumentVSG == "SMW200A")
             {
-                smw200a.SetFreq(1, freqSet);
+               // smw200a.SetFreq(1, freqSet);
                 smw200a.SetFreq(2, freqSet);
             }
             else if (instrumentVSG == "SMBV100B")
@@ -507,11 +507,12 @@ namespace _5GAutoTool
                 //smw200a.RFOnOff(source, 0);
                 //System.Threading.Thread.Sleep(500);
                 smw200a.SetFreq(source, freqSet);
-                smw200a.SetPower(source, powerSet);
-                smw200a.SetRFTrigger(1, 1, TriggerDelay);
+               // smw200a.SetPower(source, powerSet);
+                //smw200a.SetRFTrigger(1, 1, TriggerDelay);
                 System.Threading.Thread.Sleep(200);  //8.4.2024 - tam thoi de thoi gian tang len
-                smw200a.IQOnOff(source, 1);
-                smw200a.RFOnOff(source, 1);
+                //smw200a.IQOnOff(source, 1);
+                //System.Threading.Thread.Sleep(200);
+                //smw200a.RFOnOff(source, 1);
             }
             else if (instrumentVSG == "SMBV100B")
             {
@@ -1529,14 +1530,14 @@ namespace _5GAutoTool
                 if (intRBOffset < 82)
                 {
                     smw200a.SetInbandBlockingSignalLower();
-                    smw200a.SetRFTrigger(1, 1, TriggerDelay);
+                    //smw200a.SetRFTrigger(1, 1, TriggerDelay);
 
                     
                 }
                 else
                 {
                     smw200a.SetInbandBlockingSignalUpper();
-                    smw200a.SetRFTrigger(1, 1, TriggerDelay);
+                    //smw200a.SetRFTrigger(1, 1, TriggerDelay);
                     
                     //smw200a.SetFreq(2, freqSet);
                    // System.Threading.Thread.Sleep(2000);
@@ -2006,8 +2007,8 @@ namespace _5GAutoTool
             }
             else if (instrumentVSG == "SMW200A")
             {
-                smw200a.IQOnOff(index, 0);
-                smw200a.RFOnOff(index, 0);
+                //smw200a.IQOnOff(index, 0);
+                //smw200a.RFOnOff(index, 0);
             }
         }
 
@@ -2043,10 +2044,10 @@ namespace _5GAutoTool
             }
             else if (instrumentVSG == "SMW200A")
             {
-                smw200a.RFOnOff(1, OnOff);
-                smw200a.RFOnOff(2, OnOff);
-                smw200a.IQOnOff(1, OnOff);
-                smw200a.IQOnOff(2, OnOff);
+                //smw200a.RFOnOff(1, OnOff);
+                //smw200a.RFOnOff(2, OnOff);
+                //smw200a.IQOnOff(1, OnOff);
+                //smw200a.IQOnOff(2, OnOff);
             }
             else if (instrumentVSG == "SMMBV100B")
             {
