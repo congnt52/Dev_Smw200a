@@ -241,15 +241,67 @@ namespace _5GAutoTool
             Log(separator, LogLevel.DASH);
         }
 
-        public void SaveLogToFile(string fileName)
+        //public void SaveLogToFile(string fileName)
+        //{
+        //    using (StreamWriter writer = new StreamWriter(fileName))
+        //    {
+        //        foreach (ListViewItem item in _listView.Items)
+        //        {
+        //            // Write each item and its subitems to the file, separated by tabs
+        //            writer.WriteLine(string.Join("\t", item.SubItems.Cast<ListViewItem.ListViewSubItem>().Select(subItem => subItem.Text)));
+        //        }
+        //    }
+        //}
+
+        public async Task SaveLogToFile(
+    string timestamp,
+    LogLevel logLvl,
+    string logMessage,
+    string device = "",
+    string source = "")
         {
-            using (StreamWriter writer = new StreamWriter(fileName))
+            string strLogLevel =
+                logLvl != LogLevel.DASH ? $"[{logLvl}]" : "";
+
+            string strLogDevice =
+                !string.IsNullOrEmpty(device) ? $"[{device}]" : "";
+
+            string serial = mainForm.LogSessionSerial;
+            string sessionTime = mainForm.LogSessionTime;
+            string date = mainForm.LogSessionDate;
+
+            string directoryPath = Path.Combine(
+                mainForm.directionPathTemplate,
+                "logs",
+                date);
+
+            string filepath = Path.Combine(
+                directoryPath,
+                $"{serial}_{date}_{sessionTime}.txt");
+
+            string text =
+                $"{timestamp}\t{strLogLevel}\t{strLogDevice}\t{logMessage}\t{source}";
+
+            await _logFileLock.WaitAsync();
+
+            try
             {
-                foreach (ListViewItem item in _listView.Items)
+                Directory.CreateDirectory(directoryPath);
+
+                using (FileStream fs = new FileStream(
+                    filepath,
+                    FileMode.Append,
+                    FileAccess.Write,
+                    FileShare.Read))
+                using (StreamWriter sWriter =
+                    new StreamWriter(fs, Encoding.UTF8))
                 {
-                    // Write each item and its subitems to the file, separated by tabs
-                    writer.WriteLine(string.Join("\t", item.SubItems.Cast<ListViewItem.ListViewSubItem>().Select(subItem => subItem.Text)));
+                    await sWriter.WriteLineAsync(text);
                 }
+            }
+            finally
+            {
+                _logFileLock.Release();
             }
         }
         public async void Log(string text, LogLevel logLevel = LogLevel.INFO, string device = "", string source = "")
@@ -278,26 +330,100 @@ namespace _5GAutoTool
             }
 
         }
-        private async Task Append(string timestamp, LogLevel logLevel, string logMessage, string device = "", string source = "")
+        //private async Task Append(string timestamp, LogLevel logLevel, string logMessage, string device = "", string source = "")
+        //{
+        //    // Save to log file
+        //    await SaveLogToFile(timestamp, logLevel, logMessage, device, source);
+        //    await Task.Run(() =>
+        //    {
+        //        if (_listView.InvokeRequired)
+        //        {
+        //            _listView.Invoke(new Action(() => AddLogToListView(timestamp, logLevel, logMessage, device, source)));
+        //        }
+        //        else
+        //        {
+        //            AddLogToListView(timestamp, logLevel, logMessage, device, source);
+        //        }
+        //    });
+
+        //    //// Save to log file
+        //    //await SaveLogToFile(timestamp, logLevel, logMessage, device, source);
+        //}
+
+        //    private async task append(
+        //string timestamp,
+        //loglevel loglevel,
+        //string logmessage,
+        //string device = "",
+        //string source = "")
+        //    {
+        //        await savelogtofile(
+        //            timestamp,
+        //            loglevel,
+        //            logmessage,
+        //            device,
+        //            source);
+
+        //        await task.run(() =>
+        //        {
+        //            if (_listview.invokerequired)
+        //            {
+        //                _listview.invoke(new action(() =>
+        //                    addlogtolistview(
+        //                        timestamp,
+        //                        loglevel,
+        //                        logmessage,
+        //                        device,
+        //                        source)));
+        //            }
+        //            else
+        //            {
+        //                addlogtolistview(
+        //                    timestamp,
+        //                    loglevel,
+        //                    logmessage,
+        //                    device,
+        //                    source);
+        //            }
+        //        });
+        //    }
+        private async Task Append(
+        string timestamp,
+        LogLevel logLevel,
+        string logMessage,
+        string device = "",
+        string source = "")
         {
-            // Save to log file
-            await SaveLogToFile(timestamp, logLevel, logMessage, device, source);
+            await SaveLogToFile(
+                timestamp,
+                logLevel,
+                logMessage,
+                device,
+                source);
+
             await Task.Run(() =>
             {
                 if (_listView.InvokeRequired)
                 {
-                    _listView.Invoke(new Action(() => AddLogToListView(timestamp, logLevel, logMessage, device, source)));
+                    _listView.Invoke(new Action(() =>
+                        AddLogToListView(
+                            timestamp,
+                            logLevel,
+                            logMessage,
+                            device,
+                            source)));
                 }
                 else
                 {
-                    AddLogToListView(timestamp, logLevel, logMessage, device, source);
+                    AddLogToListView(
+                        timestamp,
+                        logLevel,
+                        logMessage,
+                        device,
+                        source);
                 }
             });
-
-            //// Save to log file
-            //await SaveLogToFile(timestamp, logLevel, logMessage, device, source);
         }
-
         private void AddLogToListView(string timestamp, LogLevel logLevel, string logMessage, string device = "", string source = "")
         {
             if (_listView.Columns.Count >= 5)

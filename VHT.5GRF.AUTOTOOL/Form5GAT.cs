@@ -122,14 +122,36 @@ namespace _5GAutoTool
         string setFrequency, setPower, setBandwidth;
         string instrBBU, ipBBU, userBBU, passBBU;
         public string RruSerial = ""; // thông tin RRU
-        public string LogSessionTime { get; private set; }
-            = DateTime.Now.ToString("HHmmssfff");
+       // public string LogSessionTime { get; private set; }
+          //  = DateTime.Now.ToString("HHmmssfff");
 
-        public string LogSessionSerial { get; private set; } = "NO_SERIAL";
+       // public string LogSessionSerial { get; private set; } = "NO_SERIAL";
+
+        //private void StartNewLogSession()
+        //{
+        //    LogSessionTime = DateTime.Now.ToString("HHmmssfff");
+
+        //    LogSessionSerial = string.IsNullOrWhiteSpace(RruSerial)
+        //        ? "NO_SERIAL"
+        //        : RruSerial.Trim();
+        //}
+
+        public string LogSessionTime { get; private set; }
+    = DateTime.Now.ToString("HHmmssfff");
+
+        public string LogSessionSerial { get; private set; }
+            = "NO_SERIAL";
+
+        public string LogSessionDate { get; private set; }
+            = DateTime.Now.ToString("ddMMyyyy");
 
         private void StartNewLogSession()
         {
-            LogSessionTime = DateTime.Now.ToString("HHmmssfff");
+            DateTime now = DateTime.Now;
+
+            LogSessionTime = now.ToString("HHmmssfff");
+
+            LogSessionDate = now.ToString("ddMMyyyy");
 
             LogSessionSerial = string.IsNullOrWhiteSpace(RruSerial)
                 ? "NO_SERIAL"
