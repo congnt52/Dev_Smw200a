@@ -538,9 +538,9 @@ namespace _5GAutoTool
                 vsg2.LoadUserCorrDataSGS100A(@"/var/user/RxBlocking");
 
                 // Configure the first point before starting TestMac.
-                double firstHz = double.Parse(sweepRanges[0][1], culture) * 1e-3;
-                vsg2.SetCWWaveform(isPower, firstHz.ToString("F0", culture));
-                vsg2.LogUserCorrectionSGS100A(isPower, firstHz);
+                double firstMHz = double.Parse(sweepRanges[0][1], culture);
+                vsg2.SetCWWaveform(isPower, firstMHz.ToString("F0", culture));
+                vsg2.LogUserCorrectionSGS100A(isPower, firstMHz);
 
 
 
