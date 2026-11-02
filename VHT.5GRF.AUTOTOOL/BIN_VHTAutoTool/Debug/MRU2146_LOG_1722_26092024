@@ -1,0 +1,94 @@
+26/09/2024 17:21.49	26/09/2024 17:21.49	[ERROR]	[OAM]	OAM Exception: Cannot connect to 172.16.27.188:1970: A socket operation was attempted to an unreachable host 172.16.27.188:1970	OAM
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		Testing Ports List: 1, 2, 3, 4, 5, 6, 7, 8	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		Set frequency to RRU: 2600 MHz	Form5GAT
+				=============== MEASUREMENT START: Thursday, September 26, 2024 5:21 PM ===============	
+				--------- Remaining Testcases in Testing ----------------	
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Base station output power	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Occupied bandwidth	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Adjacent channel leakage power TM1.1	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Adjacent channel leakage power TM1.2	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Operating band Unwanted emissions TM1.1	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Operating band Unwanted emissions TM1.2	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Modulation quality TM3.1	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Modulation quality TM2.0a	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Modulation quality TM2.0	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Modulation quality TM3.1a	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Modulation quality TM3.2	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Modulation quality TM3.3	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Frequency error TM2.0	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Frequency error TM2.0a	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Frequency error TM3.1	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Frequency error TM3.1a	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Frequency error TM3.2	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Frequency error TM3.3	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Total power dynamic range	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Transmitter spurious emissions	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Transmitter intermodulation (ACLR)	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Transmitter intermodulation (SEM)	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Transmitter intermodulation (SPUR)	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Transmitter OFF Power	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Transmitter transient period	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Intra-system ACLR	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Intra-system SEM	Form5GAT
+				-------------------------	
+				++++++++ Base station output power:Port 1 ++++++++	
+26/09/2024 17:21.50	26/09/2024 17:21.50	[INFO]		[MRU2146][PORT:1]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:21.50	26/09/2024 17:21.50	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:21.50	26/09/2024 17:21.50	[ERROR]	[]	VSA select measurement: FAIL	VSA
+26/09/2024 17:21.50	26/09/2024 17:21.50	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+26/09/2024 17:21.50	26/09/2024 17:21.50	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA
+				++++++++ Base station output power:Port 1 ++++++++	
+26/09/2024 17:21.50	26/09/2024 17:21.50	[INFO]		[MRU2146][PORT:1]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:21.50	26/09/2024 17:21.50	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:21.50	26/09/2024 17:21.50	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+26/09/2024 17:21.50	26/09/2024 17:21.50	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA
+				++++++++ Base station output power:Port 1 ++++++++	
+26/09/2024 17:21.50	26/09/2024 17:21.50	[INFO]		[MRU2146][PORT:1]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:21.50	26/09/2024 17:21.50	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:21.50	26/09/2024 17:21.50	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+26/09/2024 17:21.50	26/09/2024 17:21.50	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA
+				++++++++ Base station output power:Port 2 ++++++++	
+26/09/2024 17:21.53	26/09/2024 17:21.53	[INFO]		[MRU2146][PORT:2]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:21.53	26/09/2024 17:21.53	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:21.53	26/09/2024 17:21.53	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA
+26/09/2024 17:21.53	26/09/2024 17:21.53	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+				++++++++ Base station output power:Port 2 ++++++++	
+26/09/2024 17:21.53	26/09/2024 17:21.53	[INFO]		[MRU2146][PORT:2]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:21.53	26/09/2024 17:21.53	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:21.53	26/09/2024 17:21.53	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+26/09/2024 17:21.53	26/09/2024 17:21.53	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA
+				++++++++ Base station output power:Port 2 ++++++++	
+26/09/2024 17:21.53	26/09/2024 17:21.53	[INFO]		[MRU2146][PORT:2]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:21.53	26/09/2024 17:21.53	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:21.53	26/09/2024 17:21.53	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+26/09/2024 17:21.53	26/09/2024 17:21.53	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA
+				++++++++ Base station output power:Port 3 ++++++++	
+26/09/2024 17:21.56	26/09/2024 17:21.56	[INFO]		[MRU2146][PORT:3]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:21.56	26/09/2024 17:21.56	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:21.56	26/09/2024 17:21.56	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+26/09/2024 17:21.56	26/09/2024 17:21.56	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA
+				++++++++ Base station output power:Port 3 ++++++++	
+26/09/2024 17:21.56	26/09/2024 17:21.56	[INFO]		[MRU2146][PORT:3]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:21.56	26/09/2024 17:21.56	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:21.56	26/09/2024 17:21.56	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+26/09/2024 17:21.56	26/09/2024 17:21.56	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA
+				++++++++ Base station output power:Port 3 ++++++++	
+26/09/2024 17:21.56	26/09/2024 17:21.56	[INFO]		[MRU2146][PORT:3]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:21.56	26/09/2024 17:21.56	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:21.56	26/09/2024 17:21.56	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA
+26/09/2024 17:21.56	26/09/2024 17:21.56	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+				++++++++ Base station output power:Port 4 ++++++++	
+26/09/2024 17:22.00	26/09/2024 17:22.00	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:22.00	26/09/2024 17:22.00	[INFO]		[MRU2146][PORT:4]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:22.00	26/09/2024 17:22.00	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+26/09/2024 17:22.00	26/09/2024 17:22.00	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA
+				++++++++ Base station output power:Port 4 ++++++++	
+26/09/2024 17:22.00	26/09/2024 17:22.00	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:22.00	26/09/2024 17:22.00	[INFO]		[MRU2146][PORT:4]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:22.00	26/09/2024 17:22.00	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+26/09/2024 17:22.00	26/09/2024 17:22.00	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA
+				++++++++ Base station output power:Port 4 ++++++++	
+26/09/2024 17:22.00	26/09/2024 17:22.00	[INFO]		[MRU2146][PORT:4]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:22.00	26/09/2024 17:22.00	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:22.00	26/09/2024 17:22.00	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+26/09/2024 17:22.00	26/09/2024 17:22.00	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA

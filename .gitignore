@@ -1,0 +1,11 @@
+*.exe
+bin/Release
+bin/Debug
+
+.vs/
+.git_1/
+*.suo
+*.user
+*.vsdix
+*.cache
+*.log

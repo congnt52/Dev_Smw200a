@@ -1,0 +1,11 @@
+# ignore file build
+*.exe
+*.dll
+*.bin
+*.suo
+# ignore folder build
+bin/
+obj/
+build/
+.vs/.vs/
+*.suo

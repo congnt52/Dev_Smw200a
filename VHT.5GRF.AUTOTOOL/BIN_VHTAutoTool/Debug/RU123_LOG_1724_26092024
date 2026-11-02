@@ -1,0 +1,223 @@
+26/09/2024 17:21.49	26/09/2024 17:21.49	[ERROR]	[OAM]	OAM Exception: Cannot connect to 172.16.27.188:1970: A socket operation was attempted to an unreachable host 172.16.27.188:1970	OAM
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		Testing Ports List: 1, 2, 3, 4, 5, 6, 7, 8	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		Set frequency to RRU: 2600 MHz	Form5GAT
+				=============== MEASUREMENT START: Thursday, September 26, 2024 5:21 PM ===============	
+				--------- Remaining Testcases in Testing ----------------	
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Base station output power	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Occupied bandwidth	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Adjacent channel leakage power TM1.1	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Adjacent channel leakage power TM1.2	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Operating band Unwanted emissions TM1.1	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Operating band Unwanted emissions TM1.2	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Modulation quality TM3.1	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Modulation quality TM2.0a	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Modulation quality TM2.0	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Modulation quality TM3.1a	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Modulation quality TM3.2	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Modulation quality TM3.3	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Frequency error TM2.0	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Frequency error TM2.0a	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Frequency error TM3.1	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Frequency error TM3.1a	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Frequency error TM3.2	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Frequency error TM3.3	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Total power dynamic range	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Transmitter spurious emissions	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Transmitter intermodulation (ACLR)	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Transmitter intermodulation (SEM)	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Transmitter intermodulation (SPUR)	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Transmitter OFF Power	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Transmitter transient period	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Intra-system ACLR	Form5GAT
+26/09/2024 17:21.49	26/09/2024 17:21.49	[INFO]		+ Intra-system SEM	Form5GAT
+				-------------------------	
+				++++++++ Base station output power:Port 1 ++++++++	
+26/09/2024 17:21.50	26/09/2024 17:21.50	[INFO]		[MRU2146][PORT:1]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:21.50	26/09/2024 17:21.50	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:21.50	26/09/2024 17:21.50	[ERROR]	[]	VSA select measurement: FAIL	VSA
+26/09/2024 17:21.50	26/09/2024 17:21.50	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+26/09/2024 17:21.50	26/09/2024 17:21.50	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA
+				++++++++ Base station output power:Port 1 ++++++++	
+26/09/2024 17:21.50	26/09/2024 17:21.50	[INFO]		[MRU2146][PORT:1]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:21.50	26/09/2024 17:21.50	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:21.50	26/09/2024 17:21.50	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+26/09/2024 17:21.50	26/09/2024 17:21.50	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA
+				++++++++ Base station output power:Port 1 ++++++++	
+26/09/2024 17:21.50	26/09/2024 17:21.50	[INFO]		[MRU2146][PORT:1]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:21.50	26/09/2024 17:21.50	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:21.50	26/09/2024 17:21.50	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+26/09/2024 17:21.50	26/09/2024 17:21.50	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA
+				++++++++ Base station output power:Port 2 ++++++++	
+26/09/2024 17:21.53	26/09/2024 17:21.53	[INFO]		[MRU2146][PORT:2]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:21.53	26/09/2024 17:21.53	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:21.53	26/09/2024 17:21.53	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA
+26/09/2024 17:21.53	26/09/2024 17:21.53	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+				++++++++ Base station output power:Port 2 ++++++++	
+26/09/2024 17:21.53	26/09/2024 17:21.53	[INFO]		[MRU2146][PORT:2]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:21.53	26/09/2024 17:21.53	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:21.53	26/09/2024 17:21.53	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+26/09/2024 17:21.53	26/09/2024 17:21.53	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA
+				++++++++ Base station output power:Port 2 ++++++++	
+26/09/2024 17:21.53	26/09/2024 17:21.53	[INFO]		[MRU2146][PORT:2]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:21.53	26/09/2024 17:21.53	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:21.53	26/09/2024 17:21.53	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+26/09/2024 17:21.53	26/09/2024 17:21.53	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA
+				++++++++ Base station output power:Port 3 ++++++++	
+26/09/2024 17:21.56	26/09/2024 17:21.56	[INFO]		[MRU2146][PORT:3]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:21.56	26/09/2024 17:21.56	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:21.56	26/09/2024 17:21.56	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+26/09/2024 17:21.56	26/09/2024 17:21.56	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA
+				++++++++ Base station output power:Port 3 ++++++++	
+26/09/2024 17:21.56	26/09/2024 17:21.56	[INFO]		[MRU2146][PORT:3]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:21.56	26/09/2024 17:21.56	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:21.56	26/09/2024 17:21.56	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+26/09/2024 17:21.56	26/09/2024 17:21.56	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA
+				++++++++ Base station output power:Port 3 ++++++++	
+26/09/2024 17:21.56	26/09/2024 17:21.56	[INFO]		[MRU2146][PORT:3]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:21.56	26/09/2024 17:21.56	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:21.56	26/09/2024 17:21.56	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA
+26/09/2024 17:21.56	26/09/2024 17:21.56	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+				++++++++ Base station output power:Port 4 ++++++++	
+26/09/2024 17:22.00	26/09/2024 17:22.00	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:22.00	26/09/2024 17:22.00	[INFO]		[MRU2146][PORT:4]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:22.00	26/09/2024 17:22.00	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+26/09/2024 17:22.00	26/09/2024 17:22.00	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA
+				++++++++ Base station output power:Port 4 ++++++++	
+26/09/2024 17:22.00	26/09/2024 17:22.00	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:22.00	26/09/2024 17:22.00	[INFO]		[MRU2146][PORT:4]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:22.00	26/09/2024 17:22.00	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+26/09/2024 17:22.00	26/09/2024 17:22.00	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA
+				++++++++ Base station output power:Port 4 ++++++++	
+26/09/2024 17:22.00	26/09/2024 17:22.00	[INFO]		[MRU2146][PORT:4]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:22.00	26/09/2024 17:22.00	[INFO]		RRU MRU2146: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:22.00	26/09/2024 17:22.00	[ERROR]	[]	VSA Set Frequency: FAIL! 	VSA
+26/09/2024 17:22.00	26/09/2024 17:22.00	[ERROR]	[]	VSA OutputPowerMeasurement: FAIL	VSA
+26/09/2024 17:22.03	26/09/2024 17:22.03	[SUCCESS]		Measurement Completed!	Form5GAT
+26/09/2024 17:22.04	26/09/2024 17:22.04	[INFO]		Logfile exported to: MRU2146_LOG_1722_26092024	Form5GAT
+26/09/2024 17:23.27	26/09/2024 17:23.27	[ERROR]	[OAM]	OAM Exception: Cannot connect to 172.16.27.188:1970: A socket operation was attempted to an unreachable host 172.16.27.188:1970	OAM
+26/09/2024 17:23.27	26/09/2024 17:23.27	[WARN]		Connection refuse: Please run !!
+/nr_sw/running/scripts/sw_start.sh)	Form5GAT
+26/09/2024 17:23.37	26/09/2024 17:23.37	[ERROR]	[N9020A]	N9020A connect: FAIL! HRESULT = 80040000	N9020A
+26/09/2024 17:23.42	26/09/2024 17:23.42	[ERROR]	[OAM]	OAM Exception: Cannot connect to 172.16.27.188:1970: A socket operation was attempted to an unreachable host 172.16.27.188:1970	OAM
+26/09/2024 17:23.42	26/09/2024 17:23.42	[INFO]		Testing Ports List: 1, 2, 3, 4, 5, 6, 7, 8	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		Set frequency to RRU: 2600 MHz	Form5GAT
+				=============== MEASUREMENT START: Thursday, September 26, 2024 5:23 PM ===============	
+				--------- Remaining Testcases in Testing ----------------	
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Base station output power	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Adjacent channel leakage power TM1.1	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Adjacent channel leakage power TM1.2	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Operating band Unwanted emissions TM1.1	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Operating band Unwanted emissions TM1.2	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Occupied bandwidth	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Modulation quality TM2.0	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Modulation quality TM2.0a	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Modulation quality TM3.1	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Modulation quality TM3.1a	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Modulation quality TM3.2	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Modulation quality TM3.3	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Frequency error TM2.0	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Frequency error TM2.0a	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Frequency error TM3.1	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Frequency error TM3.1a	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Frequency error TM3.2	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Frequency error TM3.3	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Total power dynamic range	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Transmitter spurious emissions	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Transmitter intermodulation (ACLR)	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Transmitter intermodulation (SEM)	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Transmitter intermodulation (SPUR)	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Transmitter OFF Power	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Transmitter transient period	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Intra-system ACLR	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		+ Intra-system SEM	Form5GAT
+				-------------------------	
+				++++++++ Base station output power:Port 1 ++++++++	
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		RRU RU123: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:23.44	26/09/2024 17:23.44	[INFO]		[RU123][PORT:1]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:23.45	26/09/2024 17:23.45	[ERROR]	[N9020A]	[N9020A] Send command::MMEM:LOAD:STAT "D:/Users/Instrument/Documents/NR5G/state/NRTM/NRTM_11_7D1S2U.state" FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:23.45	26/09/2024 17:23.45	[INFO]	[N9020A]	N9020A load NRTM measurement: NRTM_11	N9020A
+26/09/2024 17:23.45	26/09/2024 17:23.45	[INFO]	[N9020A]	[N9020A] Set center frequency: 2600000000	N9020A
+26/09/2024 17:23.45	26/09/2024 17:23.45	[ERROR]	[N9020A]	[N9020A] Send command:CCAR:REF 2600000000Hz FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:23.46	26/09/2024 17:23.46	[ERROR]	[N9020A]	[N9020A] Send command:CORR:BTS:GAIN -53.932 dB FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:23.46	26/09/2024 17:23.46	[INFO]	[N9020A]	[N9020A] SSet External Gain: 53.932	N9020A
+26/09/2024 17:23.46	26/09/2024 17:23.46	[ERROR]	[N9020A]	[N9020A] Send command:DISP:CHP:WIND:TRAC:Y:RLEV 50 dBm FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:23.46	26/09/2024 17:23.46	[INFO]	[N9020A]	[N9020A] Set Reference Level Offset: 50 dBm	N9020A
+26/09/2024 17:23.46	26/09/2024 17:23.46	[ERROR]	[N9020A]	[N9020A] Send command:POW:RANG:OPT IMM FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:23.46	26/09/2024 17:23.46	[ERROR]	[N9020A]	[N9020A] Send command:INIT:CONT OFF FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:23.51	26/09/2024 17:23.51	[INFO]	[N9020A]	N9020A: Changed to Single Sweep	N9020A
+26/09/2024 17:23.51	26/09/2024 17:23.51	[ERROR]	[N9020A]	N9020a OFDM Power measurement: FAIL	N9020A
+				++++++++ Base station output power:Port 1 ++++++++	
+26/09/2024 17:23.51	26/09/2024 17:23.51	[INFO]		RRU RU123: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:23.51	26/09/2024 17:23.51	[INFO]		[RU123][PORT:1]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:23.51	26/09/2024 17:23.51	[INFO]	[N9020A]	[N9020A] Set center frequency: 2600000000	N9020A
+26/09/2024 17:23.51	26/09/2024 17:23.51	[ERROR]	[N9020A]	[N9020A] Send command:CCAR:REF 2600000000Hz FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:23.51	26/09/2024 17:23.51	[ERROR]	[N9020A]	[N9020A] Send command:CORR:BTS:GAIN -53.932 dB FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:23.51	26/09/2024 17:23.51	[INFO]	[N9020A]	[N9020A] SSet External Gain: 53.932	N9020A
+26/09/2024 17:23.51	26/09/2024 17:23.51	[ERROR]	[N9020A]	[N9020A] Send command:DISP:CHP:WIND:TRAC:Y:RLEV 50 dBm FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:23.51	26/09/2024 17:23.51	[INFO]	[N9020A]	[N9020A] Set Reference Level Offset: 50 dBm	N9020A
+26/09/2024 17:23.51	26/09/2024 17:23.51	[ERROR]	[N9020A]	[N9020A] Send command:POW:RANG:OPT IMM FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:23.51	26/09/2024 17:23.51	[ERROR]	[N9020A]	[N9020A] Send command:INIT:CONT OFF FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:23.56	26/09/2024 17:23.56	[INFO]	[N9020A]	N9020A: Changed to Single Sweep	N9020A
+26/09/2024 17:23.56	26/09/2024 17:23.56	[ERROR]	[N9020A]	N9020a OFDM Power measurement: FAIL	N9020A
+				++++++++ Base station output power:Port 1 ++++++++	
+26/09/2024 17:23.57	26/09/2024 17:23.57	[INFO]		RRU RU123: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:23.57	26/09/2024 17:23.57	[INFO]		[RU123][PORT:1]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:23.57	26/09/2024 17:23.57	[ERROR]	[N9020A]	[N9020A] Send command:CCAR:REF 2600000000Hz FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:23.57	26/09/2024 17:23.57	[INFO]	[N9020A]	[N9020A] Set center frequency: 2600000000	N9020A
+26/09/2024 17:23.57	26/09/2024 17:23.57	[ERROR]	[N9020A]	[N9020A] Send command:CORR:BTS:GAIN -53.932 dB FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:23.57	26/09/2024 17:23.57	[INFO]	[N9020A]	[N9020A] SSet External Gain: 53.932	N9020A
+26/09/2024 17:23.57	26/09/2024 17:23.57	[ERROR]	[N9020A]	[N9020A] Send command:DISP:CHP:WIND:TRAC:Y:RLEV 50 dBm FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:23.57	26/09/2024 17:23.57	[INFO]	[N9020A]	[N9020A] Set Reference Level Offset: 50 dBm	N9020A
+26/09/2024 17:23.57	26/09/2024 17:23.57	[ERROR]	[N9020A]	[N9020A] Send command:POW:RANG:OPT IMM FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:23.57	26/09/2024 17:23.57	[ERROR]	[N9020A]	[N9020A] Send command:INIT:CONT OFF FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:24.02	26/09/2024 17:24.02	[INFO]	[N9020A]	N9020A: Changed to Single Sweep	N9020A
+26/09/2024 17:24.02	26/09/2024 17:24.02	[ERROR]	[N9020A]	N9020a OFDM Power measurement: FAIL	N9020A
+26/09/2024 17:24.02	26/09/2024 17:24.02	[INFO]	[N9020A]	N9020A Screenshot saved to: C:\Screenshots\26092024\RU123\TX\Base station output power\2600MHz\P1_172402_FAIL.png	N9020A
+26/09/2024 17:24.02	26/09/2024 17:24.02	[ERROR]	[N9020A]	[N9020A] Send command::MMEM:STOR:SCR "C:\Screenshots\26092024\RU123\TX\Base station output power\2600MHz\P1_172402_FAIL.png" FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:24.02	26/09/2024 17:24.02	[ERROR]	[N9020A]	N9020A:Save Screenshot got an error! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:24.05	26/09/2024 17:24.05	[ERROR]	[N9020A]	[N9020A] Send command:INIT:CONT ON FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:24.05	26/09/2024 17:24.05	[INFO]	[N9020A]	N9020A: Changed to Continous Sweep	N9020A
+				++++++++ Base station output power:Port 2 ++++++++	
+26/09/2024 17:24.05	26/09/2024 17:24.05	[INFO]		[RU123][PORT:2]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:24.05	26/09/2024 17:24.05	[INFO]		RRU RU123: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:24.05	26/09/2024 17:24.05	[ERROR]	[N9020A]	[N9020A] Send command:CCAR:REF 2600000000Hz FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:24.05	26/09/2024 17:24.05	[INFO]	[N9020A]	[N9020A] Set center frequency: 2600000000	N9020A
+26/09/2024 17:24.06	26/09/2024 17:24.06	[ERROR]	[N9020A]	[N9020A] Send command:CORR:BTS:GAIN -53.932 dB FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:24.06	26/09/2024 17:24.06	[INFO]	[N9020A]	[N9020A] SSet External Gain: 53.932	N9020A
+26/09/2024 17:24.06	26/09/2024 17:24.06	[ERROR]	[N9020A]	[N9020A] Send command:DISP:CHP:WIND:TRAC:Y:RLEV 50 dBm FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:24.06	26/09/2024 17:24.06	[INFO]	[N9020A]	[N9020A] Set Reference Level Offset: 50 dBm	N9020A
+26/09/2024 17:24.06	26/09/2024 17:24.06	[ERROR]	[N9020A]	[N9020A] Send command:POW:RANG:OPT IMM FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:24.06	26/09/2024 17:24.06	[ERROR]	[N9020A]	[N9020A] Send command:INIT:CONT OFF FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:24.11	26/09/2024 17:24.11	[INFO]	[N9020A]	N9020A: Changed to Single Sweep	N9020A
+26/09/2024 17:24.11	26/09/2024 17:24.11	[ERROR]	[N9020A]	N9020a OFDM Power measurement: FAIL	N9020A
+				++++++++ Base station output power:Port 2 ++++++++	
+26/09/2024 17:24.11	26/09/2024 17:24.11	[INFO]		RRU RU123: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:24.11	26/09/2024 17:24.11	[INFO]		[RU123][PORT:2]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:24.11	26/09/2024 17:24.11	[INFO]	[N9020A]	[N9020A] Set center frequency: 2600000000	N9020A
+26/09/2024 17:24.11	26/09/2024 17:24.11	[ERROR]	[N9020A]	[N9020A] Send command:CCAR:REF 2600000000Hz FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:24.11	26/09/2024 17:24.11	[INFO]	[N9020A]	[N9020A] SSet External Gain: 53.932	N9020A
+26/09/2024 17:24.11	26/09/2024 17:24.11	[ERROR]	[N9020A]	[N9020A] Send command:CORR:BTS:GAIN -53.932 dB FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:24.11	26/09/2024 17:24.11	[INFO]	[N9020A]	[N9020A] Set Reference Level Offset: 50 dBm	N9020A
+26/09/2024 17:24.11	26/09/2024 17:24.11	[ERROR]	[N9020A]	[N9020A] Send command:DISP:CHP:WIND:TRAC:Y:RLEV 50 dBm FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:24.11	26/09/2024 17:24.11	[ERROR]	[N9020A]	[N9020A] Send command:POW:RANG:OPT IMM FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:24.11	26/09/2024 17:24.11	[ERROR]	[N9020A]	[N9020A] Send command:INIT:CONT OFF FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:24.16	26/09/2024 17:24.16	[INFO]	[N9020A]	N9020A: Changed to Single Sweep	N9020A
+26/09/2024 17:24.17	26/09/2024 17:24.17	[ERROR]	[N9020A]	N9020a OFDM Power measurement: FAIL	N9020A
+				++++++++ Base station output power:Port 2 ++++++++	
+26/09/2024 17:24.17	26/09/2024 17:24.17	[INFO]		[RU123][PORT:2]: ATT Level=53.932 dB at f=2600 MHz	Form5GAT
+26/09/2024 17:24.17	26/09/2024 17:24.17	[INFO]		RRU RU123: Path = C:\test3gpp\Configurations\LossConfig\Transmitters\Txn	Form5GAT
+26/09/2024 17:24.17	26/09/2024 17:24.17	[ERROR]	[N9020A]	[N9020A] Send command:CCAR:REF 2600000000Hz FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:24.17	26/09/2024 17:24.17	[INFO]	[N9020A]	[N9020A] Set center frequency: 2600000000	N9020A
+26/09/2024 17:24.17	26/09/2024 17:24.17	[ERROR]	[N9020A]	[N9020A] Send command:CORR:BTS:GAIN -53.932 dB FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:24.17	26/09/2024 17:24.17	[INFO]	[N9020A]	[N9020A] SSet External Gain: 53.932	N9020A
+26/09/2024 17:24.17	26/09/2024 17:24.17	[ERROR]	[N9020A]	[N9020A] Send command:DISP:CHP:WIND:TRAC:Y:RLEV 50 dBm FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:24.17	26/09/2024 17:24.17	[INFO]	[N9020A]	[N9020A] Set Reference Level Offset: 50 dBm	N9020A
+26/09/2024 17:24.17	26/09/2024 17:24.17	[ERROR]	[N9020A]	[N9020A] Send command:POW:RANG:OPT IMM FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:24.17	26/09/2024 17:24.17	[ERROR]	[N9020A]	[N9020A] Send command:INIT:CONT OFF FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:24.22	26/09/2024 17:24.22	[INFO]	[N9020A]	N9020A: Changed to Single Sweep	N9020A
+26/09/2024 17:24.22	26/09/2024 17:24.22	[ERROR]	[N9020A]	N9020a OFDM Power measurement: FAIL	N9020A
+26/09/2024 17:24.22	26/09/2024 17:24.22	[ERROR]	[N9020A]	[N9020A] Send command::MMEM:STOR:SCR "C:\Screenshots\26092024\RU123\TX\Base station output power\2600MHz\P2_172422_FAIL.png" FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:24.22	26/09/2024 17:24.22	[INFO]	[N9020A]	N9020A Screenshot saved to: C:\Screenshots\26092024\RU123\TX\Base station output power\2600MHz\P2_172422_FAIL.png	N9020A
+26/09/2024 17:24.22	26/09/2024 17:24.22	[ERROR]	[N9020A]	N9020A:Save Screenshot got an error! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:24.25	26/09/2024 17:24.25	[ERROR]	[N9020A]	[N9020A] Send command:INIT:CONT ON FAIL! No valid COM I/O resource available, set the IO property to a valid COM I/O resource.	N9020A
+26/09/2024 17:24.25	26/09/2024 17:24.25	[INFO]	[N9020A]	N9020A: Changed to Continous Sweep	N9020A
