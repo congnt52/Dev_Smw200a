@@ -1929,7 +1929,7 @@ namespace _5GAutoTool
                     string cli = "STR RXSENS_V2: DUId=1, AntennaPort=" + (ConvertPort - 1).ToString() + ", RBOffset=" + RBOffset + ", bandwidth=" + Bandwidth + ";";
                     oam.Send(cli);
                     Log($"Send command: STR RXSENS_V2: DUId=1, AntennaPort={ConvertPort - 1}, RBOffset={RBOffset}, bandwidth={Bandwidth};");
-                    System.Threading.Thread.Sleep(30000);
+                    System.Threading.Thread.Sleep(45000);
                     var header = new OamHeader();
                     var received = oam.Receive(header);
                     Data json = JsonConvert.DeserializeObject<Data>(received);

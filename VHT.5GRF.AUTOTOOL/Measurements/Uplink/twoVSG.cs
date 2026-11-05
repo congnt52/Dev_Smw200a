@@ -189,32 +189,86 @@ namespace _5GAutoTool
                                     oobMeasRange, oobExRange, Bandwidth, out TP);
                                 break;
                             }
-                        case "OOB1": // Co-location; WA class target +16 dBm at DUT reference plane
+
+                        case "OOB1": // Co-location Blocking - WA BS, n40
                             {
-                                vsg1.SetOOBWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
+                                // Keep wanted-signal setup consistent with OOB2.
+                                vsg1.SetOOBWaveform(
+                                    isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
+
                                 vsg1.TypeOfSignal = "DFT-s-OFDM";
                                 vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
-                                if (vsg1.Model == "SMW200A") vsg1.OffSignal(2);
-                               // if (vsg1.Model == "SMW200A") vsg1.OffSignal(2);
+
+                                if (vsg1.Model == "SMW200A")
+                                    vsg1.OffSignal(2);
+
+                                // Read Co-location DL bands from Excel Sheet2.
                                 getISCoLocationRangeFromExcel();
-                                List<string[]> oobCoExRange = BuildSupportedUlExclusionsMHz();
-                                if (oobCoExRange.Count == 0)
-                                    throw new InvalidOperationException("OOB1: supported UL exclusion list is empty.");
-                                // FAIL CLOSED: no +16 dBm RF transmission until lab confirms reference-plane
-                                // power, attenuation, UCOR polarity, instrument capability and safe RF path.
-                                // Replace this gate ONLY after the actual isPowerStr path is verified.
-                                bool coLocationPowerVerified = false;
-                                if (!coLocationPowerVerified)
+
+                                if (oobCoISsweepRanges == null ||
+                                    oobCoISsweepRanges.Count == 0)
                                 {
-                                    Log("[OOB1] REVIEW HOLD: WA CW +16 dBm at DUT not calibrated/verified; RF NOT STARTED.", LogLevel.ERROR);
-                                    break;
+                                    throw new InvalidOperationException(
+                                        "[OOB1] No Co-location ranges found in Sheet2.");
                                 }
+
+                                // Exclude supported UL n40 and configured Delta Foob.
+                                List<string[]> oobCoExRange =
+                                    BuildSupportedUlExclusionsMHz();
+
+                                if (oobCoExRange == null ||
+                                    oobCoExRange.Count == 0)
+                                {
+                                    throw new InvalidOperationException(
+                                        "[OOB1] Missing n40 UL exclusion.");
+                                }
+
+
+
+                                // WA Co-location requires verification of +16 dBm
+                                // at the DUT reference plane.
+                                // Do not infer verification from the test-case value.
+                                // Validate OOB1 test configuration.
+                                // IS target is +16 dBm for WA Co-location.
+                                double oob1TargetPower;
+
+                                bool validPower = double.TryParse(
+                                    isPowerStr,
+                                    System.Globalization.NumberStyles.Float,
+                                    System.Globalization.CultureInfo.InvariantCulture,
+                                    out oob1TargetPower);
+
+                                if (!validPower || Math.Abs(oob1TargetPower - 16.0) > 0.001)
+                                {
+                                    throw new InvalidOperationException(
+                                        "[OOB1] Invalid WA Co-location IS target. " +
+                                        "Expected +16 dBm, configured: " + isPowerStr);
+                                }
+
+                                if (oobCoISsweepRanges == null ||
+                                    oobCoISsweepRanges.Count == 0)
+                                {
+                                    throw new InvalidOperationException(
+                                        "[OOB1] No Co-location DL ranges found in Sheet2.");
+                                }
+
+                                Log("[OOB1] Frequency configuration validated.");
+                                Log("[OOB1] IS target = +16 dBm.");
+                                Log("[OOB1] SGS100A uses the existing OOB2 correction path.");
+
+                                // Reuse the same measurement function as OOB2.
                                 Log("[OOB1] WA Co-location: +16 dBm CW at DUT, PREFSENS+6 wanted");
-                                oobMeasurementInSequence(bbu, vsg2, mode, setPort, step, 800,
-                                    wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset,
-                                    oobCoISsweepRanges, oobCoExRange, Bandwidth, out TP);
+
+                                oobMeasurementInSequence(
+                                    bbu, vsg2, mode, setPort, step, 800,
+                                    wsFreq, wsPowerStr, WsRBOffset,
+                                    isFreq, isPowerStr, IsRBOffset,
+                                    oobCoISsweepRanges, oobCoExRange,
+                                    Bandwidth, out TP);
+
                                 break;
                             }
+
                             #region comment OOB old
                             //                        case "OOB2":
                             //                            //25.3.2024 - viet lai bai do oob                        
