@@ -130,11 +130,59 @@ namespace _5GAutoTool
                                 oobMeasRange.Add(new string[] { "", isLowerFreqRange, isUpperFreqRange });
                                 List<string[]> oobExRange = new List<string[]>();
                                 // Retain General OOB exclusion for current operating band plus deltaFoob.
-                                oobExRange.Add(new string[] {
-        _isFreqLimitLeft.ToString(System.Globalization.CultureInfo.InvariantCulture),
-        _isFreqLimitRight.ToString(System.Globalization.CultureInfo.InvariantCulture)
-    });
+                                // OOB2: Operating Band limits from UI, in MHz.
+                                double operatingBottomMHz = mainForm.txtOperatingFreqFrom;
+                                double operatingTopMHz = mainForm.txtOperatingFreqTo;
+
+                                // deltaFoobValue is stored in Hz.
+                                double deltaFoobMHz = mainForm.deltaFoobValue / 1e6;
+
+                                if (operatingBottomMHz <= 0 ||
+                                    operatingTopMHz <= operatingBottomMHz ||
+                                    double.IsNaN(deltaFoobMHz) ||
+                                    double.IsInfinity(deltaFoobMHz) ||
+                                    deltaFoobMHz < 0)
+                                {
+                                    throw new InvalidOperationException(
+                                        "[OOB2] Invalid Operating Band or Delta Foob configuration.");
+                                }
+
+                                double excludeBottomMHz = operatingBottomMHz - deltaFoobMHz;
+                                double excludeTopMHz = operatingTopMHz + deltaFoobMHz;
+
+                                oobExRange.Add(new string[]
+                                {
+    excludeBottomMHz.ToString(
+        System.Globalization.CultureInfo.InvariantCulture),
+
+    excludeTopMHz.ToString(
+        System.Globalization.CultureInfo.InvariantCulture)
+                                });
+
+                                Log(string.Format(
+                                    System.Globalization.CultureInfo.InvariantCulture,
+                                    "[OOB2] Operating Band=[{0}, {1}] MHz, DeltaFoob={2} MHz, Exclusion=[{3}, {4}] MHz",
+                                    operatingBottomMHz,
+                                    operatingTopMHz,
+                                    deltaFoobMHz,
+                                    excludeBottomMHz,
+                                    excludeTopMHz));
                                 // Do not automatically subtract Sheet2 co-location DL ranges from General OOB.
+                                // Debug OOB2 frequency units and exclusion range.
+                                Log(string.Format(
+                                    System.Globalization.CultureInfo.InvariantCulture,
+                                    "[OOB2 DEBUG] ChannelBWBottom={0}, ChannelBWTop={1}, DeltaFoobRaw={2}, DeltaFoobMHz={3}",
+                                    mainForm.RRU.ChannelBWBottom,
+                                    mainForm.RRU.ChannelBWTop,
+                                    mainForm.deltaFoobValue,
+                                    mainForm.deltaFoobValue / 1e6));
+
+                                Log(string.Format(
+                                    System.Globalization.CultureInfo.InvariantCulture,
+                                    "[OOB2 DEBUG] Exclusion=[{0}, {1}] MHz",
+                                    _isFreqLimitLeft,
+                                    _isFreqLimitRight));
+
                                 Log("[OOB2] General: expected CW at DUT = -15 dBm; validate existing isPower/UCOR chain.");
                                 oobMeasurementInSequence(bbu, vsg2, mode, setPort, step, 800,
                                     wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset,
@@ -931,8 +979,24 @@ namespace _5GAutoTool
                         double freqMHz = fromMHz + point; // 1 MHz grid relative to this range start
                         bool excluded = false;
                         foreach (double[] exclusion in exclusions)
-                            if (freqMHz >= exclusion[0] - 1e-9 && freqMHz <= exclusion[1] + 1e-9)
-                            { excluded = true; break; }
+                        {
+                            if (freqMHz >= exclusion[0] - 1e-9 &&
+                                freqMHz <= exclusion[1] + 1e-9)
+                            {
+                                if (mode == "OOB2" && freqMHz <= 70)
+                                {
+                                    Log(string.Format(
+                                        System.Globalization.CultureInfo.InvariantCulture,
+                                        "[OOB2 DEBUG] CW={0:F3} MHz excluded by [{1:F3}, {2:F3}] MHz",
+                                        freqMHz,
+                                        exclusion[0],
+                                        exclusion[1]));
+                                }
+
+                                excluded = true;
+                                break;
+                            }
+                        }
                         if (excluded) { Log("[OOB] SKIP excluded CW = " + freqMHz.ToString("F3", culture) + " MHz"); continue; }
                         long freqHz = checked((long)Math.Round(freqMHz * 1e6));
                         if (seenHz.Add(freqHz)) points.Add(Tuple.Create(range[0], freqHz));
@@ -958,7 +1022,7 @@ namespace _5GAutoTool
                     {
                         bbu.STOP_L1TESTMAC();
                         for (int ms = 0; ms < 30000; ms += 100)
-                        { if (worker.CancellationPending) return; System.Threading.Thread.Sleep(100); }
+                        { if (worker.CancellationPending) return; System.Threading.Thread.Sleep(500); }
                     }
                     testMacStarted = bbu.STR_RXSENS_V2(BW, WsRBOffset, currPort.StreamIndex);
                     L1TestMacV2Start = testMacStarted;
@@ -983,8 +1047,8 @@ namespace _5GAutoTool
                     vsg2.SetCWWaveform(isPower, freqText);
                     vsg2.LogUserCorrectionSGS100A(isPower, cw.Item2);
                     Log("OOB: CW = " + freqMHz.ToString("F3", culture) + " MHz");
-                    for (int waited = 0; waited < dwellMs; waited += 50)
-                    { if (worker.CancellationPending) return; System.Threading.Thread.Sleep(Math.Min(50, dwellMs - waited)); }
+                    for (int waited = 0; waited < dwellMs; waited += 500)
+                    { if (worker.CancellationPending) return; System.Threading.Thread.Sleep(Math.Min(500, dwellMs - waited)); }
 
                     bool valid = false;
                     string throughput = "ERROR";
@@ -995,8 +1059,9 @@ namespace _5GAutoTool
                         double tempTP = GetthroughputFromString(throughput, setPort);
                         if (tempTP > 0 && tempTP <= 100) { valid = true; break; }
                         if (attempt + 1 < maxReadAttempts)
-                            for (int waited = 0; waited < dwellMs; waited += 50)
-                            { if (worker.CancellationPending) return; System.Threading.Thread.Sleep(Math.Min(50, dwellMs - waited)); }
+                            for (int waited = 0; waited < dwellMs; waited += 500)
+                            { if (worker.CancellationPending) return; 
+                                System.Threading.Thread.Sleep(Math.Min(500, dwellMs - waited)); }
                     }
                     if (!valid)
                     { Log("OOB: no valid throughput at " + freqMHz.ToString("F3", culture) + " MHz.", LogLevel.ERROR); return; }

@@ -89,8 +89,6 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.grpConfig = new System.Windows.Forms.GroupBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            //this.txtOperatingFreqTo = new System.Windows.Forms.TextBox();
-            //this.txtOperatingFreqFrom = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -158,6 +156,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblProgressVal = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.txtFreqFrom = new System.Windows.Forms.TextBox();
+            this.txtFreqTo = new System.Windows.Forms.TextBox();
             this.menuStripControl.SuspendLayout();
             this.grpControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLogoVHT)).BeginInit();
@@ -194,7 +194,6 @@
             this.tOOLSToolStripMenuItem});
             this.menuStripControl.Location = new System.Drawing.Point(0, 0);
             this.menuStripControl.Name = "menuStripControl";
-            this.menuStripControl.Padding = new System.Windows.Forms.Padding(6, 2, 0, 2);
             this.menuStripControl.Size = new System.Drawing.Size(1721, 28);
             this.menuStripControl.TabIndex = 0;
             this.menuStripControl.Text = "menuStrip1";
@@ -334,7 +333,7 @@
             // 
             this.txtRRUSerial.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtRRUSerial.Location = new System.Drawing.Point(102, 146);
-            this.txtRRUSerial.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtRRUSerial.Margin = new System.Windows.Forms.Padding(4);
             this.txtRRUSerial.Name = "txtRRUSerial";
             this.txtRRUSerial.Size = new System.Drawing.Size(258, 46);
             this.txtRRUSerial.TabIndex = 10;
@@ -365,9 +364,9 @@
             this.grpControl.Controls.Add(this.txtRRUSerial);
             this.grpControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpControl.Location = new System.Drawing.Point(4, 4);
-            this.grpControl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grpControl.Margin = new System.Windows.Forms.Padding(4);
             this.grpControl.Name = "grpControl";
-            this.grpControl.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grpControl.Padding = new System.Windows.Forms.Padding(4);
             this.grpControl.Size = new System.Drawing.Size(367, 304);
             this.grpControl.TabIndex = 11;
             this.grpControl.TabStop = false;
@@ -418,7 +417,7 @@
             // 
             this.picLogoVHT.Image = ((System.Drawing.Image)(resources.GetObject("picLogoVHT.Image")));
             this.picLogoVHT.Location = new System.Drawing.Point(8, 32);
-            this.picLogoVHT.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picLogoVHT.Margin = new System.Windows.Forms.Padding(4);
             this.picLogoVHT.Name = "picLogoVHT";
             this.picLogoVHT.Size = new System.Drawing.Size(105, 110);
             this.picLogoVHT.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -431,9 +430,9 @@
             this.groupBox1.Controls.Add(this.btnConnect);
             this.groupBox1.Controls.Add(this.btnStart);
             this.groupBox1.Location = new System.Drawing.Point(120, 29);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(232, 80);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
@@ -443,7 +442,7 @@
             this.btnStop.Enabled = false;
             this.btnStop.Image = ((System.Drawing.Image)(resources.GetObject("btnStop.Image")));
             this.btnStop.Location = new System.Drawing.Point(174, 20);
-            this.btnStop.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnStop.Margin = new System.Windows.Forms.Padding(4);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(51, 48);
             this.btnStop.TabIndex = 5;
@@ -454,7 +453,7 @@
             // 
             this.btnConnect.Image = ((System.Drawing.Image)(resources.GetObject("btnConnect.Image")));
             this.btnConnect.Location = new System.Drawing.Point(8, 20);
-            this.btnConnect.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnConnect.Margin = new System.Windows.Forms.Padding(4);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(51, 48);
             this.btnConnect.TabIndex = 8;
@@ -468,7 +467,7 @@
             this.btnStart.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnStart.Image = ((System.Drawing.Image)(resources.GetObject("btnStart.Image")));
             this.btnStart.Location = new System.Drawing.Point(92, 20);
-            this.btnStart.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnStart.Margin = new System.Windows.Forms.Padding(4);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(38, 38);
             this.btnStart.TabIndex = 7;
@@ -498,7 +497,7 @@
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(445, 253);
@@ -508,9 +507,9 @@
             // 
             this.tabPage1.Controls.Add(this.lvwResult);
             this.tabPage1.Location = new System.Drawing.Point(4, 33);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage1.Size = new System.Drawing.Size(437, 216);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "RESULT VIEW";
@@ -534,7 +533,7 @@
             this.lvwResult.GridLines = true;
             this.lvwResult.HideSelection = false;
             this.lvwResult.Location = new System.Drawing.Point(4, 4);
-            this.lvwResult.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.lvwResult.Margin = new System.Windows.Forms.Padding(5);
             this.lvwResult.Name = "lvwResult";
             this.lvwResult.Size = new System.Drawing.Size(429, 208);
             this.lvwResult.TabIndex = 7;
@@ -594,10 +593,10 @@
             // 
             this.tabPage2.Controls.Add(this.chart1);
             this.tabPage2.Location = new System.Drawing.Point(4, 33);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage2.Size = new System.Drawing.Size(437, 213);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPage2.Size = new System.Drawing.Size(437, 216);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "CHART";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -612,9 +611,9 @@
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(12, 8);
-            this.chart1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chart1.Margin = new System.Windows.Forms.Padding(4);
             this.chart1.Name = "chart1";
-            this.chart1.Size = new System.Drawing.Size(4050, 2335);
+            this.chart1.Size = new System.Drawing.Size(4050, 2338);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             title1.Name = "Power";
@@ -624,10 +623,10 @@
             // 
             this.tabPage3.Controls.Add(this.grdParams);
             this.tabPage3.Location = new System.Drawing.Point(4, 33);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage3.Size = new System.Drawing.Size(437, 213);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPage3.Size = new System.Drawing.Size(437, 216);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "PARAMS";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -638,10 +637,10 @@
             this.grdParams.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdParams.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdParams.Location = new System.Drawing.Point(4, 4);
-            this.grdParams.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grdParams.Margin = new System.Windows.Forms.Padding(4);
             this.grdParams.Name = "grdParams";
             this.grdParams.RowHeadersWidth = 51;
-            this.grdParams.Size = new System.Drawing.Size(429, 205);
+            this.grdParams.Size = new System.Drawing.Size(429, 208);
             this.grdParams.TabIndex = 0;
             // 
             // tabLogs
@@ -650,7 +649,7 @@
             this.tabLogs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabLogs.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabLogs.Location = new System.Drawing.Point(0, 0);
-            this.tabLogs.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabLogs.Margin = new System.Windows.Forms.Padding(4);
             this.tabLogs.Name = "tabLogs";
             this.tabLogs.SelectedIndex = 0;
             this.tabLogs.Size = new System.Drawing.Size(895, 253);
@@ -660,9 +659,9 @@
             // 
             this.tabPage4.Controls.Add(this.lvwLog);
             this.tabPage4.Location = new System.Drawing.Point(4, 33);
-            this.tabPage4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage4.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage4.Size = new System.Drawing.Size(887, 216);
             this.tabPage4.TabIndex = 0;
             this.tabPage4.Text = "LOG";
@@ -673,7 +672,7 @@
             this.lvwLog.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvwLog.HideSelection = false;
             this.lvwLog.Location = new System.Drawing.Point(4, 4);
-            this.lvwLog.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lvwLog.Margin = new System.Windows.Forms.Padding(4);
             this.lvwLog.Name = "lvwLog";
             this.lvwLog.Size = new System.Drawing.Size(879, 208);
             this.lvwLog.TabIndex = 0;
@@ -701,7 +700,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.proLoad.Location = new System.Drawing.Point(4, 6);
-            this.proLoad.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.proLoad.Margin = new System.Windows.Forms.Padding(4);
             this.proLoad.Name = "proLoad";
             this.proLoad.Size = new System.Drawing.Size(473, 22);
             this.proLoad.TabIndex = 12;
@@ -722,7 +721,7 @@
             this.tableLayoutPanel2.Controls.Add(this.splitContainer1, 1, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 28);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 3;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 312F));
@@ -740,18 +739,18 @@
             this.grpConfig.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grpConfig.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpConfig.Location = new System.Drawing.Point(379, 4);
-            this.grpConfig.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grpConfig.Margin = new System.Windows.Forms.Padding(4);
             this.grpConfig.Name = "grpConfig";
-            this.grpConfig.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grpConfig.Padding = new System.Windows.Forms.Padding(4);
             this.grpConfig.Size = new System.Drawing.Size(1338, 304);
             this.grpConfig.TabIndex = 7;
             this.grpConfig.TabStop = false;
             this.grpConfig.Text = "CONFIGURATION";
             // 
             // groupBox6
-            //// 
-            //this.groupBox6.Controls.Add(this.txtOperatingFreqTo);
-            //this.groupBox6.Controls.Add(this.txtOperatingFreqFrom);
+            // 
+            this.groupBox6.Controls.Add(this.txtFreqTo);
+            this.groupBox6.Controls.Add(this.txtFreqFrom);
             this.groupBox6.Controls.Add(this.label1);
             this.groupBox6.Controls.Add(this.label4);
             this.groupBox6.Controls.Add(this.label2);
@@ -769,34 +768,14 @@
             this.groupBox6.Controls.Add(this.label9);
             this.groupBox6.Controls.Add(this.label8);
             this.groupBox6.Location = new System.Drawing.Point(546, 29);
-            this.groupBox6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox6.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox6.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox6.Size = new System.Drawing.Size(468, 266);
             this.groupBox6.TabIndex = 30;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "RRU Config";
             // 
-            // txtOperatingFreqTo
-            // 
-            //this.txtOperatingFreqTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            //this.txtOperatingFreqTo.Location = new System.Drawing.Point(326, 214);
-            //this.txtOperatingFreqTo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            //this.txtOperatingFreqTo.Name = "txtOperatingFreqTo";
-            //this.txtOperatingFreqTo.Size = new System.Drawing.Size(83, 30);
-            //this.txtOperatingFreqTo.TabIndex = 30;
-            //this.txtOperatingFreqTo.Text = "2400";
-            //// 
-            //// txtOperatingFreqFrom
-            //// 
-            //this.txtOperatingFreqFrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            //this.txtOperatingFreqFrom.Location = new System.Drawing.Point(179, 214);
-            //this.txtOperatingFreqFrom.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            //this.txtOperatingFreqFrom.Name = "txtOperatingFreqFrom";
-            //this.txtOperatingFreqFrom.Size = new System.Drawing.Size(83, 30);
-            //this.txtOperatingFreqFrom.TabIndex = 30;
-            //this.txtOperatingFreqFrom.Text = "2300";
-            //// 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -848,7 +827,7 @@
             "32T32R",
             "8T8R"});
             this.cbbRruType.Location = new System.Drawing.Point(179, 32);
-            this.cbbRruType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbbRruType.Margin = new System.Windows.Forms.Padding(4);
             this.cbbRruType.Name = "cbbRruType";
             this.cbbRruType.Size = new System.Drawing.Size(109, 32);
             this.cbbRruType.TabIndex = 28;
@@ -858,7 +837,7 @@
             // 
             this.textBandwidth.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBandwidth.Location = new System.Drawing.Point(179, 162);
-            this.textBandwidth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBandwidth.Margin = new System.Windows.Forms.Padding(4);
             this.textBandwidth.Name = "textBandwidth";
             this.textBandwidth.Size = new System.Drawing.Size(83, 30);
             this.textBandwidth.TabIndex = 21;
@@ -891,7 +870,7 @@
             // 
             this.txtPWR.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPWR.Location = new System.Drawing.Point(344, 174);
-            this.txtPWR.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPWR.Margin = new System.Windows.Forms.Padding(4);
             this.txtPWR.Name = "txtPWR";
             this.txtPWR.Size = new System.Drawing.Size(80, 30);
             this.txtPWR.TabIndex = 25;
@@ -902,7 +881,7 @@
             // 
             this.txtFrequency.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFrequency.Location = new System.Drawing.Point(179, 71);
-            this.txtFrequency.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtFrequency.Margin = new System.Windows.Forms.Padding(4);
             this.txtFrequency.Name = "txtFrequency";
             this.txtFrequency.Size = new System.Drawing.Size(83, 30);
             this.txtFrequency.TabIndex = 16;
@@ -934,7 +913,7 @@
             // 
             this.txtPower.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPower.Location = new System.Drawing.Point(179, 119);
-            this.txtPower.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPower.Margin = new System.Windows.Forms.Padding(4);
             this.txtPower.Name = "txtPower";
             this.txtPower.Size = new System.Drawing.Size(83, 30);
             this.txtPower.TabIndex = 24;
@@ -987,9 +966,9 @@
             this.groupBox3.Controls.Add(this.txtOOB1);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox3.Location = new System.Drawing.Point(1022, 29);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox3.Size = new System.Drawing.Size(368, 266);
             this.groupBox3.TabIndex = 29;
             this.groupBox3.TabStop = false;
@@ -1002,7 +981,7 @@
             this.chckExcludeCoLoRange.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chckExcludeCoLoRange.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chckExcludeCoLoRange.Location = new System.Drawing.Point(8, 146);
-            this.chckExcludeCoLoRange.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chckExcludeCoLoRange.Margin = new System.Windows.Forms.Padding(4);
             this.chckExcludeCoLoRange.Name = "chckExcludeCoLoRange";
             this.chckExcludeCoLoRange.Size = new System.Drawing.Size(270, 29);
             this.chckExcludeCoLoRange.TabIndex = 35;
@@ -1036,7 +1015,7 @@
             // 
             this.deltaFoob.Enabled = false;
             this.deltaFoob.Location = new System.Drawing.Point(142, 60);
-            this.deltaFoob.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.deltaFoob.Margin = new System.Windows.Forms.Padding(4);
             this.deltaFoob.Name = "deltaFoob";
             this.deltaFoob.Size = new System.Drawing.Size(62, 29);
             this.deltaFoob.TabIndex = 32;
@@ -1049,7 +1028,7 @@
             this.chkOOB3.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkOOB3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkOOB3.Location = new System.Drawing.Point(8, 29);
-            this.chkOOB3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkOOB3.Margin = new System.Windows.Forms.Padding(4);
             this.chkOOB3.Name = "chkOOB3";
             this.chkOOB3.Size = new System.Drawing.Size(181, 29);
             this.chkOOB3.TabIndex = 31;
@@ -1083,7 +1062,7 @@
             // 
             this.txtOOB2.Enabled = false;
             this.txtOOB2.Location = new System.Drawing.Point(238, 99);
-            this.txtOOB2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtOOB2.Margin = new System.Windows.Forms.Padding(4);
             this.txtOOB2.Name = "txtOOB2";
             this.txtOOB2.Size = new System.Drawing.Size(62, 29);
             this.txtOOB2.TabIndex = 25;
@@ -1104,7 +1083,7 @@
             // 
             this.txtOOB1.Enabled = false;
             this.txtOOB1.Location = new System.Drawing.Point(142, 99);
-            this.txtOOB1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtOOB1.Margin = new System.Windows.Forms.Padding(4);
             this.txtOOB1.Name = "txtOOB1";
             this.txtOOB1.Size = new System.Drawing.Size(62, 29);
             this.txtOOB1.TabIndex = 20;
@@ -1146,9 +1125,9 @@
             this.groupBox5.Controls.Add(this.chkPort2);
             this.groupBox5.Controls.Add(this.chkPort1);
             this.groupBox5.Location = new System.Drawing.Point(8, 29);
-            this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox5.Size = new System.Drawing.Size(531, 266);
             this.groupBox5.TabIndex = 10;
             this.groupBox5.TabStop = false;
@@ -1158,7 +1137,7 @@
             // 
             this.chkPort32.AutoSize = true;
             this.chkPort32.Location = new System.Drawing.Point(461, 135);
-            this.chkPort32.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort32.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort32.Name = "chkPort32";
             this.chkPort32.Size = new System.Drawing.Size(64, 28);
             this.chkPort32.TabIndex = 32;
@@ -1169,7 +1148,7 @@
             // 
             this.chkPort31.AutoSize = true;
             this.chkPort31.Location = new System.Drawing.Point(461, 101);
-            this.chkPort31.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort31.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort31.Name = "chkPort31";
             this.chkPort31.Size = new System.Drawing.Size(64, 28);
             this.chkPort31.TabIndex = 33;
@@ -1180,7 +1159,7 @@
             // 
             this.chkPort30.AutoSize = true;
             this.chkPort30.Location = new System.Drawing.Point(461, 66);
-            this.chkPort30.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort30.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort30.Name = "chkPort30";
             this.chkPort30.Size = new System.Drawing.Size(64, 28);
             this.chkPort30.TabIndex = 34;
@@ -1191,7 +1170,7 @@
             // 
             this.chkPort29.AutoSize = true;
             this.chkPort29.Location = new System.Drawing.Point(461, 32);
-            this.chkPort29.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort29.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort29.Name = "chkPort29";
             this.chkPort29.Size = new System.Drawing.Size(64, 28);
             this.chkPort29.TabIndex = 35;
@@ -1202,7 +1181,7 @@
             // 
             this.chkPort28.AutoSize = true;
             this.chkPort28.Location = new System.Drawing.Point(398, 135);
-            this.chkPort28.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort28.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort28.Name = "chkPort28";
             this.chkPort28.Size = new System.Drawing.Size(64, 28);
             this.chkPort28.TabIndex = 28;
@@ -1213,7 +1192,7 @@
             // 
             this.chkPort27.AutoSize = true;
             this.chkPort27.Location = new System.Drawing.Point(398, 101);
-            this.chkPort27.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort27.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort27.Name = "chkPort27";
             this.chkPort27.Size = new System.Drawing.Size(64, 28);
             this.chkPort27.TabIndex = 29;
@@ -1224,7 +1203,7 @@
             // 
             this.chkPort26.AutoSize = true;
             this.chkPort26.Location = new System.Drawing.Point(398, 66);
-            this.chkPort26.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort26.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort26.Name = "chkPort26";
             this.chkPort26.Size = new System.Drawing.Size(64, 28);
             this.chkPort26.TabIndex = 30;
@@ -1235,7 +1214,7 @@
             // 
             this.chkPort25.AutoSize = true;
             this.chkPort25.Location = new System.Drawing.Point(398, 32);
-            this.chkPort25.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort25.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort25.Name = "chkPort25";
             this.chkPort25.Size = new System.Drawing.Size(64, 28);
             this.chkPort25.TabIndex = 31;
@@ -1246,7 +1225,7 @@
             // 
             this.chkPort24.AutoSize = true;
             this.chkPort24.Location = new System.Drawing.Point(334, 135);
-            this.chkPort24.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort24.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort24.Name = "chkPort24";
             this.chkPort24.Size = new System.Drawing.Size(64, 28);
             this.chkPort24.TabIndex = 24;
@@ -1257,7 +1236,7 @@
             // 
             this.chkPort23.AutoSize = true;
             this.chkPort23.Location = new System.Drawing.Point(334, 101);
-            this.chkPort23.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort23.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort23.Name = "chkPort23";
             this.chkPort23.Size = new System.Drawing.Size(64, 28);
             this.chkPort23.TabIndex = 25;
@@ -1268,7 +1247,7 @@
             // 
             this.chkPort22.AutoSize = true;
             this.chkPort22.Location = new System.Drawing.Point(334, 66);
-            this.chkPort22.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort22.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort22.Name = "chkPort22";
             this.chkPort22.Size = new System.Drawing.Size(64, 28);
             this.chkPort22.TabIndex = 26;
@@ -1279,7 +1258,7 @@
             // 
             this.chkPort21.AutoSize = true;
             this.chkPort21.Location = new System.Drawing.Point(334, 32);
-            this.chkPort21.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort21.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort21.Name = "chkPort21";
             this.chkPort21.Size = new System.Drawing.Size(64, 28);
             this.chkPort21.TabIndex = 27;
@@ -1290,7 +1269,7 @@
             // 
             this.chkPort20.AutoSize = true;
             this.chkPort20.Location = new System.Drawing.Point(270, 134);
-            this.chkPort20.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort20.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort20.Name = "chkPort20";
             this.chkPort20.Size = new System.Drawing.Size(64, 28);
             this.chkPort20.TabIndex = 20;
@@ -1301,7 +1280,7 @@
             // 
             this.chkPort19.AutoSize = true;
             this.chkPort19.Location = new System.Drawing.Point(270, 100);
-            this.chkPort19.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort19.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort19.Name = "chkPort19";
             this.chkPort19.Size = new System.Drawing.Size(64, 28);
             this.chkPort19.TabIndex = 21;
@@ -1312,7 +1291,7 @@
             // 
             this.chkPort18.AutoSize = true;
             this.chkPort18.Location = new System.Drawing.Point(270, 65);
-            this.chkPort18.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort18.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort18.Name = "chkPort18";
             this.chkPort18.Size = new System.Drawing.Size(64, 28);
             this.chkPort18.TabIndex = 22;
@@ -1323,7 +1302,7 @@
             // 
             this.chkPort17.AutoSize = true;
             this.chkPort17.Location = new System.Drawing.Point(270, 31);
-            this.chkPort17.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort17.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort17.Name = "chkPort17";
             this.chkPort17.Size = new System.Drawing.Size(64, 28);
             this.chkPort17.TabIndex = 23;
@@ -1334,7 +1313,7 @@
             // 
             this.chkPort16.AutoSize = true;
             this.chkPort16.Location = new System.Drawing.Point(202, 135);
-            this.chkPort16.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort16.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort16.Name = "chkPort16";
             this.chkPort16.Size = new System.Drawing.Size(64, 28);
             this.chkPort16.TabIndex = 16;
@@ -1345,7 +1324,7 @@
             // 
             this.chkPort15.AutoSize = true;
             this.chkPort15.Location = new System.Drawing.Point(202, 101);
-            this.chkPort15.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort15.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort15.Name = "chkPort15";
             this.chkPort15.Size = new System.Drawing.Size(64, 28);
             this.chkPort15.TabIndex = 17;
@@ -1356,7 +1335,7 @@
             // 
             this.chkPort14.AutoSize = true;
             this.chkPort14.Location = new System.Drawing.Point(202, 66);
-            this.chkPort14.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort14.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort14.Name = "chkPort14";
             this.chkPort14.Size = new System.Drawing.Size(64, 28);
             this.chkPort14.TabIndex = 18;
@@ -1367,7 +1346,7 @@
             // 
             this.chkPort13.AutoSize = true;
             this.chkPort13.Location = new System.Drawing.Point(202, 32);
-            this.chkPort13.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort13.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort13.Name = "chkPort13";
             this.chkPort13.Size = new System.Drawing.Size(64, 28);
             this.chkPort13.TabIndex = 19;
@@ -1378,7 +1357,7 @@
             // 
             this.chkPort12.AutoSize = true;
             this.chkPort12.Location = new System.Drawing.Point(138, 134);
-            this.chkPort12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort12.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort12.Name = "chkPort12";
             this.chkPort12.Size = new System.Drawing.Size(64, 28);
             this.chkPort12.TabIndex = 12;
@@ -1389,7 +1368,7 @@
             // 
             this.chkPort11.AutoSize = true;
             this.chkPort11.Location = new System.Drawing.Point(138, 101);
-            this.chkPort11.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort11.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort11.Name = "chkPort11";
             this.chkPort11.Size = new System.Drawing.Size(64, 28);
             this.chkPort11.TabIndex = 13;
@@ -1400,7 +1379,7 @@
             // 
             this.chkPort10.AutoSize = true;
             this.chkPort10.Location = new System.Drawing.Point(138, 65);
-            this.chkPort10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort10.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort10.Name = "chkPort10";
             this.chkPort10.Size = new System.Drawing.Size(64, 28);
             this.chkPort10.TabIndex = 14;
@@ -1411,7 +1390,7 @@
             // 
             this.chkPort9.AutoSize = true;
             this.chkPort9.Location = new System.Drawing.Point(138, 31);
-            this.chkPort9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort9.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort9.Name = "chkPort9";
             this.chkPort9.Size = new System.Drawing.Size(54, 28);
             this.chkPort9.TabIndex = 15;
@@ -1424,7 +1403,7 @@
             this.chkALL.Checked = true;
             this.chkALL.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkALL.Location = new System.Drawing.Point(18, 168);
-            this.chkALL.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkALL.Margin = new System.Windows.Forms.Padding(4);
             this.chkALL.Name = "chkALL";
             this.chkALL.Size = new System.Drawing.Size(65, 28);
             this.chkALL.TabIndex = 1;
@@ -1438,7 +1417,7 @@
             this.chkPort8.Checked = true;
             this.chkPort8.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkPort8.Location = new System.Drawing.Point(76, 135);
-            this.chkPort8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort8.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort8.Name = "chkPort8";
             this.chkPort8.Size = new System.Drawing.Size(54, 28);
             this.chkPort8.TabIndex = 2;
@@ -1451,7 +1430,7 @@
             this.chkPort4.Checked = true;
             this.chkPort4.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkPort4.Location = new System.Drawing.Point(18, 134);
-            this.chkPort4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort4.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort4.Name = "chkPort4";
             this.chkPort4.Size = new System.Drawing.Size(54, 28);
             this.chkPort4.TabIndex = 3;
@@ -1464,7 +1443,7 @@
             this.chkPort7.Checked = true;
             this.chkPort7.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkPort7.Location = new System.Drawing.Point(76, 101);
-            this.chkPort7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort7.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort7.Name = "chkPort7";
             this.chkPort7.Size = new System.Drawing.Size(54, 28);
             this.chkPort7.TabIndex = 4;
@@ -1477,7 +1456,7 @@
             this.chkPort6.Checked = true;
             this.chkPort6.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkPort6.Location = new System.Drawing.Point(76, 66);
-            this.chkPort6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort6.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort6.Name = "chkPort6";
             this.chkPort6.Size = new System.Drawing.Size(54, 28);
             this.chkPort6.TabIndex = 5;
@@ -1490,7 +1469,7 @@
             this.chkPort3.Checked = true;
             this.chkPort3.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkPort3.Location = new System.Drawing.Point(18, 100);
-            this.chkPort3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort3.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort3.Name = "chkPort3";
             this.chkPort3.Size = new System.Drawing.Size(54, 28);
             this.chkPort3.TabIndex = 6;
@@ -1503,7 +1482,7 @@
             this.chkPort5.Checked = true;
             this.chkPort5.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkPort5.Location = new System.Drawing.Point(76, 32);
-            this.chkPort5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort5.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort5.Name = "chkPort5";
             this.chkPort5.Size = new System.Drawing.Size(54, 28);
             this.chkPort5.TabIndex = 7;
@@ -1516,7 +1495,7 @@
             this.chkPort2.Checked = true;
             this.chkPort2.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkPort2.Location = new System.Drawing.Point(18, 65);
-            this.chkPort2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort2.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort2.Name = "chkPort2";
             this.chkPort2.Size = new System.Drawing.Size(54, 28);
             this.chkPort2.TabIndex = 8;
@@ -1529,7 +1508,7 @@
             this.chkPort1.Checked = true;
             this.chkPort1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkPort1.Location = new System.Drawing.Point(18, 32);
-            this.chkPort1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkPort1.Margin = new System.Windows.Forms.Padding(4);
             this.chkPort1.Name = "chkPort1";
             this.chkPort1.Size = new System.Drawing.Size(54, 28);
             this.chkPort1.TabIndex = 9;
@@ -1557,9 +1536,9 @@
             this.groupBox4.Controls.Add(this.trvTestCases);
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox4.Location = new System.Drawing.Point(4, 316);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox4.Size = new System.Drawing.Size(367, 249);
             this.groupBox4.TabIndex = 16;
             this.groupBox4.TabStop = false;
@@ -1570,7 +1549,7 @@
             this.trvTestCases.CheckBoxes = true;
             this.trvTestCases.Dock = System.Windows.Forms.DockStyle.Fill;
             this.trvTestCases.Location = new System.Drawing.Point(4, 26);
-            this.trvTestCases.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.trvTestCases.Margin = new System.Windows.Forms.Padding(4);
             this.trvTestCases.Name = "trvTestCases";
             this.trvTestCases.Size = new System.Drawing.Size(359, 219);
             this.trvTestCases.TabIndex = 0;
@@ -1624,6 +1603,26 @@
             this.splitContainer1.SplitterWidth = 2;
             this.splitContainer1.TabIndex = 37;
             // 
+            // txtFreqFrom
+            // 
+            this.txtFreqFrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtFreqFrom.Location = new System.Drawing.Point(179, 213);
+            this.txtFreqFrom.Margin = new System.Windows.Forms.Padding(4);
+            this.txtFreqFrom.Name = "txtFreqFrom";
+            this.txtFreqFrom.Size = new System.Drawing.Size(83, 30);
+            this.txtFreqFrom.TabIndex = 32;
+            this.txtFreqFrom.Text = "2300";
+            // 
+            // txtFreqTo
+            // 
+            this.txtFreqTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtFreqTo.Location = new System.Drawing.Point(325, 213);
+            this.txtFreqTo.Margin = new System.Windows.Forms.Padding(4);
+            this.txtFreqTo.Name = "txtFreqTo";
+            this.txtFreqTo.Size = new System.Drawing.Size(83, 30);
+            this.txtFreqTo.TabIndex = 33;
+            this.txtFreqTo.Text = "2400";
+            // 
             // Form5GAT
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -1636,7 +1635,7 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStripControl;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form5GAT";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -1806,6 +1805,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtFreqTo;
+        private System.Windows.Forms.TextBox txtFreqFrom;
     }
 }
 

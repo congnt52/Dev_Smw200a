@@ -110,7 +110,9 @@ namespace _5GAutoTool
                 if (tmp!=currFreq)
                 {
                     //send command to setup frequency value and get response
-                    sgs100a.WriteString($":SOUR:FREQ:CW {freqGHz} GHz", true);
+                    sgs100a.WriteString(
+    $":SOUR:FREQ:CW {freqGHz} GHz;*OPC?", true);
+
                     double response = sgs100a.ReadNumber();
 
                     if (response == 1)
@@ -138,7 +140,9 @@ namespace _5GAutoTool
                 if (tmp != currPowerLevel)
                 {
                     //send command to setup frequency value and get response
-                    sgs100a.WriteString($":SOUR:POW:LEV:IMM:AMPL {setPower}", true);
+                    sgs100a.WriteString(
+     $":SOUR:POW:LEV:IMM:AMPL {setPower};*OPC?", true);
+
                     double response = sgs100a.ReadNumber();
 
                     if (response == 1)
@@ -188,7 +192,9 @@ namespace _5GAutoTool
         {
             try
             {
-                sgs100a.WriteString($":OUTP:STAT {ON_OFF}", true);
+                sgs100a.WriteString(
+    $":OUTP:STAT {ON_OFF};*OPC?", true);
+
                 double response = sgs100a.ReadNumber();
                 if (response == 1)
                 {
