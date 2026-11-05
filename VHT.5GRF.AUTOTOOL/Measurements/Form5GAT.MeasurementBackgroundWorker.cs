@@ -3204,9 +3204,15 @@ namespace _5GAutoTool
                                 string IS1RBOffsetR = ReadValueByHeader(testcaseInTesting.Parameters, "IS1RBOffsetR");
                                 string deltaFoobMHz = ReadValueByHeader(testcaseInTesting.Parameters, "deltaFoobMHz");
 
+                                string SweepStep = ReadValueByHeader(testcaseInTesting.Parameters, "SweepStep(MHz)");
+
                                 string strWSTrigDelay = ReadValueByHeader(testcaseInTesting.Parameters, "TriggerDelay(ms)");
+                                //double.TryParse(strWSTrigDelay, out double wsTrigDelay);
+                                //VSG1.SetTriggerDelay(wsTrigDelay * 1e-3);
+
                                 double.TryParse(strWSTrigDelay, out double wsTrigDelay);
-                                VSG1.SetTriggerDelay(wsTrigDelay * 1e-3);
+                                wsTrigDelay = wsTrigDelay * 1e-3;
+                                VSG1.SetTriggerDelay(wsTrigDelay);
 
                                 double.TryParse(strLimMax, out limitMax);
                                 double.TryParse(strLimMin, out limitMin);
@@ -3214,25 +3220,41 @@ namespace _5GAutoTool
                                 double.TryParse(strStep, out double stepdB);
 
                                 testCase = "Uplink";
-                                specName = "OOB1";
+                                specName = "OBB";
 
                                 //code cu
                                 string wsPower = strWSPwr;
                                 string isPower = strISPwr;
-                                string offset = wsOffsetR;
-                                string isFreqUpper = Convert.ToString(2690e6 + (double.Parse(offset) * 1e6)); // band n41 2496 – 2690
-                                string isFreqLower = Convert.ToString(2500e6 - (double.Parse(offset) * 1e6));
+                                string offset = isOffsetR;
+                                string isFreqUpper = Convert.ToString(RRU.ChannelBWTop + (double.Parse(offset) * 1e6)); // band n41 2496 – 2690
+                                string isFreqLower = Convert.ToString(RRU.ChannelBWBottom - (double.Parse(offset) * 1e6));
+
 
                                 double isFreq = 1e6; //OOBB - CW start at 1MHz
-                                double stepOOBB = 1e6; //step sweep CW signal _1MHz 
-                                double.TryParse(txtOOB1.Text, out double tmpLowerFreq);
-                                double.TryParse(txtOOB2.Text, out double tmpUpperFreq);
-                                string isFreqLowerSpec = Convert.ToString(tmpLowerFreq * 1e6);
-                                string isFreqUpperSpec = Convert.ToString(tmpUpperFreq * 1e6);
+                                double stepOOBB = double.Parse(SweepStep) * 1e6; //step sweep CW signal _1MHz 
 
                                 if (measurementBackgroundWorker.CancellationPending) return;
                                 System.Threading.Thread.Sleep(1);
-                                Measurement.twoVSGMode(VSG1, VSG2, BBU, "OOB1", wsOffsetL, IS1RBOffsetR, stepOOBB, attSetVal.ToString(), testingPort, wsPower, setFrequency, isPower, isFreq.ToString(), isFreqLowerSpec, isFreqUpperSpec, setBandwidth,wsTrigDelay, out tp);
+                                if (chkOOB3.Checked)
+                                {
+                                    deltaFoobValue = double.Parse(deltaFoob.Text) * 1e6; //in Hz
+                                    Log($"Set CW Signal delta_Foob = {deltaFoobValue / 1e6} MHz");
+
+                                    double.TryParse(txtOOB1.Text, out double tmpLowerFreq);
+                                    double.TryParse(txtOOB2.Text, out double tmpUpperFreq);
+
+                                    string isFreqLowerSpec = Convert.ToString(tmpLowerFreq); // MHz
+                                    string isFreqUpperSpec = Convert.ToString(tmpUpperFreq); // MHz
+                                    Log($"Set CW Signal frequency range from {tmpLowerFreq} MHz to {tmpUpperFreq} MHz");
+
+                                    if (measurementBackgroundWorker.CancellationPending) return;
+                                    System.Threading.Thread.Sleep(1);
+                                    Measurement.twoVSGMode(VSG1, VSG2, BBU, "OOB1", wsOffsetR, IS1RBOffsetR, stepOOBB, attSetVal.ToString(), testingPort, wsPower, setFrequency, isPower, isFreq.ToString(), isFreqLowerSpec, isFreqUpperSpec, setBandwidth, wsTrigDelay, out tp);
+                                }
+                                else
+                                {
+                                    Log("ERROR: You don't config these parameters for Out-of-band", LogLevel.WARN);
+                                }
 
                                 if (tp >= 95)
                                 {
@@ -3249,6 +3271,7 @@ namespace _5GAutoTool
                                 dataOBB[testingPort - 1, 0, 1] = DateTime.Now.ToString("hh:mm:ss");  // 2 Testing Time
                                 dataOBB[testingPort - 1, 0, 2] = tp.ToString();     // 3 Reading Value
                                 dataOBB[testingPort - 1, 0, 3] = result;     // 4 Reading Value
+
 
 
                             }
@@ -3659,7 +3682,20 @@ namespace _5GAutoTool
                         {
                             ListViewShow("PORT" + testingPort, testcaseInTesting.Text, strSpec, strMin, result, strMax, mode, PassFail, tactTime.ToString(@"hh\:mm\:ss"));
                         }
-
+                        if (testcaseInTesting.Text == "Out-of-band Blocking" ||
+                            testcaseInTesting.Text == "Out-of-band Blocking Co-location")
+                        {
+                            portResult.Values["PORT"] = "PORT" + testingPort;
+                            portResult.Values["CLAUSE"] = testcaseInTesting.Text;
+                            portResult.Values["UNIT"] = "%";
+                            portResult.Values["CONFIG"] = "CW";
+                            portResult.Values["PARAM"] = "RX Throughput";
+                            portResult.Values["SPECS"] = ">= 95%";
+                            portResult.Values["RESULT"] = tp.ToString(
+                                System.Globalization.CultureInfo.InvariantCulture);
+                            portResult.Values["TEST TIME"] = DateTime.Now.ToString("HH:mm:ss");
+                            portResult.Values["PASS/FAIL"] = PassFail;
+                        }
                         //add to report                        
                         portResult.Values.Add("TACT TIME", tactTime.ToString(@"hh\:mm\:ss"));
                         _reportManager.AddResult(portResult);

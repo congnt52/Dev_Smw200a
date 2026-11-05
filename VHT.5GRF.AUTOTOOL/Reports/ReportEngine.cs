@@ -73,6 +73,32 @@ namespace _5GAutoTool.Reports
             return name.Replace(" ", "_");
         }
 
+        //public void ExportAll(Report report, string excelTemplatePath, ListView lvwLog)
+        //{
+        //    // Tạo tên cho file
+        //    string filename = BuildReportFileName(report);
+
+        //    ExportHtml(report.ReportFolder, filename + ".html", report);
+
+        //    //ExportCsv(report.ReportFolder, filename + ".csv", report);
+
+        //    ExportExcel(excelTemplatePath, report.ReportFolder, filename + ".xlsx", report);
+
+        //    ExportLogTxt(report.ReportFolder, filename + ".txt", lvwLog);
+
+        //    try
+        //    {
+        //        ExportListViewResult(
+        //            report.ReportFolder,
+        //            filename + ".xlsx",
+        //            lvwResult);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"Export ListView got an error! + {ex.Message}");
+        //    }
+        //}
+
         public void ExportAll(Report report, string excelTemplatePath, ListView lvwLog)
         {
             // Tạo tên cho file
@@ -80,12 +106,15 @@ namespace _5GAutoTool.Reports
 
             ExportHtml(report.ReportFolder, filename + ".html", report);
 
-            //ExportCsv(report.ReportFolder, filename + ".csv", report);
+            // Xuất CSV tổng hợp
+            ExportCsv(report.ReportFolder, filename + ".csv", report);
 
             ExportExcel(excelTemplatePath, report.ReportFolder, filename + ".xlsx", report);
 
             ExportLogTxt(report.ReportFolder, filename + ".txt", lvwLog);
         }
+
+
         public string BuildReportFileName(Report report)
         {
             return string.Format(
@@ -807,7 +836,17 @@ namespace _5GAutoTool.Reports
                     SetValue(ws, currentRow, colMap, "<tc_specs>", GetValue(row.Values, "SPECS"));
                     //SetValue(ws, currentRow, colMap, "<tc_min>", GetValue(row.Values, "MIN"));
                     //SetValue(ws, currentRow, colMap, "<tc_max>", GetValue(row.Values, "MAX"));
-                    SetValue(ws, currentRow, colMap, "<port>", "PORT " + GetValue(row.Values, "PORT"));
+                    //SetValue(ws, currentRow, colMap, "<port>", "PORT " + GetValue(row.Values, "PORT"));
+                    string port = GetValue(row.Values, "PORT");
+
+                    SetValue(
+                        ws,
+                        currentRow,
+                        colMap,
+                        "<port>",
+                        port.StartsWith("PORT", StringComparison.OrdinalIgnoreCase)
+                            ? port
+                            : "PORT " + port);
                     SetValue(ws, currentRow, colMap, "<meas>", GetValue(row.Values, "RESULT"));
                     SetValue(ws, currentRow, colMap, "<tc_description>", GetValue(row.Values, "DESC"));
 

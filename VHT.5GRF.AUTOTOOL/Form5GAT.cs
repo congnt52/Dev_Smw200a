@@ -37,7 +37,7 @@ namespace _5GAutoTool
             VSG1 = new VSG(this);
             VSG2 = new VSG(this);
             VSG3 = new VSG(this);
-            PS = new PowerSensor(this);
+           // PS = new PowerSensor(this);
             rfSwitch1 = new RFSwitch(this);
             rfSwitch2 = new RFSwitch(this);
             rfSwitch3 = new RFSwitch(this);
@@ -87,7 +87,7 @@ namespace _5GAutoTool
         public RRU RRU;
         public VSA VSA;
         public VSG VSG1, VSG2, VSG3;
-        public PowerSensor PS;
+        //public PowerSensor PS;
         Measurements1 Measurement;
         public RFSwitch rfSwitch1, rfSwitch2, rfSwitch3;
         public string ProcessInfo;
@@ -114,6 +114,8 @@ namespace _5GAutoTool
         public double channelBWLower; // Channel bandwidth Lower Edge
         public double channelBWUpper; // Channel bandwidth Upper Edge
         public double deltaFoobValue = 60;
+        public double txtOperatingFreqFrom =2300;
+        public double txtOperatingFreqTo =2400;
         public string RruType;
 
         //CONFIGURATION
@@ -478,8 +480,8 @@ namespace _5GAutoTool
             //}
 
             //12/06/2026 - Thêm cài đặt Operating band từ MainForm
-            double.TryParse(txtOperatingFreqFrom.Text, out RRU.ChannelBWBottom);
-            double.TryParse(txtOperatingFreqTo.Text, out RRU.ChannelBWTop);
+            //double.TryParse(txtOperatingFreqFrom.Text, out RRU.ChannelBWBottom);
+            //double.TryParse(txtOperatingFreqTo.Text, out RRU.ChannelBWTop);
 
             channelBWLower = RRU.ChannelBWBottom;
             channelBWUpper = RRU.ChannelBWTop;
@@ -919,6 +921,11 @@ namespace _5GAutoTool
             lvwLog.Columns.Add("Message");
             lvwLog.Columns.Add("Source");
             lvwLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+        }
+
+        private void chckExcludeCoLoRange_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
 
         //capture window screenshot

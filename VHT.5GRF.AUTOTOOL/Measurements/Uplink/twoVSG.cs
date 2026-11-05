@@ -120,179 +120,267 @@ namespace _5GAutoTool
                             //26.2.2024 - sua code
                             writeCSVThroughputValue(mode, setPort, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, throughput, out TP);
                             break;
+                        case "OOB2": // General OOB; CW target -15 dBm at DUT reference plane
+                            {
+                                vsg1.SetOOBWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
+                                vsg1.TypeOfSignal = "DFT-s-OFDM";
+                                vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
+                                if (vsg1.Model == "SMW200A") vsg1.OffSignal(2);
+                                List<string[]> oobMeasRange = new List<string[]>();
+                                oobMeasRange.Add(new string[] { "", isLowerFreqRange, isUpperFreqRange });
+                                List<string[]> oobExRange = new List<string[]>();
+                                // Retain General OOB exclusion for current operating band plus deltaFoob.
+                                oobExRange.Add(new string[] {
+        _isFreqLimitLeft.ToString(System.Globalization.CultureInfo.InvariantCulture),
+        _isFreqLimitRight.ToString(System.Globalization.CultureInfo.InvariantCulture)
+    });
+                                // Do not automatically subtract Sheet2 co-location DL ranges from General OOB.
+                                Log("[OOB2] General: expected CW at DUT = -15 dBm; validate existing isPower/UCOR chain.");
+                                oobMeasurementInSequence(bbu, vsg2, mode, setPort, step, 800,
+                                    wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset,
+                                    oobMeasRange, oobExRange, Bandwidth, out TP);
+                                break;
+                            }
+                        case "OOB1": // Co-location; WA class target +16 dBm at DUT reference plane
+                            {
+                                vsg1.SetOOBWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
+                                vsg1.TypeOfSignal = "DFT-s-OFDM";
+                                vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
+                                if (vsg1.Model == "SMW200A") vsg1.OffSignal(2);
+                               // if (vsg1.Model == "SMW200A") vsg1.OffSignal(2);
+                                getISCoLocationRangeFromExcel();
+                                List<string[]> oobCoExRange = BuildSupportedUlExclusionsMHz();
+                                if (oobCoExRange.Count == 0)
+                                    throw new InvalidOperationException("OOB1: supported UL exclusion list is empty.");
+                                // FAIL CLOSED: no +16 dBm RF transmission until lab confirms reference-plane
+                                // power, attenuation, UCOR polarity, instrument capability and safe RF path.
+                                // Replace this gate ONLY after the actual isPowerStr path is verified.
+                                bool coLocationPowerVerified = false;
+                                if (!coLocationPowerVerified)
+                                {
+                                    Log("[OOB1] REVIEW HOLD: WA CW +16 dBm at DUT not calibrated/verified; RF NOT STARTED.", LogLevel.ERROR);
+                                    break;
+                                }
+                                Log("[OOB1] WA Co-location: +16 dBm CW at DUT, PREFSENS+6 wanted");
+                                oobMeasurementInSequence(bbu, vsg2, mode, setPort, step, 800,
+                                    wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset,
+                                    oobCoISsweepRanges, oobCoExRange, Bandwidth, out TP);
+                                break;
+                            }
+                            #region comment OOB old
+                            //                        case "OOB2":
+                            //                            //25.3.2024 - viet lai bai do oob                        
+                            //                            //neu su dung smw200a la nguon phat ws => tat bo nguon nhieu o port 2
+                            //                            //if (vsg1.Model == "SMW200A")
+                            //                            //{
+                            //                            //    vsg1.OffSignal(2); //off nguon 2
+                            //                            //}
+                            //                            vsg1.SetOOBWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
+                            //                            vsg1.TypeOfSignal = "DFT-s-OFDM";
+                            //                            vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
+                            //                          //  vsg1.setParameter(2, isPower, isFreq, TriggerDelay);
+                            //                            //measRange
+                            //                            List<string[]> oobMeasRange = new List<string[]>();
+                            //                            oobMeasRange.Add(new string[] { "", isLowerFreqRange, isUpperFreqRange });
+                            //                            //exceptRange
+                            //                            List<string[]> oobExRange = new List<string[]>();
+                            //                            //add Co-location bands to exception range if check option
+                            //                            ////if (mainForm.OOBexcludeColocationRange)
+                            //                            ////{
+                            //                            ////    getISCoLocationRangeFromExcel();
+                            //                            ////    foreach (var item in oobCoISsweepRanges)
+                            //                            ////    {
+                            //                            ////        oobExRange.Add(new string[] { item[1].ToString(), item[2].ToString() });
+                            //                            ////    }
+                            //                            ////}
+                            //                            ///
 
-                        case "OOB2":
-                            //25.3.2024 - viet lai bai do oob                        
-                            //neu su dung smw200a la nguon phat ws => tat bo nguon nhieu o port 2
-                            //if (vsg1.Model == "SMW200A")
+                            //                            Log("[OOB2] Exclude Co-location = " +
+                            //                                             mainForm.OOBexcludeColocationRange);
+
+                            //                            if (mainForm.OOBexcludeColocationRange)
+                            //                            {
+                            //                                getISCoLocationRangeFromExcel();
+
+                            //                                Log("[OOB2] Co-location range count = " +
+                            //                                    oobCoISsweepRanges.Count);
+
+                            //                                foreach (var item in oobCoISsweepRanges)
+                            //                                {
+                            //                                    oobExRange.Add(new string[]
+                            //                                    {
+                            //            item[1].ToString(
+                            //                System.Globalization.CultureInfo.InvariantCulture),
+                            //            item[2].ToString(
+                            //                System.Globalization.CultureInfo.InvariantCulture)
+                            //                                    });
+
+                            //                                    Log("[OOB2] Exclude Co-location: [" +
+                            //                                        item[1] + ", " + item[2] + "] MHz");
+                            //                                }
+                            //                            }
+                            //                            else
+                            //                            {
+                            //                                Log("[OOB2] WARNING: Co-location exclusion is disabled!",
+                            //                                    LogLevel.WARN);
+                            //                            }
+
+                            //                            // add Operating band with delta_fOOB to exception range
+                            //                           // oobExRange.Add(new string[] { (_isFreqLimitLeft / 1e6).ToString(), (_isFreqLimitRight / 1e6).ToString() });
+                            //                           oobExRange.Add(new string[]
                             //{
-                            //    vsg1.OffSignal(2); //off nguon 2
-                            //}
-                            vsg1.SetOOBWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
-                            vsg1.TypeOfSignal = "DFT-s-OFDM";
-                            vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
-                          //  vsg1.setParameter(2, isPower, isFreq, TriggerDelay);
-                            //measRange
-                            List<string[]> oobMeasRange = new List<string[]>();
-                            oobMeasRange.Add(new string[] { "", isLowerFreqRange, isUpperFreqRange });
-                            //exceptRange
-                            List<string[]> oobExRange = new List<string[]>();
-                            //add Co-location bands to exception range if check option
-                            if (mainForm.OOBexcludeColocationRange)
-                            {
-                                getISCoLocationRangeFromExcel();
-                                foreach (var item in oobCoISsweepRanges)
-                                {
-                                    oobExRange.Add(new string[] { item[1].ToString(), item[2].ToString() });
-                                }
-                            }
-                            // add Operating band with delta_fOOB to exception range
-                            oobExRange.Add(new string[] { (_isFreqLimitLeft / 1e6).ToString(), (_isFreqLimitRight / 1e6).ToString() });
-                            //for debugging
-                            Log("[Out-of-band Measurement] Reading Excluding Range:");
-                            foreach (var range in oobExRange)
-                            {
-                                Log($"[ {range[0]} MHz, {range[1]} MHz]");
-                            }
-                            //============
-                            oobMeasurementInSequence(bbu, vsg2, mode, setPort, step, 800, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, oobMeasRange, oobExRange, Bandwidth, out TP);
-                            break;
+                            //    _isFreqLimitLeft.ToString(
+                            //        System.Globalization.CultureInfo.InvariantCulture),
+                            //    _isFreqLimitRight.ToString(
+                            //        System.Globalization.CultureInfo.InvariantCulture)
+                            //});
+                            //                            //for debugging
+                            //                            Log("[Out-of-band Measurement] Reading Excluding Range:");
+                            //                            foreach (var range in oobExRange)
+                            //                            {
+                            //                                Log($"[ {range[0]} MHz, {range[1]} MHz]");
+                            //                            }
+                            //                            //============
+                            //                            oobMeasurementInSequence(bbu, vsg2, mode, setPort, step, 800, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, oobMeasRange, oobExRange, Bandwidth, out TP);
+                            //                            break;
 
-                        case "OOB1": //oob co-location
-                                     //neu su dung smw200a la nguon phat ws => tat bo nguon nhieu o port 2
-                            if (vsg1.Model == "SMW200A")
-                            {
-                                vsg1.OffSignal(2);
-                            }
-                            getISCoLocationRangeFromExcel();
-                            oobMeasurementInSequence(bbu, vsg2, mode, portIndex, step, 800, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, oobCoISsweepRanges, null, Bandwidth, out TP);
-                            break;
+                            //                        case "OOB1": //oob co-location
+                            //                                     //neu su dung smw200a la nguon phat ws => tat bo nguon nhieu o port 2
+                            //                            if (vsg1.Model == "SMW200A")
+                            //                            {
+                            //                                vsg1.OffSignal(2);
+                            //                            }
+                            //                            getISCoLocationRangeFromExcel();
+                            //                            oobMeasurementInSequence(bbu, vsg2, mode, portIndex, step, 800, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, oobCoISsweepRanges, null, Bandwidth, out TP);
+                            //                            break;
 
-                        // Add cases for other modes
+                            //                        // Add cases for other modes
 
-                        default:
-                            // Handle unsupported mode here.
-                            break;
-                    }
-                    vsg2.OnOffSignal(0);
-                
-                }
-                else
-                {
-                    //vsg1.OnOffSignal(1);
-                    //vsg2.OnOffSignal(1);
-                    //Generate inferrence signal
-                    switch (mode)
-                    {
-                        case "ACS":
-                            vsg2.SetACSWaveform(isPower, isFreq, IsRBOffset, Bandwidth,TriggerDelay);
-                            vsg2.TypeOfSignal = "DFT-s-OFDM";
-                            vsg1.setParameter(1, wsPower, isFreq, TriggerDelay);
-                            vsg2.setParameter(2, isPower, isFreq, TriggerDelay);
-                            bbu.NEW_RXSENS(Bandwidth, WsRBOffset, out throughput);
-                            //26.2.2024 - sua code
-                            writeCSVThroughputValue(mode, setPort, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, throughput, out TP);
-                            break;
-                        case "ICS":
-                            vsg2.SetICSWaveform(isPower, isFreq, IsRBOffset, Bandwidth,TriggerDelay);
-                            vsg2.TypeOfSignal = "DFT-s-OFDM";
-                            vsg1.setParameter(1, wsPower, isFreq, TriggerDelay); //smw200a 
-                            vsg2.setParameter(2, isPower, isFreq, TriggerDelay); //smw200a
-                            bbu.NEW_RXSENS(Bandwidth, WsRBOffset, out throughput);
-                            //26.2.2024 - sua code
-                            writeCSVThroughputValue(mode, setPort, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, throughput, out TP);
-                            break;
-                        case "INB":
-                            //vsg2.SetIBBWaveform(isPower, isFreq);
-                            vsg2.TypeOfSignal = "DFT-s-OFDM";
-                            vsg2.SetIBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth);
-                            vsg1.setParameter(1, wsPower, wsFreq,TriggerDelay); //smw200a
-                            vsg2.setParameter(2, isPower, isFreq, TriggerDelay); //smw200a
-                            bbu.NEW_RXSENS(Bandwidth, WsRBOffset, out throughput);
-                            //26.2.2024 - sua code
-                            writeCSVThroughputValue(mode, setPort, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, throughput, out TP);
-                            break;
-                        case "INB2":
-                            //measuring INB with TM run continuosly in xx (s)
-                            vsg2.TypeOfSignal = "DFT-s-OFDM";
-                            vsg2.SetIBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth);
-                            vsg1.setParameter(1, wsPower, wsFreq,TriggerDelay); //smw200a                      
-                            vsg2.setParameter(2, isPower, isFreq, TriggerDelay); //smw200a
-                            inbMeasurementInSequence(bbu, vsg2, mode, setPort, step, 10000, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, _isFreqLimitLeft.ToString(), isLowerFreqRange, isUpperFreqRange, _isFreqLimitRight.ToString(), Bandwidth, out TP);
-                            break;
-                        case "NBB":
-                            if (vsg2.Model != "SMW200A")
-                            {
-                                vsg2.SetNBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth);
-                            }
-                            else
-                            {
-                                if (double.Parse(wsFreq) < double.Parse(isFreq)) //Nhieu ben phai
-                                {
-                                    vsg2.SetNBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth);
-                                }
-                                else
-                                {
-                                    vsg2.SetNBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth); //nhieu ben trai
-                                }
-                            }
-                            //vsg2.SetNBBWaveform(isPower, isFreq, IsRBOffset);
-                            vsg1.setParameter(1, wsPower, wsFreq,TriggerDelay);
-                            //System.Threading.Thread.Sleep(2000);
-                            vsg2.setParameter(2, isPower, isFreq, TriggerDelay);
-                            vsg2.TypeOfSignal = "DFT-s-OFDM_1RB";
-                            bbu.NEW_RXSENS(Bandwidth, WsRBOffset, out throughput);
-                            //26.2.2024 - sua code
-                            writeCSVThroughputValue(mode, setPort, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, throughput, out TP);
-                            break;
-                        case "OOB2":
-                            //25.3.2024 - viet lai bai do oob                        
-                            //neu su dung smw200a la nguon phat ws => tat bo nguon nhieu o port 2
-                            if (vsg1.Model == "SMW200A")
-                            {
-                                vsg1.OffSignal(2); //off nguon 2
-                            }
-                            //measRange
-                            List<string[]> oobMeasRange = new List<string[]>();
-                            oobMeasRange.Add(new string[] { "", isLowerFreqRange, isUpperFreqRange });
-                            //exceptRange
-                            List<string[]> oobExRange = new List<string[]>();
-                            //add Co-location bands to exception range if check option
-                            if (mainForm.OOBexcludeColocationRange)
-                            {
-                                getISCoLocationRangeFromExcel();
-                                foreach (var item in oobCoISsweepRanges)
-                                {
-                                    oobExRange.Add(new string[] { item[1].ToString(), item[2].ToString() });
-                                }
-                            }
-                            // add Operating band with delta_fOOB to exception range
-                            oobExRange.Add(new string[] { (_isFreqLimitLeft / 1e6).ToString(), (_isFreqLimitRight / 1e6).ToString() });
-                            //for debugging
-                            Log("[Out-of-band Measurement] Reading Excluding Range:");
-                            foreach (var range in oobExRange)
-                            {
-                                Log($"[ {range[0]} MHz, {range[1]} MHz]");
-                            }
-                            //============
-                            oobMeasurementInSequence(bbu, vsg2, mode, setPort, step, 800, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, oobMeasRange, oobExRange, Bandwidth, out TP);
-                            break;
+                            //                        default:
+                            //                            // Handle unsupported mode here.
+                            //                            break;
+                            //                    }
+                            //                    vsg2.OnOffSignal(0);
 
-                        case "OOB1": //oob co-location
-                                     //neu su dung smw200a la nguon phat ws => tat bo nguon nhieu o port 2
-                            if (vsg1.Model == "SMW200A")
-                            {
-                                vsg1.OffSignal(2);
-                            }
-                            getISCoLocationRangeFromExcel();
-                            oobMeasurementInSequence(bbu, vsg2, mode, portIndex, step, 800, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, oobCoISsweepRanges, null, Bandwidth, out TP);
-                            break;
+                            //                }
+                            //                else
+                            //                {
+                            //                    //vsg1.OnOffSignal(1);
+                            //                    //vsg2.OnOffSignal(1);
+                            //                    //Generate inferrence signal
+                            //                    switch (mode)
+                            //                    {
+                            //                        case "ACS":
+                            //                            vsg2.SetACSWaveform(isPower, isFreq, IsRBOffset, Bandwidth,TriggerDelay);
+                            //                            vsg2.TypeOfSignal = "DFT-s-OFDM";
+                            //                            vsg1.setParameter(1, wsPower, isFreq, TriggerDelay);
+                            //                            vsg2.setParameter(2, isPower, isFreq, TriggerDelay);
+                            //                            bbu.NEW_RXSENS(Bandwidth, WsRBOffset, out throughput);
+                            //                            //26.2.2024 - sua code
+                            //                            writeCSVThroughputValue(mode, setPort, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, throughput, out TP);
+                            //                            break;
+                            //                        case "ICS":
+                            //                            vsg2.SetICSWaveform(isPower, isFreq, IsRBOffset, Bandwidth,TriggerDelay);
+                            //                            vsg2.TypeOfSignal = "DFT-s-OFDM";
+                            //                            vsg1.setParameter(1, wsPower, isFreq, TriggerDelay); //smw200a 
+                            //                            vsg2.setParameter(2, isPower, isFreq, TriggerDelay); //smw200a
+                            //                            bbu.NEW_RXSENS(Bandwidth, WsRBOffset, out throughput);
+                            //                            //26.2.2024 - sua code
+                            //                            writeCSVThroughputValue(mode, setPort, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, throughput, out TP);
+                            //                            break;
+                            //                        case "INB":
+                            //                            //vsg2.SetIBBWaveform(isPower, isFreq);
+                            //                            vsg2.TypeOfSignal = "DFT-s-OFDM";
+                            //                            vsg2.SetIBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth);
+                            //                            vsg1.setParameter(1, wsPower, wsFreq,TriggerDelay); //smw200a
+                            //                            vsg2.setParameter(2, isPower, isFreq, TriggerDelay); //smw200a
+                            //                            bbu.NEW_RXSENS(Bandwidth, WsRBOffset, out throughput);
+                            //                            //26.2.2024 - sua code
+                            //                            writeCSVThroughputValue(mode, setPort, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, throughput, out TP);
+                            //                            break;
+                            //                        case "INB2":
+                            //                            //measuring INB with TM run continuosly in xx (s)
+                            //                            vsg2.TypeOfSignal = "DFT-s-OFDM";
+                            //                            vsg2.SetIBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth);
+                            //                            vsg1.setParameter(1, wsPower, wsFreq,TriggerDelay); //smw200a                      
+                            //                            vsg2.setParameter(2, isPower, isFreq, TriggerDelay); //smw200a
+                            //                            inbMeasurementInSequence(bbu, vsg2, mode, setPort, step, 10000, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, _isFreqLimitLeft.ToString(), isLowerFreqRange, isUpperFreqRange, _isFreqLimitRight.ToString(), Bandwidth, out TP);
+                            //                            break;
+                            //                        case "NBB":
+                            //                            if (vsg2.Model != "SMW200A")
+                            //                            {
+                            //                                vsg2.SetNBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth);
+                            //                            }
+                            //                            else
+                            //                            {
+                            //                                if (double.Parse(wsFreq) < double.Parse(isFreq)) //Nhieu ben phai
+                            //                                {
+                            //                                    vsg2.SetNBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth);
+                            //                                }
+                            //                                else
+                            //                                {
+                            //                                    vsg2.SetNBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth); //nhieu ben trai
+                            //                                }
+                            //                            }
+                            //                            //vsg2.SetNBBWaveform(isPower, isFreq, IsRBOffset);
+                            //                            vsg1.setParameter(1, wsPower, wsFreq,TriggerDelay);
+                            //                            //System.Threading.Thread.Sleep(2000);
+                            //                            vsg2.setParameter(2, isPower, isFreq, TriggerDelay);
+                            //                            vsg2.TypeOfSignal = "DFT-s-OFDM_1RB";
+                            //                            bbu.NEW_RXSENS(Bandwidth, WsRBOffset, out throughput);
+                            //                            //26.2.2024 - sua code
+                            //                            writeCSVThroughputValue(mode, setPort, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, throughput, out TP);
+                            //                            break;
+                            //                        case "OOB2":
+                            //                            //25.3.2024 - viet lai bai do oob                        
+                            //                            //neu su dung smw200a la nguon phat ws => tat bo nguon nhieu o port 2
+                            //                            if (vsg1.Model == "SMW200A")
+                            //                            {
+                            //                                vsg1.OffSignal(2); //off nguon 2
+                            //                            }
+                            //                            //measRange
+                            //                            List<string[]> oobMeasRange = new List<string[]>();
+                            //                            oobMeasRange.Add(new string[] { "", isLowerFreqRange, isUpperFreqRange });
+                            //                            //exceptRange
+                            //                            List<string[]> oobExRange = new List<string[]>();
+                            //                            //add Co-location bands to exception range if check option
+                            //                            if (mainForm.OOBexcludeColocationRange)
+                            //                            {
+                            //                                getISCoLocationRangeFromExcel();
+                            //                                foreach (var item in oobCoISsweepRanges)
+                            //                                {
+                            //                                    oobExRange.Add(new string[] { item[1].ToString(), item[2].ToString() });
+                            //                                }
+                            //                            }
+                            //                            // add Operating band with delta_fOOB to exception range
+                            //                            oobExRange.Add(new string[] { (_isFreqLimitLeft / 1e6).ToString(), (_isFreqLimitRight / 1e6).ToString() });
+                            //                            //for debugging
+                            //                            Log("[Out-of-band Measurement] Reading Excluding Range:");
+                            //                            foreach (var range in oobExRange)
+                            //                            {
+                            //                                Log($"[ {range[0]} MHz, {range[1]} MHz]");
+                            //                            }
+                            //                            //============
+                            //                            oobMeasurementInSequence(bbu, vsg2, mode, setPort, step, 800, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, oobMeasRange, oobExRange, Bandwidth, out TP);
+                            //                            break;
 
-                        // Add cases for other modes
+                            //                        case "OOB1": //oob co-location
+                            //                                     //neu su dung smw200a la nguon phat ws => tat bo nguon nhieu o port 2
+                            //                            if (vsg1.Model == "SMW200A")
+                            //                            {
+                            //                                vsg1.OffSignal(2);
+                            //                            }
+                            //                            getISCoLocationRangeFromExcel();
+                            //                            oobMeasurementInSequence(bbu, vsg2, mode, portIndex, step, 800, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, oobCoISsweepRanges, null, Bandwidth, out TP);
+                            //                            break;
 
-                        default:
-                            // Handle unsupported mode here.
-                            break;
+                            //                        // Add cases for other modes
+
+                            //                        default:
+                            //                            // Handle unsupported mode here.
+                            //                            break;
+
+                            #endregion
                     }
                     vsg2.OnOffSignal(0);
                 }
@@ -505,46 +593,364 @@ namespace _5GAutoTool
         // REVIEW PATCH - replace only oobMeasurementInSequence() inside twoVSG.cs.
         // Not compiled against the complete project or tested on RF hardware.
         // Requires: using System.Globalization; using System.Threading;
+
+        #region oobMeasurementInSequence_old
+        //private void oobMeasurementInSequence(
+        //    BBU bbu, VSG vsg2, string mode, int setPort, double step, int timeSequence,
+        //    string wsFreq, string wsPower, string WsRBOffset, string isFreq,
+        //    string isPower, string IsRBOffset, List<string[]> measRanges,
+        //    List<string[]> exceptRanges, string BW, out double TP)
+        //{
+        //    TP = -1;
+        //    double minTP = -1;
+        //    bool testMacStarted = false;
+        //    bool completed = false;
+        //    const int syncTimeoutMs = 60000;
+        //    const int maxReadAttempts = 4; // 1 initial + 3 retries
+        //    int dwellMs = Math.Max(100, timeSequence);
+        //    var culture = System.Globalization.CultureInfo.InvariantCulture;
+        //    var worker = mainForm.measurementBackgroundWorker;
+
+        //    try
+        //    {
+        //        if (step <= 0 || double.IsNaN(step) || double.IsInfinity(step))
+        //            throw new ArgumentOutOfRangeException("step", "Sweep step must be positive (Hz).");
+        //        if (worker.CancellationPending) return;
+
+        //        List<string[]> sweepRanges = GetSweepRangeWithID(measRanges, exceptRanges);
+        //        if (sweepRanges == null || sweepRanges.Count == 0)
+        //        {
+        //            Log("OOB: no valid sweep ranges.");
+        //            return;
+        //        }
+
+        //        vsg2.TypeOfSignal = "CW";
+        //        vsg2.LoadUserCorrDataSGS100A(@"/var/user/RxBlocking");
+
+        //        // Configure the first point before starting TestMac.
+        //        double firstMHz = double.Parse(sweepRanges[0][1], culture)*1e6;
+        //        vsg2.SetCWWaveform(isPower, firstMHz.ToString("F0", culture));
+        //        vsg2.LogUserCorrectionSGS100A(isPower, firstMHz);
+
+
+
+        //        // Keep existing one-retry startup behavior, but honor Stop.
+        //        for (int startAttempt = 0; startAttempt < 2 && !testMacStarted; startAttempt++)
+        //        {
+        //            if (worker.CancellationPending) return;
+        //            if (startAttempt > 0)
+        //            {
+        //                bbu.STOP_L1TESTMAC();
+        //                for (int ms = 0; ms < 30000; ms += 100)
+        //                {
+        //                    if (worker.CancellationPending) return;
+        //                    System.Threading.Thread.Sleep(100);
+        //                }
+        //            }
+        //            testMacStarted = bbu.STR_RXSENS_V2(BW, WsRBOffset, currPort.StreamIndex);
+        //            L1TestMacV2Start = testMacStarted;
+        //        }
+        //        if (!testMacStarted)
+        //        {
+        //            Log("OOB: cannot start RXSENS_V2.", LogLevel.ERROR);
+        //            return;
+        //        }
+
+        //        // Wait for BBU file-out with a bounded, cancellable loop.
+        //        var syncWatch = System.Diagnostics.Stopwatch.StartNew();
+        //        bool synchronized = false;
+        //        while (syncWatch.ElapsedMilliseconds < syncTimeoutMs)
+        //        {
+        //            if (worker.CancellationPending) return;
+        //            if (bbu.VALIDATEFILEOUT_RXSENS_V2())
+        //            {
+        //                synchronized = true;
+        //                break;
+        //            }
+        //            System.Threading.Thread.Sleep(100);
+        //        }
+        //        if (!synchronized)
+        //        {
+        //            Log("OOB: timeout waiting for RXSENS_V2 file-out.", LogLevel.ERROR);
+        //            return;
+        //        }
+
+        //        // One worker owns the sweep. No static flagStep or Timer callback.
+        //        foreach (string[] range in sweepRanges)
+        //        {
+        //            if (worker.CancellationPending) return;
+        //            if (range == null || range.Length < 3)
+        //                throw new FormatException("Invalid OOB sweep range.");
+
+        //            double fromHz = double.Parse(range[1], culture) * 1e6;
+        //            double toHz = double.Parse(range[2], culture) * 1e6;
+        //            if (fromHz > toHz) throw new FormatException("OOB range start > end.");
+        //            Log(string.Format("OOB sweep: {0} [{1}, {2}] MHz", range[0], range[1], range[2]));
+
+        //            // Index-based calculation avoids cumulative floating-point drift.
+        //            for (int point = 0; ; point++)
+        //            {
+        //                if (worker.CancellationPending) return;
+        //                double freqHz = fromHz + point * step;
+        //                if (freqHz > toHz + 0.01) break;
+        //                if (point > 1000000)
+        //                    throw new InvalidOperationException("OOB sweep exceeds 1,000,000 points.");
+
+        //                //string freqText = freqHz.ToString("F0", culture);
+        //                //bool skipFrequency = false;
+
+        //                //if (exceptRanges != null)
+        //                //{
+        //                //    foreach (var exprange in exceptRanges)
+        //                //    {
+        //                //        double startMHz = double.Parse(
+        //                //            range[0],
+        //                //            System.Globalization.CultureInfo.InvariantCulture);
+
+        //                //        double endMHz = double.Parse(
+        //                //            range[1],
+        //                //            System.Globalization.CultureInfo.InvariantCulture);
+
+        //                //        double freqMHz = freqHz / 1e6;
+
+        //                //        if (freqMHz >= startMHz &&
+        //                //            freqMHz <= endMHz)
+        //                //        {
+        //                //            skipFrequency = true;
+        //                //            break;
+        //                //        }
+        //                //    }
+        //                //}
+
+        //                //if (skipFrequency)
+        //                //{
+        //                //    Log("[OOB] SKIP excluded CW = " +
+        //                //        (freqHz / 1e6).ToString("F3") + " MHz");
+
+        //                //    continue;
+        //                //}
+        //                string freqText = freqHz.ToString("F0", culture);
+
+        //                // Check excluded frequency ranges
+        //                bool skipFrequency = false;
+
+        //                if (exceptRanges != null)
+        //                {
+        //                    foreach (string[] exceptRange in exceptRanges)
+        //                    {
+        //                        if (exceptRange == null || exceptRange.Length < 2)
+        //                        {
+        //                            throw new FormatException(
+        //                                "OOB exceptRange is missing frequency values.");
+        //                        }
+
+        //                        double startMHz;
+        //                        double endMHz;
+
+        //                        bool validStart = double.TryParse(
+        //                            exceptRange[0],
+        //                            System.Globalization.NumberStyles.Float,
+        //                            System.Globalization.CultureInfo.InvariantCulture,
+        //                            out startMHz);
+
+        //                        bool validEnd = double.TryParse(
+        //                            exceptRange[1],
+        //                            System.Globalization.NumberStyles.Float,
+        //                            System.Globalization.CultureInfo.InvariantCulture,
+        //                            out endMHz);
+
+        //                        if (!validStart || !validEnd)
+        //                        {
+        //                            throw new FormatException(
+        //                                "Invalid OOB exceptRange: [" +
+        //                                exceptRange[0] + ", " +
+        //                                exceptRange[1] + "]");
+        //                        }
+
+        //                        double freqMHz = freqHz / 1e6;
+
+        //                        if (freqMHz >= Math.Min(startMHz, endMHz) &&
+        //                            freqMHz <= Math.Max(startMHz, endMHz))
+        //                        {
+        //                            skipFrequency = true;
+        //                            break;
+        //                        }
+        //                    }
+        //                }
+
+        //                if (skipFrequency)
+        //                {
+        //                    Log("[OOB] SKIP excluded CW = " +
+        //                        (freqHz / 1e6).ToString(
+        //                            "F3",
+        //                            System.Globalization.CultureInfo.InvariantCulture) +
+        //                        " MHz");
+
+        //                    continue;
+        //                }
+        //                vsg2.SetCWWaveform(isPower, freqText);
+        //                Log(string.Format("OOB: CW = {0} MHz", freqHz / 1e6));
+        //                vsg2.LogUserCorrectionSGS100A(isPower, freqHz);
+
+
+        //                // Dwell is cancellable. No busy-spin.
+        //                for (int waited = 0; waited < dwellMs; waited += 50)
+        //                {
+        //                    if (worker.CancellationPending) return;
+        //                    System.Threading.Thread.Sleep(Math.Min(50, dwellMs - waited));
+        //                }
+
+        //                bool valid = false;
+        //                string throughput = "ERROR";
+        //                for (int attempt = 0; attempt < maxReadAttempts; attempt++)
+        //                {
+        //                    if (worker.CancellationPending) return;
+        //                    bbu.RXSENS_V2(out throughput);
+        //                    double tempTP = GetthroughputFromString(throughput, setPort);
+        //                    // Preserve original code's tempTP > 0 acceptance policy.
+        //                    // A real 0% throughput needs separate validation in the parser.
+        //                    if (tempTP > 0 && tempTP <= 100)
+        //                    {
+        //                        valid = true;
+        //                        break;
+        //                    }
+        //                    if (attempt + 1 < maxReadAttempts)
+        //                    {
+        //                        for (int waited = 0; waited < dwellMs; waited += 50)
+        //                        {
+        //                            if (worker.CancellationPending) return;
+        //                            System.Threading.Thread.Sleep(Math.Min(50, dwellMs - waited));
+        //                        }
+        //                    }
+        //                }
+        //                if (!valid)
+        //                {
+        //                    Log("OOB: no valid throughput after retries at " + freqText + " Hz.", LogLevel.ERROR);
+        //                    return;
+        //                }
+
+        //                string subName = string.IsNullOrEmpty(range[0]) ? "" : "_" + range[0];
+        //                writeCSVThroughputValue(mode + "_P" + setPort + subName,
+        //                    setPort, wsFreq, wsPower, WsRBOffset, freqText,
+        //                    isPower, IsRBOffset, throughput, out double currentTP);
+
+        //                if (currentTP >= 0 && currentTP <= 100 &&
+        //                    (minTP < 0 || currentTP < minTP))
+        //                    minTP = currentTP;
+
+        //                mainForm.PopulateMeasurementChart("Out-of-band Blocking: Port " + setPort,
+        //                    (freqHz / 1e6).ToString(culture), currentTP.ToString(culture), "95", "100");
+        //                Log("OOB min throughput = " + minTP + "%");
+        //            }
+        //        }
+        //        completed = true;
+        //        TP = minTP;
+        //        Log("OOB completed. Min TP = " + minTP + "%",
+        //            minTP >= 95 ? LogLevel.SUCCESS : LogLevel.ERROR);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Log("OOB stopped: " + ex.Message, LogLevel.ERROR);
+        //    }
+        //    finally
+        //    {
+        //        // A failed Stop command must not prevent CW from being turned off.
+        //        if (testMacStarted || L1TestMacV2Start)
+        //        {
+        //            try { bbu.STOP_L1TESTMAC(); }
+        //            catch (Exception ex) { Log("STOP_L1TESTMAC: " + ex.Message, LogLevel.ERROR); }
+        //        }
+        //        L1TestMacV2Start = false;
+        //        try { vsg2.OnOffSignal(0); }
+        //        catch (Exception ex) { Log("CW OFF: " + ex.Message, LogLevel.ERROR); }
+        //        if (!completed) TP = -1;
+        //    }
+        //}
+
+        #endregion
         private void oobMeasurementInSequence(
-            BBU bbu, VSG vsg2, string mode, int setPort, double step, int timeSequence,
-            string wsFreq, string wsPower, string WsRBOffset, string isFreq,
-            string isPower, string IsRBOffset, List<string[]> measRanges,
-            List<string[]> exceptRanges, string BW, out double TP)
+    BBU bbu, VSG vsg2, string mode, int setPort, double step, int timeSequence,
+    string wsFreq, string wsPower, string WsRBOffset, string isFreq,
+    string isPower, string IsRBOffset, List<string[]> measRanges,
+    List<string[]> exceptRanges, string BW, out double TP)
         {
             TP = -1;
             double minTP = -1;
             bool testMacStarted = false;
             bool completed = false;
             const int syncTimeoutMs = 60000;
-            const int maxReadAttempts = 4; // 1 initial + 3 retries
+            const int maxReadAttempts = 4;
             int dwellMs = Math.Max(100, timeSequence);
             var culture = System.Globalization.CultureInfo.InvariantCulture;
             var worker = mainForm.measurementBackgroundWorker;
+            var exclusions = new List<double[]>();
+            var seenHz = new HashSet<long>();
 
             try
             {
-                if (step <= 0 || double.IsNaN(step) || double.IsInfinity(step))
-                    throw new ArgumentOutOfRangeException("step", "Sweep step must be positive (Hz).");
+                if (Math.Abs(step - 1e6) > 0.001)
+                    throw new ArgumentException("3GPP OOB CW step must be 1 MHz (1000000 Hz); actual step=" + step);
+                if (measRanges == null || measRanges.Count == 0)
+                    throw new ArgumentException("No OOB measurement ranges configured.");
                 if (worker.CancellationPending) return;
 
-                List<string[]> sweepRanges = GetSweepRangeWithID(measRanges, exceptRanges);
-                if (sweepRanges == null || sweepRanges.Count == 0)
+                // Parse and validate exclusions BEFORE enabling the interferer.
+                if (exceptRanges != null)
                 {
-                    Log("OOB: no valid sweep ranges.");
+                    foreach (string[] exceptRange in exceptRanges)
+                    {
+                        if (exceptRange == null || exceptRange.Length < 2)
+                            throw new FormatException("Invalid OOB exclusion row (needs 2 values).");
+                        double low, high;
+                        if (!double.TryParse(exceptRange[0], System.Globalization.NumberStyles.Float, culture, out low) ||
+                            !double.TryParse(exceptRange[1], System.Globalization.NumberStyles.Float, culture, out high) ||
+                            double.IsNaN(low) || double.IsNaN(high) || double.IsInfinity(low) || double.IsInfinity(high))
+                            throw new FormatException("Invalid OOB exclusion MHz: [" + exceptRange[0] + ", " + exceptRange[1] + "]");
+                        exclusions.Add(new double[] { Math.Min(low, high), Math.Max(low, high) });
+                    }
+                }
+
+                // Work from ORIGINAL measurement ranges; do not use GetSweepRangeWithID here.
+                // This avoids boundary inclusion errors in PopulateRange and preserves the 1-MHz grid.
+                var points = new List<Tuple<string, long>>();
+                foreach (string[] range in measRanges)
+                {
+                    if (range == null || range.Length < 3)
+                        throw new FormatException("Invalid OOB measurement range (needs ID, start, end).");
+                    double fromMHz, toMHz;
+                    if (!double.TryParse(range[1], System.Globalization.NumberStyles.Float, culture, out fromMHz) ||
+                        !double.TryParse(range[2], System.Globalization.NumberStyles.Float, culture, out toMHz) ||
+                        double.IsNaN(fromMHz) || double.IsNaN(toMHz) || fromMHz > toMHz)
+                        throw new FormatException("Invalid OOB sweep range: [" + range[1] + ", " + range[2] + "] MHz");
+                    Log("OOB source range: " + range[0] + " [" + range[1] + ", " + range[2] + "] MHz");
+                    long count = (long)Math.Floor((toMHz - fromMHz) + 1e-9) + 1;
+                    if (count < 1 || count > 1000000 || points.Count + count > 1000000)
+                        throw new InvalidOperationException("OOB sweep exceeds 1,000,000 points.");
+                    for (long point = 0; point < count; point++)
+                    {
+                        double freqMHz = fromMHz + point; // 1 MHz grid relative to this range start
+                        bool excluded = false;
+                        foreach (double[] exclusion in exclusions)
+                            if (freqMHz >= exclusion[0] - 1e-9 && freqMHz <= exclusion[1] + 1e-9)
+                            { excluded = true; break; }
+                        if (excluded) { Log("[OOB] SKIP excluded CW = " + freqMHz.ToString("F3", culture) + " MHz"); continue; }
+                        long freqHz = checked((long)Math.Round(freqMHz * 1e6));
+                        if (seenHz.Add(freqHz)) points.Add(Tuple.Create(range[0], freqHz));
+                    }
+                }
+                if (points.Count == 0)
+                {
+                    Log("OOB: all configured frequencies excluded; no measurement performed.", LogLevel.ERROR);
                     return;
                 }
+                Log("OOB valid CW points: " + points.Count);
 
                 vsg2.TypeOfSignal = "CW";
                 vsg2.LoadUserCorrDataSGS100A(@"/var/user/RxBlocking");
+                // Configure first VALID frequency before starting BBU measurement.
+                vsg2.SetCWWaveform(isPower, points[0].Item2.ToString(culture));
+                vsg2.LogUserCorrectionSGS100A(isPower, points[0].Item2);
 
-                // Configure the first point before starting TestMac.
-                double firstMHz = double.Parse(sweepRanges[0][1], culture);
-                vsg2.SetCWWaveform(isPower, firstMHz.ToString("F0", culture));
-                vsg2.LogUserCorrectionSGS100A(isPower, firstMHz);
-
-
-
-                // Keep existing one-retry startup behavior, but honor Stop.
                 for (int startAttempt = 0; startAttempt < 2 && !testMacStarted; startAttempt++)
                 {
                     if (worker.CancellationPending) return;
@@ -552,141 +958,108 @@ namespace _5GAutoTool
                     {
                         bbu.STOP_L1TESTMAC();
                         for (int ms = 0; ms < 30000; ms += 100)
-                        {
-                            if (worker.CancellationPending) return;
-                            System.Threading.Thread.Sleep(100);
-                        }
+                        { if (worker.CancellationPending) return; System.Threading.Thread.Sleep(100); }
                     }
                     testMacStarted = bbu.STR_RXSENS_V2(BW, WsRBOffset, currPort.StreamIndex);
                     L1TestMacV2Start = testMacStarted;
                 }
-                if (!testMacStarted)
-                {
-                    Log("OOB: cannot start RXSENS_V2.", LogLevel.ERROR);
-                    return;
-                }
+                if (!testMacStarted) { Log("OOB: cannot start RXSENS_V2.", LogLevel.ERROR); return; }
 
-                // Wait for BBU file-out with a bounded, cancellable loop.
                 var syncWatch = System.Diagnostics.Stopwatch.StartNew();
                 bool synchronized = false;
                 while (syncWatch.ElapsedMilliseconds < syncTimeoutMs)
                 {
                     if (worker.CancellationPending) return;
-                    if (bbu.VALIDATEFILEOUT_RXSENS_V2())
-                    {
-                        synchronized = true;
-                        break;
-                    }
+                    if (bbu.VALIDATEFILEOUT_RXSENS_V2()) { synchronized = true; break; }
                     System.Threading.Thread.Sleep(100);
                 }
-                if (!synchronized)
-                {
-                    Log("OOB: timeout waiting for RXSENS_V2 file-out.", LogLevel.ERROR);
-                    return;
-                }
+                if (!synchronized) { Log("OOB: timeout waiting for BBU file-out.", LogLevel.ERROR); return; }
 
-                // One worker owns the sweep. No static flagStep or Timer callback.
-                foreach (string[] range in sweepRanges)
+                foreach (var cw in points)
                 {
                     if (worker.CancellationPending) return;
-                    if (range == null || range.Length < 3)
-                        throw new FormatException("Invalid OOB sweep range.");
+                    string freqText = cw.Item2.ToString(culture);
+                    double freqMHz = cw.Item2 / 1e6;
+                    vsg2.SetCWWaveform(isPower, freqText);
+                    vsg2.LogUserCorrectionSGS100A(isPower, cw.Item2);
+                    Log("OOB: CW = " + freqMHz.ToString("F3", culture) + " MHz");
+                    for (int waited = 0; waited < dwellMs; waited += 50)
+                    { if (worker.CancellationPending) return; System.Threading.Thread.Sleep(Math.Min(50, dwellMs - waited)); }
 
-                    double fromHz = double.Parse(range[1], culture) * 1e6;
-                    double toHz = double.Parse(range[2], culture) * 1e6;
-                    if (fromHz > toHz) throw new FormatException("OOB range start > end.");
-                    Log(string.Format("OOB sweep: {0} [{1}, {2}] MHz", range[0], range[1], range[2]));
-
-                    // Index-based calculation avoids cumulative floating-point drift.
-                    for (int point = 0; ; point++)
+                    bool valid = false;
+                    string throughput = "ERROR";
+                    for (int attempt = 0; attempt < maxReadAttempts; attempt++)
                     {
                         if (worker.CancellationPending) return;
-                        double freqHz = fromHz + point * step;
-                        if (freqHz > toHz + 0.01) break;
-                        if (point > 1000000)
-                            throw new InvalidOperationException("OOB sweep exceeds 1,000,000 points.");
-
-                        string freqText = freqHz.ToString("F0", culture);
-                        vsg2.SetCWWaveform(isPower, freqText);
-                        Log(string.Format("OOB: CW = {0} MHz", freqHz / 1e6));
-                        vsg2.LogUserCorrectionSGS100A(isPower, freqHz);
-
-
-                        // Dwell is cancellable. No busy-spin.
-                        for (int waited = 0; waited < dwellMs; waited += 50)
-                        {
-                            if (worker.CancellationPending) return;
-                            System.Threading.Thread.Sleep(Math.Min(50, dwellMs - waited));
-                        }
-
-                        bool valid = false;
-                        string throughput = "ERROR";
-                        for (int attempt = 0; attempt < maxReadAttempts; attempt++)
-                        {
-                            if (worker.CancellationPending) return;
-                            bbu.RXSENS_V2(out throughput);
-                            double tempTP = GetthroughputFromString(throughput, setPort);
-                            // Preserve original code's tempTP > 0 acceptance policy.
-                            // A real 0% throughput needs separate validation in the parser.
-                            if (tempTP > 0 && tempTP <= 100)
-                            {
-                                valid = true;
-                                break;
-                            }
-                            if (attempt + 1 < maxReadAttempts)
-                            {
-                                for (int waited = 0; waited < dwellMs; waited += 50)
-                                {
-                                    if (worker.CancellationPending) return;
-                                    System.Threading.Thread.Sleep(Math.Min(50, dwellMs - waited));
-                                }
-                            }
-                        }
-                        if (!valid)
-                        {
-                            Log("OOB: no valid throughput after retries at " + freqText + " Hz.", LogLevel.ERROR);
-                            return;
-                        }
-
-                        string subName = string.IsNullOrEmpty(range[0]) ? "" : "_" + range[0];
-                        writeCSVThroughputValue(mode + "_P" + setPort + subName,
-                            setPort, wsFreq, wsPower, WsRBOffset, freqText,
-                            isPower, IsRBOffset, throughput, out double currentTP);
-
-                        if (currentTP >= 0 && currentTP <= 100 &&
-                            (minTP < 0 || currentTP < minTP))
-                            minTP = currentTP;
-
-                        mainForm.PopulateMeasurementChart("Out-of-band Blocking: Port " + setPort,
-                            (freqHz / 1e6).ToString(culture), currentTP.ToString(culture), "95", "100");
-                        Log("OOB min throughput = " + minTP + "%");
+                        bbu.RXSENS_V2(out throughput);
+                        double tempTP = GetthroughputFromString(throughput, setPort);
+                        if (tempTP > 0 && tempTP <= 100) { valid = true; break; }
+                        if (attempt + 1 < maxReadAttempts)
+                            for (int waited = 0; waited < dwellMs; waited += 50)
+                            { if (worker.CancellationPending) return; System.Threading.Thread.Sleep(Math.Min(50, dwellMs - waited)); }
                     }
+                    if (!valid)
+                    { Log("OOB: no valid throughput at " + freqMHz.ToString("F3", culture) + " MHz.", LogLevel.ERROR); return; }
+
+                    string subName = string.IsNullOrEmpty(cw.Item1) ? "" : "_" + cw.Item1;
+                    double currentTP;
+                    writeCSVThroughputValue(mode + "_P" + setPort + subName,
+                        setPort, wsFreq, wsPower, WsRBOffset, freqText,
+                        isPower, IsRBOffset, throughput, out currentTP);
+                    if (currentTP >= 0 && currentTP <= 100 && (minTP < 0 || currentTP < minTP))
+                        minTP = currentTP;
+                    mainForm.PopulateMeasurementChart("Out-of-band Blocking: Port " + setPort,
+                        freqMHz.ToString(culture), currentTP.ToString(culture), "95", "100");
+                    Log("OOB min throughput = " + minTP + "%");
                 }
                 completed = true;
                 TP = minTP;
-                Log("OOB completed. Min TP = " + minTP + "%",
-                    minTP >= 95 ? LogLevel.SUCCESS : LogLevel.ERROR);
+                Log("OOB completed. Min TP = " + minTP + "%", minTP >= 95 ? LogLevel.SUCCESS : LogLevel.ERROR);
             }
-            catch (Exception ex)
-            {
-                Log("OOB stopped: " + ex.Message, LogLevel.ERROR);
-            }
+            catch (Exception ex) { Log("OOB stopped: " + ex.ToString(), LogLevel.ERROR); }
             finally
             {
-                // A failed Stop command must not prevent CW from being turned off.
                 if (testMacStarted || L1TestMacV2Start)
-                {
                     try { bbu.STOP_L1TESTMAC(); }
                     catch (Exception ex) { Log("STOP_L1TESTMAC: " + ex.Message, LogLevel.ERROR); }
-                }
                 L1TestMacV2Start = false;
                 try { vsg2.OnOffSignal(0); }
                 catch (Exception ex) { Log("CW OFF: " + ex.Message, LogLevel.ERROR); }
                 if (!completed) TP = -1;
             }
         }
+private List<string[]> BuildSupportedUlExclusionsMHz()
+{
+    List<string[]> exclusions = new List<string[]>();
 
+    double ulBottomMHz = mainForm.txtOperatingFreqFrom;
+    double ulTopMHz = mainForm.txtOperatingFreqTo;
+    double deltaFoobMHz = mainForm.deltaFoobValue;
 
+    if (deltaFoobMHz < 0)
+        throw new InvalidOperationException(
+            "Delta Foob must not be negative.");
+
+    double excludeStartMHz = ulBottomMHz - deltaFoobMHz/1e6;
+    double excludeEndMHz = ulTopMHz + deltaFoobMHz/1e6;
+
+    exclusions.Add(new string[]
+    {
+        excludeStartMHz.ToString(
+            System.Globalization.CultureInfo.InvariantCulture),
+        excludeEndMHz.ToString(
+            System.Globalization.CultureInfo.InvariantCulture)
+    });
+
+    Log(string.Format(
+        System.Globalization.CultureInfo.InvariantCulture,
+        "[OOB] n40 UL exclusion: [{0}, {1}] MHz, DeltaFoob={2} MHz",
+        excludeStartMHz,
+        excludeEndMHz,
+        deltaFoobMHz/1e6));
+
+    return exclusions;
+}
         //private void oobMeasurementInSequence(BBU bbu, VSG vsg2, string mode, int setPort, double step, int timeSequence, string wsFreq, string wsPower, string WsRBOffset, string isFreq, string isPower, string IsRBOffset, List<string[]> measRanges, List<string[]> exceptRanges, string BW, out double TP)
         //{
         //    TP = -1;

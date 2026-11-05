@@ -104,11 +104,13 @@ namespace _5GAutoTool
             try
             {
                 double.TryParse(freqSet, out double tmp);
-                tmp = tmp * 1e-3;
-                if(tmp!=currFreq)
+                string freqGHz = (tmp / 1e9).ToString(
+    "G17",
+    System.Globalization.CultureInfo.InvariantCulture);
+                if (tmp!=currFreq)
                 {
                     //send command to setup frequency value and get response
-                    sgs100a.WriteString($":SOUR:FREQ:CW {freqSet} GHz", true);
+                    sgs100a.WriteString($":SOUR:FREQ:CW {freqGHz} GHz", true);
                     double response = sgs100a.ReadNumber();
 
                     if (response == 1)
@@ -169,7 +171,7 @@ namespace _5GAutoTool
                     Log("SGS100A: Invalid OOB standard power: " + isPower, LogLevel.WARN);
                     return;
                 }
-                double requiredSetPower = standardPower - correction;
+                double requiredSetPower = standardPower + correction;
                 sgs100a.WriteString($":SOUR:POW:LEV:IMM:AMPL {requiredSetPower}", true);
                 Log(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                     "[OOB] CW={0:F3} MHz | Standard={1:F3} dBm | UCOR={2:+0.000;-0.000;0.000} dB | Required SGS Set={3:F3} dBm | Current commanded Level={4:F3} dBm",

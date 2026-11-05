@@ -59,6 +59,40 @@ namespace _5GAutoTool.Reports
             _report.TestCases.Add(_currentTestCase);
         }
 
+        //    public void AddResult(TestRow testRow)
+        //    {
+        //        if (_currentTestCase == null)
+        //            throw new Exception("BeginTestCase chưa được gọi.");
+
+        //        _currentTestCase.Rows.Add(testRow);
+
+        //        string result;
+
+        //        //if (testRow.Values.TryGetValue("PASS/FAIL", out result) &&
+        //        //    string.Equals(result, "PASS", StringComparison.OrdinalIgnoreCase))
+        //        //{
+        //        //    _currentTestCase.numPass++;
+        //        //}
+        //        //else
+        //        //{
+        //        //    _currentTestCase.numFail++;
+        //        //}
+
+        //        //_currentTestCase.Verdict = (_currentTestCase.numFail > 0)? "FAIL" : "PASS";
+
+        //        if (testRow.Values.TryGetValue("PASS/FAIL", out result) &&
+        //string.Equals(result, "PASS", StringComparison.OrdinalIgnoreCase))
+        //        {
+        //            _currentTestCase.numPass++;
+        //        }
+        //        else
+        //        {
+        //            _currentTestCase.numFail++;
+        //        }
+
+        //        _currentTestCase.Verdict = (_currentTestCase.numFail > 0) ? "FAIL" : "PASS";
+        //    }
+
         public void AddResult(TestRow testRow)
         {
             if (_currentTestCase == null)
@@ -68,19 +102,21 @@ namespace _5GAutoTool.Reports
 
             string result;
 
-            if (testRow.Values.TryGetValue("PASS/FAIL", out result))
+            if (testRow.Values.TryGetValue("PASS/FAIL", out result) &&
+                string.Equals(result, "PASS", StringComparison.OrdinalIgnoreCase))
             {
-                if (string.Equals(result, "PASS", StringComparison.OrdinalIgnoreCase))
-                {
-                    _currentTestCase.numPass++;
-                }
-                else
-                {
-                    _currentTestCase.numFail++;
-                }
+                _currentTestCase.numPass++;
+            }
+            else
+            {
+                _currentTestCase.numFail++;
+
+                // Không cho kết quả thiếu trạng thái được tính PASS
+                testRow.Values["PASS/FAIL"] = "FAIL";
             }
 
-            _currentTestCase.Verdict = (_currentTestCase.numFail > 0)? "FAIL" : "PASS";
+            _currentTestCase.Verdict =
+                (_currentTestCase.numFail > 0) ? "FAIL" : "PASS";
         }
 
         public TestCaseResult EndTestCase()
