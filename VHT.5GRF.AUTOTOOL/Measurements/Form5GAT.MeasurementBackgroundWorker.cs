@@ -2895,10 +2895,12 @@ namespace _5GAutoTool
 
                                 double isLowerOffset = double.Parse(isOffsetL) * 1e6; //=30MHz = 30*1e6 Hz
                                 double isUpperOffset = double.Parse(isOffsetR) * 1e6;
-                                double isFreqLowerTo = double.Parse(setFrequency) - double.Parse(setBandwidth) * 1e6 / 2 - isLowerOffset;
-                                double isFreqLowerFrom = RRU.ChannelBWBottom - delta_Foob;                                
-                                double isFreqUpperFrom = double.Parse(setFrequency) + double.Parse(setBandwidth) * 1e6 / 2 + isUpperOffset;
-                                double isFreqUpperTo = RRU.ChannelBWTop + delta_Foob;
+                                
+                                double isFreqLowerTo = (double.Parse(setFrequency) - double.Parse(setBandwidth) * 1e6 / 2 - isLowerOffset)/1e6;
+                               double isFreqLowerFrom = txtOperatingFreqFrom - delta_Foob/1e6;
+                          
+                                double isFreqUpperFrom = (double.Parse(setFrequency) + double.Parse(setBandwidth) * 1e6 / 2 + isUpperOffset)/1e6;
+                                double isFreqUpperTo = txtOperatingFreqTo + delta_Foob/1e6;
                                 
                                 double isFreqStart = isFreqLowerFrom;
                                 string wsRbOffset = wsOffsetL;

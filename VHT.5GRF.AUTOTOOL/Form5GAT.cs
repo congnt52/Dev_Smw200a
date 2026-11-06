@@ -114,8 +114,8 @@ namespace _5GAutoTool
         public double channelBWLower; // Channel bandwidth Lower Edge
         public double channelBWUpper; // Channel bandwidth Upper Edge
         public double deltaFoobValue = 60;
-        public double txtOperatingFreqFrom =2300;
-        public double txtOperatingFreqTo =2400;
+        public double txtOperatingFreqFrom;
+        public double txtOperatingFreqTo;
         public string RruType;
 
         //CONFIGURATION
@@ -245,6 +245,28 @@ namespace _5GAutoTool
             //Reading device information
             ProgressLabel("Reading Measurement Parameter...");
             RruSerial = txtRRUSerial.Text;
+            // Đọc Operating Frequency từ giao diện (MHz)
+            if (!double.TryParse(
+                txtFreqFrom.Text,
+                out txtOperatingFreqFrom))
+            {
+                MessageBox.Show("Operating Frequency From không hợp lệ!");
+                return;
+            }
+
+            if (!double.TryParse(
+                txtFreqTo.Text,
+                out txtOperatingFreqTo))
+            {
+                MessageBox.Show("Operating Frequency To không hợp lệ!");
+                return;
+            }
+
+            if (txtOperatingFreqFrom >= txtOperatingFreqTo)
+            {
+                MessageBox.Show("Operating Frequency From phải nhỏ hơn To!");
+                return;
+            }
 
             frmBBU.infor(out instrBBU, out ipBBU, out port, out userBBU, out passBBU);
 
@@ -1130,7 +1152,20 @@ namespace _5GAutoTool
             }
         }
 
-
+        public double ISFreqLowerFromMHz
+        {
+            get
+            {
+                return double.Parse(txtFreqFrom.Text);
+            }
+        }
+        public double ISFreqUpperToMHz
+        {
+            get
+            {
+                return double.Parse(txtFreqTo.Text);
+            }
+        }
 
         //19.02.2024 - Chart
         long chartCount = 0;

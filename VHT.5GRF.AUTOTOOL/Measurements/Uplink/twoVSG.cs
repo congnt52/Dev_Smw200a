@@ -90,8 +90,11 @@ namespace _5GAutoTool
             L1TestMacV3Start = false;
 
             //string isType = null;
-            double _isFreqLimitLeft = mainForm.RRU.ChannelBWBottom - mainForm.deltaFoobValue/1000000;
-            double _isFreqLimitRight = mainForm.RRU.ChannelBWTop + mainForm.deltaFoobValue/1000000;
+            double _isFreqLimitLeft = mainForm.txtOperatingFreqFrom - mainForm.deltaFoobValue/1000000;
+            double _isFreqLimitRight = mainForm.txtOperatingFreqTo + mainForm.deltaFoobValue/1000000;
+
+            double _isFreqFrom = double.Parse(isLowerFreqRange);
+            double _isFreqTo = double.Parse(isUpperFreqRange);
             try
             {
                 if (mainForm.measurementBackgroundWorker.CancellationPending) return;
