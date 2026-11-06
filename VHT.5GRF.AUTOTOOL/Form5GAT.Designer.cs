@@ -89,6 +89,8 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.grpConfig = new System.Windows.Forms.GroupBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.txtFreqTo = new System.Windows.Forms.TextBox();
+            this.txtFreqFrom = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -156,8 +158,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblProgressVal = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.txtFreqFrom = new System.Windows.Forms.TextBox();
-            this.txtFreqTo = new System.Windows.Forms.TextBox();
             this.menuStripControl.SuspendLayout();
             this.grpControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLogoVHT)).BeginInit();
@@ -776,6 +776,26 @@
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "RRU Config";
             // 
+            // txtFreqTo
+            // 
+            this.txtFreqTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtFreqTo.Location = new System.Drawing.Point(325, 213);
+            this.txtFreqTo.Margin = new System.Windows.Forms.Padding(4);
+            this.txtFreqTo.Name = "txtFreqTo";
+            this.txtFreqTo.Size = new System.Drawing.Size(83, 30);
+            this.txtFreqTo.TabIndex = 33;
+            this.txtFreqTo.Text = "2400";
+            // 
+            // txtFreqFrom
+            // 
+            this.txtFreqFrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtFreqFrom.Location = new System.Drawing.Point(179, 213);
+            this.txtFreqFrom.Margin = new System.Windows.Forms.Padding(4);
+            this.txtFreqFrom.Name = "txtFreqFrom";
+            this.txtFreqFrom.Size = new System.Drawing.Size(83, 30);
+            this.txtFreqFrom.TabIndex = 32;
+            this.txtFreqFrom.Text = "2300";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -869,7 +889,7 @@
             // txtPWR
             // 
             this.txtPWR.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPWR.Location = new System.Drawing.Point(344, 174);
+            this.txtPWR.Location = new System.Drawing.Point(331, 121);
             this.txtPWR.Margin = new System.Windows.Forms.Padding(4);
             this.txtPWR.Name = "txtPWR";
             this.txtPWR.Size = new System.Drawing.Size(80, 30);
@@ -1602,26 +1622,6 @@
             this.splitContainer1.SplitterDistance = 445;
             this.splitContainer1.SplitterWidth = 2;
             this.splitContainer1.TabIndex = 37;
-            // 
-            // txtFreqFrom
-            // 
-            this.txtFreqFrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFreqFrom.Location = new System.Drawing.Point(179, 213);
-            this.txtFreqFrom.Margin = new System.Windows.Forms.Padding(4);
-            this.txtFreqFrom.Name = "txtFreqFrom";
-            this.txtFreqFrom.Size = new System.Drawing.Size(83, 30);
-            this.txtFreqFrom.TabIndex = 32;
-            this.txtFreqFrom.Text = "2300";
-            // 
-            // txtFreqTo
-            // 
-            this.txtFreqTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFreqTo.Location = new System.Drawing.Point(325, 213);
-            this.txtFreqTo.Margin = new System.Windows.Forms.Padding(4);
-            this.txtFreqTo.Name = "txtFreqTo";
-            this.txtFreqTo.Size = new System.Drawing.Size(83, 30);
-            this.txtFreqTo.TabIndex = 33;
-            this.txtFreqTo.Text = "2400";
             // 
             // Form5GAT
             // 
