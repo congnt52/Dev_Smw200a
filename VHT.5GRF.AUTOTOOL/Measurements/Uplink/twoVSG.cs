@@ -269,6 +269,24 @@ namespace _5GAutoTool
                                 break;
                             }
 
+                                case "INB":
+                                    //vsg2.SetIBBWaveform(isPower, isFreq);
+                                    vsg2.TypeOfSignal = "DFT-s-OFDM";
+                                    vsg2.SetIBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth);
+                                    vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay); //smw200a
+                                    vsg2.setParameter(2, isPower, isFreq, TriggerDelay); //smw200a
+                                    bbu.NEW_RXSENS(Bandwidth, WsRBOffset, out throughput);
+                                    //26.2.2024 - sua code
+                                    writeCSVThroughputValue(mode, setPort, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, throughput, out TP);
+                                    break;
+                                case "INB2":
+                                    //measuring INB with TM run continuosly in xx (s)
+                                    vsg2.TypeOfSignal = "DFT-s-OFDM";
+                                    vsg2.SetIBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth);
+                                    vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay); //smw200a                      
+                                    vsg2.setParameter(2, isPower, isFreq, TriggerDelay); //smw200a
+                                    inbMeasurementInSequence(bbu, vsg2, mode, setPort, step, 10000, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, _isFreqLimitLeft.ToString(), isLowerFreqRange, isUpperFreqRange, _isFreqLimitRight.ToString(), Bandwidth, out TP);
+                                    break;
                             #region comment OOB old
                             //                        case "OOB2":
                             //                            //25.3.2024 - viet lai bai do oob                        

@@ -437,7 +437,7 @@ namespace _5GAutoTool
             }
         }
         // Inband Blocking signal OFDM 100RB - SCS 15Khz
-        public void InbandBlockingSignal()
+        public void SetInbandBlockingSignalLower()
         {
             try
             {
@@ -446,7 +446,30 @@ namespace _5GAutoTool
                 //smw.WriteString(":SYST:RCL '/var/user/test3gpp/INB_DFT-s-OFDM_100rb_15kHz_QPSK.savrcltxt'");
                 //Log("SMW200A Recell File: :SYST:RCL '/var/user/test3gpp/INB_DFT-s-OFDM_100rb_15kHz_QPSK.savrcltxt'");
                 //====================
-                string path = "/var/user/test3gpp/INB_DFT-s-OFDM_100rb_15kHz_QPSK.savrcltxt";
+                string path = "/var/user/congnt52/50MHz/IBB_low.savrcltxt";
+                string cmd = $":SYST:RCL '{path}'";
+                bool tmp = SendCmdStatus(cmd);
+                if (tmp)
+                {
+                    Log($"{Alias} SMW Recall File: {path}");
+                }
+            }
+            catch (Exception)
+            {
+                Log($"ERROR: {Alias} SMW load file fail", LogLevel.ERROR);
+            }
+        }
+
+        public void SetInbandBlockingSignalUpper()
+        {
+            try
+            {
+                //if (mainForm.measurementBackgroundWorker.CancellationPending) return;
+                //System.Threading.Thread.Sleep(100);
+                //smw.WriteString(":SYST:RCL '/var/user/test3gpp/INB_DFT-s-OFDM_100rb_15kHz_QPSK.savrcltxt'");
+                //Log("SMW200A Recell File: :SYST:RCL '/var/user/test3gpp/INB_DFT-s-OFDM_100rb_15kHz_QPSK.savrcltxt'");
+                //====================
+                string path = "/var/user/congnt52/50MHz/IBB_high.savrcltxt";
                 string cmd = $":SYST:RCL '{path}'";
                 bool tmp = SendCmdStatus(cmd);
                 if (tmp)
