@@ -2913,8 +2913,8 @@ namespace _5GAutoTool
                                     VSG2.SetFrequencyValue = isFreqLowerFrom;
                                     string path = $@"{isCSVFilePathRX}\ISRX{testingPort}.csv";
                                     double.TryParse(setFrequency, out double freq);
-                                    VSG2.AttenuatorLevel = VSG2.ReadATTfromCSVFile(path, VSG2.SetFrequencyValue);
-                                    Log($"{VSG2.Alias}: Set ATT_Port{testingPort}={VSG2.AttenuatorLevel} dB at f={VSG2.SetFrequencyValue / 1e6}MHz");
+                                    VSG2.AttenuatorLevel = VSG2.ReadATTfromCSVFile(path, VSG2.SetFrequencyValue*1e6);
+                                    Log($"{VSG2.Alias}: Set ATT_Port{testingPort}={VSG2.AttenuatorLevel} dB at f={VSG2.SetFrequencyValue }MHz");
                                     Log($"{VSG2.Alias}: CSV Path:{VSG2.AttenuatorCSVpath}");
 
                                 }

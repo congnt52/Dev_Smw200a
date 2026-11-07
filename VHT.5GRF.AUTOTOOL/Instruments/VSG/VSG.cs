@@ -847,6 +847,53 @@ namespace _5GAutoTool
             }
             
         }
+        public void SetIBBWaveform(string powerSet, string freqSet, string RBOffset, string BW, double TriggerDelay)
+        {
+            if (instrumentVSG == "N5182B")
+            {
+                //N5182b.MODOnOff(0);
+                //N5182b.RFOnOff(0);
+                //System.Threading.Thread.Sleep(500);
+                N5182b.InbandBlockingSignal(freqSet, BW);
+                N5182b.SetPower(powerSet);
+                System.Threading.Thread.Sleep(500);
+                N5182b.MODOnOff(1);
+                N5182b.RFOnOff(1);
+            }
+            else if (instrumentVSG == "SMW200A")
+            {
+                int.TryParse(RBOffset, out int intRBOffset);
+                if (intRBOffset < 82)
+                {
+                    smw200a.SetInbandBlockingSignalLower();
+                    smw200a.SetRFTrigger(1, 1, TriggerDelay);
+
+                    
+                }
+                else
+                {
+                    smw200a.SetInbandBlockingSignalUpper();
+                    smw200a.SetRFTrigger(1, 1, TriggerDelay);
+                    
+                    //smw200a.SetFreq(2, freqSet);
+                   // System.Threading.Thread.Sleep(2000);
+                    //smw200a.SetPower(2, powerSet);
+                    //System.Threading.Thread.Sleep(500);
+                    //smw200a.RFOnOff(2, 1);
+                }
+            }
+
+
+            else if ((instrumentVSG == "M9410A"))
+            {
+                m9410a.InbandBlockingSignal(freqSet, BW);
+                m9410a.SetPower(powerSet);
+                System.Threading.Thread.Sleep(500);
+                m9410a.MODOnOff(1);
+                m9410a.RFOnOff(1);
+            }
+
+        }
         public void SetNBBLowerWaveform(string powerSet, string freqSet, string RBOffset, string BW)
         {
             if (instrumentVSG == "N5182B")

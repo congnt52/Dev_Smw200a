@@ -273,9 +273,10 @@ namespace _5GAutoTool
                             }
 
                                 case "INB":
-                                    //vsg2.SetIBBWaveform(isPower, isFreq);
+                            //vsg2.SetIBBWaveform(isPower, isFreq);
+                                    vsg1.SetIBBWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
                                     vsg2.TypeOfSignal = "DFT-s-OFDM";
-                                    vsg2.SetIBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth);
+                                    //vsg2.SetIBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth);
                                     vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay); //smw200a
                                     vsg2.setParameter(2, isPower, isFreq, TriggerDelay); //smw200a
                                     bbu.NEW_RXSENS(Bandwidth, WsRBOffset, out throughput);
@@ -283,9 +284,10 @@ namespace _5GAutoTool
                                     writeCSVThroughputValue(mode, setPort, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, throughput, out TP);
                                     break;
                                 case "INB2":
-                                    //measuring INB with TM run continuosly in xx (s)
+                            //measuring INB with TM run continuosly in xx (s)
+                                    vsg1.SetIBBWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
                                     vsg2.TypeOfSignal = "DFT-s-OFDM";
-                                    vsg2.SetIBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth);
+                                   //vsg2.SetIBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth);
                                     vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay); //smw200a                      
                                     vsg2.setParameter(2, isPower, isFreq, TriggerDelay); //smw200a
                                     inbMeasurementInSequence(bbu, vsg2, mode, setPort, step, 10000, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, _isFreqLimitLeft.ToString(), isLowerFreqRange, isUpperFreqRange, _isFreqLimitRight.ToString(), Bandwidth, out TP);
@@ -534,8 +536,8 @@ namespace _5GAutoTool
             //read att of IS:
             double sFreqChange = isFreqFromL;
             string path = $@"{mainForm.isCSVFilePathRX}/ISRX{setPort}.csv";
-            double isATT = vsg2.ReadATTfromCSVFile(path, sFreqChange);
-            Log($"{vsg2.Alias}: Set ATT_Port{setPort}={isATT} dB at f={sFreqChange / 1e6}MHz");
+            double isATT = vsg2.ReadATTfromCSVFile(path, sFreqChange*1e6);
+            Log($"{vsg2.Alias}: Set ATT_Port{setPort}={isATT} dB at f={sFreqChange}MHz");
             Log($"{vsg2.Alias}: CSV Path:{path}");
 
             bool runningMode = true; // mode 
@@ -557,16 +559,38 @@ namespace _5GAutoTool
                     Log("Setting Measurement Environment...");
                     //waiting for 25s to restart L1TestMac again
                     countdownTimerInSecond(25, "Waiting for preseting Testmac");
-                    while (!bbu.VALIDATEFILEOUT_RXSENS_V2())  //sua thanh V3 sau khi update OAM
+                    var syncWatch = System.Diagnostics.Stopwatch.StartNew();
+                    bool synchronized = false;
+
+                    while (syncWatch.ElapsedMilliseconds < 60000)
                     {
                         if (mainForm.measurementBackgroundWorker.CancellationPending)
                         {
-                            TP = (minTP <= 100 && minTP >= 0) ? minTP : -1; //minTP out of range 100 ==> TP=-1;                            
+                            Log("[INB2] Measurement cancelled.");
+                            bbu.STOP_L1TESTMAC();
+                            L1TestMacV2Start = false;
+                            return;
+                        }
+
+                        if (bbu.VALIDATEFILEOUT_RXSENS_V2())
+                        {
+                            synchronized = true;
                             break;
                         }
-                        System.Threading.Thread.Sleep(1);
+
+                        System.Threading.Thread.Sleep(100);
                     }
-                    Log("Synchronized Time Period completed: " + DateTime.Now.ToString()); //for debugging                        
+
+                    if (!synchronized)
+                    {
+                        Log("[INB2] Timeout waiting for RXSENS_V2 synchronization.",
+                            LogLevel.ERROR);
+
+                        bbu.STOP_L1TESTMAC();
+                        L1TestMacV2Start = false;
+                        return;
+                    }
+                    //Log("Synchronized Time Period completed: " + DateTime.Now.ToString()); //for debugging                        
                     Log("Start Measurement!");
 
                     //start loop                
@@ -579,8 +603,23 @@ namespace _5GAutoTool
                     bool isOAMsyncFail = false; //28.3.2024 - co bao Fail OAM
                     bool firstStep = true; //28.3.2024 - check if first step
                     int errCount = 0;
+                    var sweepWatch = System.Diagnostics.Stopwatch.StartNew();
+                    const int sweepTimeoutMs = 300000; // Giới hạn tạm thời để debug
                     while (sFreqChange <= isFreqToR)
                     {
+                        if (mainForm.measurementBackgroundWorker.CancellationPending)
+                        {
+                            Log("[INB2] Sweep cancelled.");
+                            break;
+                        }
+
+                        if (sweepWatch.ElapsedMilliseconds > sweepTimeoutMs)
+                        {
+                            Log("[INB2] Sweep watchdog timeout.", LogLevel.ERROR);
+                            break;
+                        }
+
+                        System.Threading.Thread.Sleep(10);
                         if (flagStep)
                         {
                             if (!firstStep)
