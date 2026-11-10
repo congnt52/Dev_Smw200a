@@ -521,255 +521,696 @@ namespace _5GAutoTool
 
         }
         //bai do inband theo phuong an chay TM lien tuc - 01.03.2024
-        private void inbMeasurementInSequence(BBU bbu, VSG vsg2, string mode, int setPort, double step, int timeSequence, string wsFreq, string wsPower, string WsRBOffset, string isFreq, string isPower, string IsRBOffset, string isLowerFreqFrom, string isLowerFreqTo, string isUpperFreqFrom, string isUpperFreqTo, string BW, out double TP)
-        {
-            TP = -1;
-            double minTP = -1; //out of range 0-100            
-            double.TryParse(isLowerFreqFrom, out double isFreqFromL);
-            double.TryParse(isLowerFreqTo, out double isFreqToL);
-            double.TryParse(isUpperFreqFrom, out double isFreqFromR);
-            double.TryParse(isUpperFreqTo, out double isFreqToR);
-            string throughput;
-            int testCount = 0;
+        #region OldIB
+        //private void inbMeasurementInSequence(BBU bbu, VSG vsg2, string mode, int setPort, double step, int timeSequence, string wsFreq, string wsPower, string WsRBOffset, string isFreq, string isPower, string IsRBOffset, string isLowerFreqFrom, string isLowerFreqTo, string isUpperFreqFrom, string isUpperFreqTo, string BW, out double TP)
+        //{
+        //    TP = -1;
+        //    double minTP = -1; //out of range 0-100            
+        //    double.TryParse(isLowerFreqFrom, out double isFreqFromL);
+        //    double.TryParse(isLowerFreqTo, out double isFreqToL);
+        //    double.TryParse(isUpperFreqFrom, out double isFreqFromR);
+        //    double.TryParse(isUpperFreqTo, out double isFreqToR);
+        //    string throughput;
+        //    int testCount = 0;
 
-            double freqIS = 0;
-            //read att of IS:
-            double sFreqChange = isFreqFromL;
-            string path = $@"{mainForm.isCSVFilePathRX}/ISRX{setPort}.csv";
-            double isATT = vsg2.ReadATTfromCSVFile(path, sFreqChange*1e6);
-            Log($"{vsg2.Alias}: Set ATT_Port{setPort}={isATT} dB at f={sFreqChange}MHz");
-            Log($"{vsg2.Alias}: CSV Path:{path}");
+        //    double freqIS = 0;
+        //    //read att of IS:
+        //    double sFreqChange = isFreqFromL;
+        //    string path = $@"{mainForm.isCSVFilePathRX}/ISRX{setPort}.csv";
+        //    double isATT = vsg2.ReadATTfromCSVFile(path, sFreqChange*1e6);
+        //    Log($"{vsg2.Alias}: Set ATT_Port{setPort}={isATT} dB at f={sFreqChange}MHz");
+        //    Log($"{vsg2.Alias}: CSV Path:{path}");
 
-            bool runningMode = true; // mode 
-            if (runningMode)
-            {
-                L1TestMacV2Start = bbu.STR_RXSENS_V2(BW, WsRBOffset, setPort);
-                //start RxSen_V2 fail => Dung do
+        //    bool runningMode = true; // mode 
+        //    if (runningMode)
+        //    {
+        //        L1TestMacV2Start = bbu.STR_RXSENS_V2(BW, WsRBOffset, setPort);
+        //        //start RxSen_V2 fail => Dung do
 
-                //if (!L1TestMacV2Start)
-                //{
-                //    bbu.STOP_L1TESTMAC();
-                //    //waiting for 30s to restart L1TestMac again
-                //    countdownTimerInSecond(30, "Waiting for L1TestMac restart again");
-                //    L1TestMacV2Start = bbu.STR_RXSENS_V2(BW, WsRBOffset, currPort.StreamIndex);
-                //}
+        //        //if (!L1TestMacV2Start)
+        //        //{
+        //        //    bbu.STOP_L1TESTMAC();
+        //        //    //waiting for 30s to restart L1TestMac again
+        //        //    countdownTimerInSecond(30, "Waiting for L1TestMac restart again");
+        //        //    L1TestMacV2Start = bbu.STR_RXSENS_V2(BW, WsRBOffset, currPort.StreamIndex);
+        //        //}
 
-                if (L1TestMacV2Start)
-                {
-                    Log("Setting Measurement Environment...");
-                    //waiting for 25s to restart L1TestMac again
-                    countdownTimerInSecond(25, "Waiting for preseting Testmac");
-                    var syncWatch = System.Diagnostics.Stopwatch.StartNew();
-                    bool synchronized = false;
+        //        if (L1TestMacV2Start)
+        //        {
+        //            Log("Setting Measurement Environment...");
+        //            //waiting for 25s to restart L1TestMac again
+        //            countdownTimerInSecond(25, "Waiting for preseting Testmac");
+        //            var syncWatch = System.Diagnostics.Stopwatch.StartNew();
+        //            bool synchronized = false;
 
-                    while (syncWatch.ElapsedMilliseconds < 60000)
-                    {
-                        if (mainForm.measurementBackgroundWorker.CancellationPending)
-                        {
-                            Log("[INB2] Measurement cancelled.");
-                            bbu.STOP_L1TESTMAC();
-                            L1TestMacV2Start = false;
-                            return;
-                        }
+        //            while (syncWatch.ElapsedMilliseconds < 60000)
+        //            {
+        //                if (mainForm.measurementBackgroundWorker.CancellationPending)
+        //                {
+        //                    Log("[INB2] Measurement cancelled.");
+        //                    bbu.STOP_L1TESTMAC();
+        //                    L1TestMacV2Start = false;
+        //                    return;
+        //                }
 
-                        if (bbu.VALIDATEFILEOUT_RXSENS_V2())
-                        {
-                            synchronized = true;
-                            break;
-                        }
+        //                if (bbu.VALIDATEFILEOUT_RXSENS_V2())
+        //                {
+        //                    synchronized = true;
+        //                    break;
+        //                }
 
-                        System.Threading.Thread.Sleep(100);
-                    }
+        //                System.Threading.Thread.Sleep(100);
+        //            }
 
-                    if (!synchronized)
-                    {
-                        Log("[INB2] Timeout waiting for RXSENS_V2 synchronization.",
-                            LogLevel.ERROR);
+        //            if (!synchronized)
+        //            {
+        //                Log("[INB2] Timeout waiting for RXSENS_V2 synchronization.",
+        //                    LogLevel.ERROR);
 
-                        bbu.STOP_L1TESTMAC();
-                        L1TestMacV2Start = false;
-                        return;
-                    }
-                    //Log("Synchronized Time Period completed: " + DateTime.Now.ToString()); //for debugging                        
-                    Log("Start Measurement!");
+        //                bbu.STOP_L1TESTMAC();
+        //                L1TestMacV2Start = false;
+        //                return;
+        //            }
+        //            //Log("Synchronized Time Period completed: " + DateTime.Now.ToString()); //for debugging                        
+        //            Log("Start Measurement!");
 
-                    //start loop                
-                    DashedLineLog();
-                    //======== Setup Cycle ======
-                    //int stepTime = 10000; // 10s
-                    System.Threading.Thread.Sleep(10);
+        //            //start loop                
+        //            DashedLineLog();
+        //            //======== Setup Cycle ======
+        //            //int stepTime = 10000; // 10s
+        //            System.Threading.Thread.Sleep(10);
 
-                    // INB2 không sử dụng Timer và flagStep nữa.
-                    bool isOAMsyncFail = false;
-                    bool firstStep = true;
-                    int errCount = 0;
+        //            // INB2 không sử dụng Timer và flagStep nữa.
+        //            bool isOAMsyncFail = false;
+        //            bool firstStep = true;
+        //            int errCount = 0;
 
-                    var sweepWatch = System.Diagnostics.Stopwatch.StartNew();
+        //            var sweepWatch = System.Diagnostics.Stopwatch.StartNew();
 
-                    // 10 giây giữa các lần đọc throughput.
-                    var stepWatch = System.Diagnostics.Stopwatch.StartNew();
+        //            // 10 giây giữa các lần đọc throughput.
+        //            var stepWatch = System.Diagnostics.Stopwatch.StartNew();
 
-                    const int sweepTimeoutMs = 300000;
-                    while (sFreqChange <= isFreqToR)
-                    {
-                        if (mainForm.measurementBackgroundWorker.CancellationPending)
-                        {
-                            Log("[INB2] Measurement cancelled.");
-                            break;
-                        }
+        //            const int sweepTimeoutMs = 300000;
+        //            while (sFreqChange <= isFreqToR)
+        //            {
+        //                if (mainForm.measurementBackgroundWorker.CancellationPending)
+        //                {
+        //                    Log("[INB2] Measurement cancelled.");
+        //                    break;
+        //                }
 
-                        if (sweepWatch.ElapsedMilliseconds > sweepTimeoutMs)
-                        {
-                            Log("[INB2] Sweep timeout.", LogLevel.ERROR);
-                            break;
-                        }
+        //                if (sweepWatch.ElapsedMilliseconds > sweepTimeoutMs)
+        //                {
+        //                    Log("[INB2] Sweep timeout.", LogLevel.ERROR);
+        //                    break;
+        //                }
 
-                        // Chờ đủ thời gian trước khi đọc throughput.
-                        if (stepWatch.ElapsedMilliseconds < timeSequence)
-                        {
-                            System.Threading.Thread.Sleep(10);
-                            continue;
-                        }
+        //                // Chờ đủ thời gian trước khi đọc throughput.
+        //                if (stepWatch.ElapsedMilliseconds < timeSequence)
+        //                {
+        //                    System.Threading.Thread.Sleep(10);
+        //                    continue;
+        //                }
 
-                        stepWatch.Restart();
-                        //System.Threading.Thread.Sleep(10);
-                        if (flagStep)
-                        {
-                            if (!firstStep)
-                            {
-                                //08.01.2024 - chuyen thong bao len dau vong lap
-                                Log($"Set frequency of IS to: {sFreqChange / 1e6} MHz");
-                                //tao chu ky 10s
+        //                stepWatch.Restart();
+        //                //System.Threading.Thread.Sleep(10);
+        //                if (flagStep)
+        //                {
+        //                    if (!firstStep)
+        //                    {
+        //                        //08.01.2024 - chuyen thong bao len dau vong lap
+        //                        Log($"Set frequency of IS to: {sFreqChange / 1e6} MHz");
+        //                        //tao chu ky 10s
 
-                                //delay = DateTime.Now.AddSeconds(0.05); // 08.01.2024 - test voi chu ky 100ms ???can trong vong lap nay khong???
-                                isFreq = sFreqChange.ToString();
+        //                        //delay = DateTime.Now.AddSeconds(0.05); // 08.01.2024 - test voi chu ky 100ms ???can trong vong lap nay khong???
+        //                        isFreq = sFreqChange.ToString();
 
-                                //check background worker
-                                if (mainForm.measurementBackgroundWorker.CancellationPending)
-                                {
-                                    TP = (minTP <= 100 && minTP >= 0) ? minTP : -1; //minTP out of range 100 ==> TP=0;
-                                    break; //nhay khoi vong lap
-                                }
-                                System.Threading.Thread.Sleep(1);
+        //                        //check background worker
+        //                        if (mainForm.measurementBackgroundWorker.CancellationPending)
+        //                        {
+        //                            TP = (minTP <= 100 && minTP >= 0) ? minTP : -1; //minTP out of range 100 ==> TP=0;
+        //                            break; //nhay khoi vong lap
+        //                        }
+        //                        System.Threading.Thread.Sleep(1);
 
-                                //Đọc throughput về
-                                bbu.RXSENS_V2(out throughput); //sua sau khi update OAM
-                                System.Threading.Thread.Sleep(1);
-                                double tempTP = GetthroughputFromString(throughput, setPort);
-                                if ((tempTP >= 95 && tempTP <= 100) || testCount == 3)
-                                {
-                                    //28.3.2024 - Truong hop van doc dc ve mang throughput
-                                    if (tempTP > 0)
-                                    {
-                                        writeCSVThroughputValue(mode, setPort, wsFreq, wsPower, WsRBOffset, isFreq, isPower, IsRBOffset, throughput, out TP);
-                                        //luu lại giá trị TP nhỏ nhất
-                                        if (minTP >= TP || minTP == -1)
-                                        {
-                                            minTP = TP;
-                                            freqIS = sFreqChange;
-                                        }
-                                        Log($"Min throughput = {minTP}% @ NR Interfering Freq. = {freqIS / 1e6} MHz");
-                                        DashedLineLog("-------");
-                                        //09.01.2024 - plot chart
-                                        mainForm.PopulateMeasurementChart($"Inband-Blocking: Port {setPort}", (sFreqChange / 1e6).ToString(), TP.ToString(), "95", "100");
-                                        //==================
-                                        //Change CW frequency for next step                            
-                                        sFreqChange += step;
-                                        //kiem tra tan so nam trong dai tan sweep
-                                        if (sFreqChange > isFreqToL & sFreqChange < isFreqFromR)
-                                        {
-                                            sFreqChange = isFreqFromR;
-                                        }
-                                        //end loop when freq is up to UpperFreq
-                                        if (sFreqChange > isFreqToR)
-                                        {
-                                            break;
-                                        }
-                                        isATT = vsg2.ReadATTfromCSVFile(path, sFreqChange);
-                                        Log($"{vsg2.Alias}: Set ATT_Port{setPort}={isATT} dB at f={sFreqChange / 1e6}MHz");
-                                        //Phat nhieu                             
-                                        isFreq = sFreqChange.ToString();
-                                        //vsg2.SetIBBWaveform(isPower, isFreq, IsRBOffset);
-                                        //19.3.2024
-                                        if (vsg2.Model == "SMW200A")
-                                        {
-                                            //vsg2.setParameter(2, (double.Parse(isPower) + isATT).ToString("N3"), isFreq, TriggerDelay);
-                                            vsg2.SetFreq(isFreq);
-                                            vsg2.SetPower((double.Parse(isPower) + isATT).ToString("N3"));
-                                        }
-                                        else
-                                        {
-                                            vsg2.SetFreq(isFreq);
-                                            vsg2.SetPower((double.Parse(isPower) + isATT).ToString("N3"));
-                                        }
-                                        //reset testCount ve 0
-                                        testCount = 0;
-                                        errCount = 0;
-                                        isOAMsyncFail = false;
-                                    }
-                                    else   // truong hop khong doc duoc ve mang throughput do loi mat OAM sau khi da test lai 3 lan
-                                    {
-                                        errCount += 1;
-                                        //Console.WriteLine($"\rWaiting for synchronization.....{errCount}");
-                                        if (errCount >= 1000)  //28.3.2024 - Sau 1000 vong lap, neu van loi thi bao loi
-                                        {
-                                            isOAMsyncFail = true;
-                                            Log("Server is not responding, measurement stop!");
-                                            errCount = 0;
-                                            break;
-                                        }
-                                    }
+        //                        //Đọc throughput về
+        //                        bbu.RXSENS_V2(out throughput); //sua sau khi update OAM
+        //                        System.Threading.Thread.Sleep(1);
+        //                        double tempTP = GetthroughputFromString(throughput, setPort);
+        //                        if ((tempTP >= 95 && tempTP <= 100) || testCount == 3)
+        //                        {
+        //                            //28.3.2024 - Truong hop van doc dc ve mang throughput
+        //                            if (tempTP > 0)
+        //                            {
+        //                                writeCSVThroughputValue(mode, setPort, wsFreq, wsPower, WsRBOffset, isFreq, isPower, IsRBOffset, throughput, out TP);
+        //                                //luu lại giá trị TP nhỏ nhất
+        //                                if (minTP >= TP || minTP == -1)
+        //                                {
+        //                                    minTP = TP;
+        //                                    freqIS = sFreqChange;
+        //                                }
+        //                                Log($"Min throughput = {minTP}% @ NR Interfering Freq. = {freqIS / 1e6} MHz");
+        //                                DashedLineLog("-------");
+        //                                //09.01.2024 - plot chart
+        //                                mainForm.PopulateMeasurementChart($"Inband-Blocking: Port {setPort}", (sFreqChange / 1e6).ToString(), TP.ToString(), "95", "100");
+        //                                //==================
+        //                                //Change CW frequency for next step                            
+        //                                sFreqChange += step;
+        //                                //kiem tra tan so nam trong dai tan sweep
+        //                                if (sFreqChange > isFreqToL & sFreqChange < isFreqFromR)
+        //                                {
+        //                                    sFreqChange = isFreqFromR;
+        //                                }
+        //                                //end loop when freq is up to UpperFreq
+        //                                if (sFreqChange > isFreqToR)
+        //                                {
+        //                                    break;
+        //                                }
+        //                                isATT = vsg2.ReadATTfromCSVFile(path, sFreqChange);
+        //                                Log($"{vsg2.Alias}: Set ATT_Port{setPort}={isATT} dB at f={sFreqChange / 1e6}MHz");
+        //                                //Phat nhieu                             
+        //                                isFreq = sFreqChange.ToString();
+        //                                //vsg2.SetIBBWaveform(isPower, isFreq, IsRBOffset);
+        //                                //19.3.2024
+        //                                if (vsg2.Model == "SMW200A")
+        //                                {
+        //                                    //vsg2.setParameter(2, (double.Parse(isPower) + isATT).ToString("N3"), isFreq, TriggerDelay);
+        //                                    vsg2.SetFreq(isFreq);
+        //                                    vsg2.SetPower((double.Parse(isPower) + isATT).ToString("N3"));
+        //                                }
+        //                                else
+        //                                {
+        //                                    vsg2.SetFreq(isFreq);
+        //                                    vsg2.SetPower((double.Parse(isPower) + isATT).ToString("N3"));
+        //                                }
+        //                                //reset testCount ve 0
+        //                                testCount = 0;
+        //                                errCount = 0;
+        //                                isOAMsyncFail = false;
+        //                            }
+        //                            else   // truong hop khong doc duoc ve mang throughput do loi mat OAM sau khi da test lai 3 lan
+        //                            {
+        //                                errCount += 1;
+        //                                //Console.WriteLine($"\rWaiting for synchronization.....{errCount}");
+        //                                if (errCount >= 1000)  //28.3.2024 - Sau 1000 vong lap, neu van loi thi bao loi
+        //                                {
+        //                                    isOAMsyncFail = true;
+        //                                    Log("Server is not responding, measurement stop!");
+        //                                    errCount = 0;
+        //                                    break;
+        //                                }
+        //                            }
 
-                                }
-                                else
-                                {
-                                    Log($"TP = {tempTP}% => Retest: {testCount}");
-                                    testCount += 1;
-                                }
-                            }
-                            else
-                            {
-                                firstStep = false;
-                            }
-                            //xoa flag
-                            flagStep = false;
-                        }
-                        if (isOAMsyncFail)  //28.3.2024 - Sau 100 vong lap, neu van loi thi bao loi va thoat bai do
-                        {
-                            break;
-                        }
-                    }
+        //                        }
+        //                        else
+        //                        {
+        //                            Log($"TP = {tempTP}% => Retest: {testCount}");
+        //                            testCount += 1;
+        //                        }
+        //                    }
+        //                    else
+        //                    {
+        //                        firstStep = false;
+        //                    }
+        //                    //xoa flag
+        //                    flagStep = false;
+        //                }
+        //                if (isOAMsyncFail)  //28.3.2024 - Sau 100 vong lap, neu van loi thi bao loi va thoat bai do
+        //                {
+        //                    break;
+        //                }
+        //            }
 
-                    //Ket thuc chay vong lap
-                    timerSequence.Dispose();  //Stop timer
-                    bbu.STOP_L1TESTMAC();
-                    L1TestMacV2Start = false;
-                    vsg2.OnOffSignal(0);
-                    //gan gia tri throughput nho nhat de in ra ngoai ListView
-                    DashedLineLog("---");
-                    Log("Measurement finished!");
-                    TP = minTP;
-                    if (TP < 95) Log("LOG: Throughput < 95% => FAILED!", LogLevel.ERROR);
-                    else Log("LOG: Throughput > 95% => PASSED!", LogLevel.SUCCESS);
-                    Log("========================================");
+        //            //Ket thuc chay vong lap
+        //            timerSequence.Dispose();  //Stop timer
+        //            bbu.STOP_L1TESTMAC();
+        //            L1TestMacV2Start = false;
+        //            vsg2.OnOffSignal(0);
+        //            //gan gia tri throughput nho nhat de in ra ngoai ListView
+        //            DashedLineLog("---");
+        //            Log("Measurement finished!");
+        //            TP = minTP;
+        //            if (TP < 95) Log("LOG: Throughput < 95% => FAILED!", LogLevel.ERROR);
+        //            else Log("LOG: Throughput > 95% => PASSED!", LogLevel.SUCCESS);
+        //            Log("========================================");
 
-                    if (isOAMsyncFail)
-                    {
-                        MessageBox.Show("OAM is not responding, measurement stop!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    }
-                }
+        //            if (isOAMsyncFail)
+        //            {
+        //                MessageBox.Show("OAM is not responding, measurement stop!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        //            }
+        //        }
 
-                else
-                {
-                    bbu.STOP_L1TESTMAC();
-                    L1TestMacV2Start = false;
-                    Log("Start RXSENS_V2 Fail! Wait for a while before next measurement!", LogLevel.ERROR);
-                }
-            }
-        }
+        //        else
+        //        {
+        //            bbu.STOP_L1TESTMAC();
+        //            L1TestMacV2Start = false;
+        //            Log("Start RXSENS_V2 Fail! Wait for a while before next measurement!", LogLevel.ERROR);
+        //        }
+        //    }
+        //}
         // REVIEW PATCH - replace only oobMeasurementInSequence() inside twoVSG.cs.
         // Not compiled against the complete project or tested on RF hardware.
         // Requires: using System.Globalization; using System.Threading;
+        #endregion
+
+
+        private void inbMeasurementInSequence(
+            BBU bbu,
+            VSG vsg2,
+            string mode,
+            int setPort,
+            double step,
+            int timeSequence,
+            string wsFreq,
+            string wsPower,
+            string WsRBOffset,
+            string isFreq,
+            string isPower,
+            string IsRBOffset,
+            string isLowerFreqFrom,
+            string isLowerFreqTo,
+            string isUpperFreqFrom,
+            string isUpperFreqTo,
+            string BW,
+            out double TP)
+        {
+            TP = -1;
+
+            double minTP = -1;
+            double freqIS = 0;
+            bool testMacStarted = false;
+            bool cancelled = false;
+            bool measurementFailed = false;
+
+            var culture =
+                System.Globalization.CultureInfo.InvariantCulture;
+
+            // ===== 1. Parse frequency ranges (MHz) =====
+            double fromL, toL, fromR, toR;
+
+            if (!double.TryParse(isLowerFreqFrom, out fromL) ||
+                !double.TryParse(isLowerFreqTo, out toL) ||
+                !double.TryParse(isUpperFreqFrom, out fromR) ||
+                !double.TryParse(isUpperFreqTo, out toR))
+            {
+                Log("[INB2] Invalid frequency configuration.",
+                    LogLevel.ERROR);
+                return;
+            }
+
+            // GUI có thể truyền step theo Hz hoặc MHz.
+            // Ví dụ 1000000 Hz = 1 MHz.
+            double stepMHz = step >= 1000
+                ? step / 1e6
+                : step;
+
+            if (stepMHz <= 0 ||
+                fromL > toL ||
+                fromR > toR ||
+                toL >= fromR)
+            {
+                Log("[INB2] Invalid sweep ranges or step.",
+                    LogLevel.ERROR);
+                return;
+            }
+
+            // ===== 2. Prepare frequency points =====
+            var frequencyPoints = new List<double>();
+
+            double[] starts = { fromL, fromR };
+            double[] ends = { toL, toR };
+
+            for (int rangeIndex = 0; rangeIndex < 2; rangeIndex++)
+            {
+                double start = starts[rangeIndex];
+                double end = ends[rangeIndex];
+
+                for (int point = 0; ; point++)
+                {
+                    double frequency = start + point * stepMHz;
+
+                    if (frequency > end + 1e-9)
+                        break;
+
+                    if (point > 1000000)
+                    {
+                        Log("[INB2] Too many sweep points.",
+                            LogLevel.ERROR);
+                        return;
+                    }
+
+                    frequencyPoints.Add(frequency);
+                }
+            }
+
+            Log(
+                $"[INB2] Lower: {fromL} - {toL} MHz; " +
+                $"Upper: {fromR} - {toR} MHz");
+
+            Log(
+                $"[INB2] Step={stepMHz} MHz; " +
+                $"Total points={frequencyPoints.Count}");
+
+            // ===== 3. Correction configuration =====
+            string path = System.IO.Path.Combine(
+                mainForm.isCSVFilePathRX,
+                $"ISRX{setPort}.csv");
+
+            if (!System.IO.File.Exists(path))
+            {
+                Log("[INB2] Correction file not found: " + path,
+                    LogLevel.ERROR);
+                return;
+            }
+
+            // isPower đã cộng AttenuatorLevel ở Measurement().
+            double initialPower;
+
+            if (!double.TryParse(
+                isPower,
+                System.Globalization.NumberStyles.Float |
+                System.Globalization.NumberStyles.AllowThousands,
+                System.Globalization.CultureInfo.CurrentCulture,
+                out initialPower))
+            {
+                Log("[INB2] Invalid IS power.", LogLevel.ERROR);
+                return;
+            }
+
+            double targetISPower =
+                initialPower - vsg2.AttenuatorLevel;
+
+            int dwellMs = Math.Max(1, timeSequence);
+            const int maxReadAttempts = 4;
+
+            // ===== 4. Start BBU measurement =====
+            try
+            {
+                Log("[INB2] Starting RXSENS_V2...");
+
+                testMacStarted = bbu.STR_RXSENS_V2(
+                    BW, WsRBOffset, setPort);
+
+                L1TestMacV2Start = testMacStarted;
+
+                if (!testMacStarted)
+                {
+                    Log("[INB2] STR_RXSENS_V2 failed.",
+                        LogLevel.ERROR);
+                    measurementFailed = true;
+                    return;
+                }
+
+                countdownTimerInSecond(
+                    25, "Waiting for preseting Testmac");
+
+                // ===== 5. Wait for synchronization =====
+                var syncWatch =
+                    System.Diagnostics.Stopwatch.StartNew();
+
+                bool synchronized = false;
+
+                while (syncWatch.ElapsedMilliseconds < 60000)
+                {
+                    if (mainForm.measurementBackgroundWorker
+                        .CancellationPending)
+                    {
+                        cancelled = true;
+                        return;
+                    }
+
+                    if (bbu.VALIDATEFILEOUT_RXSENS_V2())
+                    {
+                        synchronized = true;
+                        break;
+                    }
+
+                    System.Threading.Thread.Sleep(100);
+                }
+
+                if (!synchronized)
+                {
+                    Log("[INB2] BBU synchronization timeout.",
+                        LogLevel.ERROR);
+
+                    measurementFailed = true;
+                    return;
+                }
+
+                Log("[INB2] BBU synchronized.");
+                Log("[INB2] Start Measurement!");
+
+                DashedLineLog();
+
+                // ===== 6. Sequential frequency sweep =====
+                foreach (double freqMHz in frequencyPoints)
+                {
+                    if (mainForm.measurementBackgroundWorker
+                        .CancellationPending)
+                    {
+                        cancelled = true;
+                        break;
+                    }
+
+                    // SMW200A SetFreq() nhận tần số Hz.
+                    double freqHz = freqMHz * 1e6;
+
+                    string freqText = freqHz.ToString(
+                        "F0", culture);
+
+                    // Correction file sử dụng Hz.
+                    double isATT =
+                        vsg2.ReadATTfromCSVFile(path, freqHz);
+
+                    double smwPower = targetISPower + isATT;
+
+                    string powerText = smwPower.ToString(
+                        "F3", culture);
+
+                    Log(
+                        $"[INB2] IS={freqMHz:F3} MHz; " +
+                        $"ATT={isATT:F3} dB; " +
+                        $"SMW Power={smwPower:F3} dBm");
+
+                    // ===== 7. Configure interfering signal =====
+                    if (vsg2.Model == "SMW200A")
+                    {
+                        // Chỉ cấu hình Source 2.
+                        // Không gọi vsg2.SetFreq() vì hàm đó
+                        // thay đổi cả Source 1 và Source 2.
+                        vsg2.setParameter(
+                            2,
+                            powerText,
+                            freqText,
+                            vsg2.TriggerDelay);
+                    }
+                    else
+                    {
+                        vsg2.SetFreq(freqText);
+                        vsg2.SetPower(powerText);
+                    }
+
+                    // ===== 8. Wait before reading throughput =====
+                    var dwellWatch =
+                        System.Diagnostics.Stopwatch.StartNew();
+
+                    while (dwellWatch.ElapsedMilliseconds < dwellMs)
+                    {
+                        if (mainForm.measurementBackgroundWorker
+                            .CancellationPending)
+                        {
+                            cancelled = true;
+                            break;
+                        }
+
+                        System.Threading.Thread.Sleep(20);
+                    }
+
+                    if (cancelled)
+                        break;
+
+                    // ===== 9. Read throughput =====
+                    bool validTP = false;
+                    string throughput = "";
+                    double tempTP = -1;
+
+                    for (int attempt = 1;
+                         attempt <= maxReadAttempts;
+                         attempt++)
+                    {
+                        if (mainForm.measurementBackgroundWorker
+                            .CancellationPending)
+                        {
+                            cancelled = true;
+                            break;
+                        }
+
+                        Log(
+                            $"[INB2] Reading throughput: " +
+                            $"{freqMHz:F3} MHz; " +
+                            $"Attempt={attempt}/{maxReadAttempts}");
+
+                        try
+                        {
+                            bbu.RXSENS_V2(out throughput);
+
+                            tempTP = GetthroughputFromString(
+                                throughput, setPort);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log(
+                                "[INB2] Throughput read error: " +
+                                ex.Message,
+                                LogLevel.ERROR);
+
+                            tempTP = -1;
+                        }
+
+                        if (!double.IsNaN(tempTP) &&
+                            !double.IsInfinity(tempTP) &&
+                            tempTP >= 0 &&
+                            tempTP <= 100)
+                        {
+                            validTP = true;
+                            break;
+                        }
+
+                        if (attempt < maxReadAttempts)
+                            System.Threading.Thread.Sleep(1000);
+                    }
+
+                    if (cancelled)
+                        break;
+
+                    if (!validTP)
+                    {
+                        Log(
+                            $"[INB2] Invalid throughput at " +
+                            $"{freqMHz:F3} MHz.",
+                            LogLevel.ERROR);
+
+                        measurementFailed = true;
+                        break;
+                    }
+
+                    // TP < 95% là kết quả đo không đạt,
+                    // không phải mặc định là lỗi OAM.
+                    Log(
+                        $"[INB2] Throughput={tempTP:F3}% " +
+                        $"at {freqMHz:F3} MHz");
+
+                    // ===== 10. Save CSV =====
+                    isFreq = freqText;
+
+                    writeCSVThroughputValue(
+                        mode,
+                        setPort,
+                        wsFreq,
+                        wsPower,
+                        WsRBOffset,
+                        isFreq,
+                        isPower,
+                        IsRBOffset,
+                        throughput,
+                        out double csvTP);
+
+                    // Lấy TP đã parse để tránh kết quả
+                    // ghi CSV làm sai minTP.
+                    TP = tempTP;
+
+                    if (minTP < 0 || tempTP < minTP)
+                    {
+                        minTP = tempTP;
+                        freqIS = freqMHz;
+                    }
+
+                    // ===== 11. Update chart =====
+                    mainForm.PopulateMeasurementChart(
+                        $"Inband-Blocking: Port {setPort}",
+                        freqMHz.ToString("F3", culture),
+                        tempTP.ToString("F3", culture),
+                        "95",
+                        "100");
+
+                    Log(
+                        $"[INB2] Min TP={minTP:F3}% " +
+                        $"at IS={freqIS:F3} MHz");
+
+                    DashedLineLog("-------");
+                }
+
+                // ===== 12. Final result =====
+                TP = minTP;
+
+                if (cancelled)
+                {
+                    Log("[INB2] Measurement cancelled.");
+                }
+                else if (measurementFailed || minTP < 0)
+                {
+                    Log("[INB2] Measurement incomplete.",
+                        LogLevel.ERROR);
+                }
+                else
+                {
+                    Log("[INB2] Sweep completed.");
+
+                    if (minTP >= 95)
+                        Log("[INB2] PASSED.", LogLevel.SUCCESS);
+                    else
+                        Log("[INB2] FAILED: TP < 95%.",
+                            LogLevel.ERROR);
+                }
+            }
+            catch (Exception ex)
+            {
+                measurementFailed = true;
+
+                Log(
+                    "[INB2] Measurement exception: " +
+                    ex.Message,
+                    LogLevel.ERROR);
+            }
+            finally
+            {
+                // ===== 13. Cleanup =====
+                if (testMacStarted)
+                {
+                    try
+                    {
+                        bbu.STOP_L1TESTMAC();
+                    }
+                    catch (Exception ex)
+                    {
+                        Log(
+                            "[INB2] STOP_L1TESTMAC error: " +
+                            ex.Message,
+                            LogLevel.ERROR);
+                    }
+                }
+
+                L1TestMacV2Start = false;
+
+                try
+                {
+                    vsg2.OnOffSignal(0);
+                }
+                catch (Exception ex)
+                {
+                    Log(
+                        "[INB2] RF OFF error: " +
+                        ex.Message,
+                        LogLevel.ERROR);
+                }
+
+                if (measurementFailed)
+                {
+                    Log("[INB2] Stopped due to error.",
+                        LogLevel.ERROR);
+                }
+            }
+        }
 
         #region oobMeasurementInSequence_old
         //private void oobMeasurementInSequence(

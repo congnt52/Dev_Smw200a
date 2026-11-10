@@ -1784,11 +1784,14 @@ namespace _5GAutoTool
                 if (oam.IsConnected)
                 {
                     string cli = "SHW RXSENS_V2: DUId=1;";
+                    
                     oam.Send(cli);
                     Log("Send command: " + cli);
                     var header = new OamHeader();
                     var received = oam.Receive(header);
+                    Log("[RXSENS_V2][SHW] Raw response: " + received);
                     Data json = JsonConvert.DeserializeObject<Data>(received);
+                    Log($"[RXSENS_V2][SHW] Status={json.status}");
                     string json1 = JsonConvert.SerializeObject(json);
                     if (json.status == 0)
                     {
@@ -1927,11 +1930,18 @@ namespace _5GAutoTool
                     }
                     //STR RXSENS_V2: DUId=1, AntennaPort=0, RBOffset=0, bandwidth=50;
                     string cli = "STR RXSENS_V2: DUId=1, AntennaPort=" + (ConvertPort - 1).ToString() + ", RBOffset=" + RBOffset + ", bandwidth=" + Bandwidth + ";";
+                    Log("before send");
                     oam.Send(cli);
                     Log($"Send command: STR RXSENS_V2: DUId=1, AntennaPort={ConvertPort - 1}, RBOffset={RBOffset}, bandwidth={Bandwidth};");
+                    var watch = System.Diagnostics.Stopwatch.StartNew();
+                    
+
                     System.Threading.Thread.Sleep(45000);
                     var header = new OamHeader();
+                    Log("Before receive");
                     var received = oam.Receive(header);
+                    Log("After receive"+ $"elapsed = {watch.ElapsedMilliseconds} ms");
+                    Log("[RXSENS_V2][STR] Raw response: " + received);
                     Data json = JsonConvert.DeserializeObject<Data>(received);
                     string json1 = JsonConvert.SerializeObject(json);
                     if (json.status == 0)
