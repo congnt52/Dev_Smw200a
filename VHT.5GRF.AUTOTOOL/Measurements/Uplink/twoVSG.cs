@@ -12,7 +12,7 @@ namespace _5GAutoTool
     {
         public Form5GAT mainForm;
         private static Timer timerSequence;
-        private static bool flagStep = false;
+        private static volatile bool flagStep = false;
         private List<string[]> oobCoData = new List<string[]>();
         private List<string[]> oobCoISsweepRanges = new List<string[]>();
         private bool L1TestMacV2Start = false;
@@ -598,27 +598,40 @@ namespace _5GAutoTool
                     //======== Setup Cycle ======
                     //int stepTime = 10000; // 10s
                     System.Threading.Thread.Sleep(10);
-                    timerSequence = new Timer(NRFrequencyLoop, null, 0, timeSequence);
-                    //sFreqChange = isFreqFrom;
-                    bool isOAMsyncFail = false; //28.3.2024 - co bao Fail OAM
-                    bool firstStep = true; //28.3.2024 - check if first step
+
+                    // INB2 không sử dụng Timer và flagStep nữa.
+                    bool isOAMsyncFail = false;
+                    bool firstStep = true;
                     int errCount = 0;
+
                     var sweepWatch = System.Diagnostics.Stopwatch.StartNew();
-                    const int sweepTimeoutMs = 300000; // Giới hạn tạm thời để debug
+
+                    // 10 giây giữa các lần đọc throughput.
+                    var stepWatch = System.Diagnostics.Stopwatch.StartNew();
+
+                    const int sweepTimeoutMs = 300000;
                     while (sFreqChange <= isFreqToR)
                     {
-                        //if (mainForm.measurementBackgroundWorker.CancellationPending)
-                        //{
-                        //    Log("[INB2] Sweep cancelled.");
-                        //    break;
-                        //}
+                        if (mainForm.measurementBackgroundWorker.CancellationPending)
+                        {
+                            Log("[INB2] Measurement cancelled.");
+                            break;
+                        }
 
-                        //if (sweepWatch.ElapsedMilliseconds > sweepTimeoutMs)
-                        //{
-                        //    Log("[INB2] Sweep watchdog timeout.", LogLevel.ERROR);
-                        //    break;
-                        //}
+                        if (sweepWatch.ElapsedMilliseconds > sweepTimeoutMs)
+                        {
+                            Log("[INB2] Sweep timeout.", LogLevel.ERROR);
+                            break;
+                        }
 
+                        // Chờ đủ thời gian trước khi đọc throughput.
+                        if (stepWatch.ElapsedMilliseconds < timeSequence)
+                        {
+                            System.Threading.Thread.Sleep(10);
+                            continue;
+                        }
+
+                        stepWatch.Restart();
                         //System.Threading.Thread.Sleep(10);
                         if (flagStep)
                         {
@@ -681,6 +694,8 @@ namespace _5GAutoTool
                                         if (vsg2.Model == "SMW200A")
                                         {
                                             //vsg2.setParameter(2, (double.Parse(isPower) + isATT).ToString("N3"), isFreq, TriggerDelay);
+                                            vsg2.SetFreq(isFreq);
+                                            vsg2.SetPower((double.Parse(isPower) + isATT).ToString("N3"));
                                         }
                                         else
                                         {
@@ -1731,11 +1746,16 @@ private List<string[]> BuildSupportedUlExclusionsMHz()
         {
             flagStep = true;
         }
+        //private static void NRFrequencyLoop(object state)
+        //{
+        //    flagStep = true;
+        //}
+        private static int inbTimerTicks = 0;
         private static void NRFrequencyLoop(object state)
         {
+            System.Threading.Interlocked.Increment(ref inbTimerTicks);
             flagStep = true;
         }
-
         private void countdownTimerInSecond(int iSec, string message)
         {
             TimeSpan remainingTime;

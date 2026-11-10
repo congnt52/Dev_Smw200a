@@ -45,7 +45,7 @@ namespace _5GAutoTool
             {
                 smw.IO = (Ivi.Visa.Interop.IMessage)rm.Open($"TCPIP::{IP}::INSTR", Ivi.Visa.Interop.AccessMode.NO_LOCK, 5, " ");
                 smw.WriteString(Cmd, true);
-                smw.IO.Timeout = 2000;
+                smw.IO.Timeout = 15000;
                 tmp = (object[])smw.ReadList(Ivi.Visa.Interop.IEEEASCIIType.ASCIIType_Any, ",");
                 Manufacturer = tmp[0].ToString();
                 Model = tmp[1].ToString();
@@ -486,8 +486,26 @@ namespace _5GAutoTool
             }
         }
         // Inband Blocking signal OFDM 100RB - SCS 15Khz
+        public void PresetSmw200a()
+        {
+
+           // string path = "/var/user/congnt52/50MHz/IBB_low.savrcltxt";
+            string cmd = $"*RST";
+
+            if (!SendCmdStatusIBB(cmd))
+            {
+                Log($"{Alias} [IBB] Preset SMW200A",
+                    LogLevel.ERROR);
+
+                throw new InvalidOperationException(
+                    "IBB LOW preset failed.");
+            }
+
+            Log($"{Alias} [IBB] Preset completed");
+        }
         public void SetInbandBlockingSignalLower()
         {
+            PresetSmw200a();
             string path = "/var/user/congnt52/50MHz/IBB_low.savrcltxt";
             string cmd = $":SYST:RCL '{path}'";
 
@@ -505,6 +523,7 @@ namespace _5GAutoTool
 
         public void SetInbandBlockingSignalUpper()
         {
+            PresetSmw200a();
             string path = "/var/user/congnt52/50MHz/IBB_high.savrcltxt";
             string cmd = $":SYST:RCL '{path}'";
 
