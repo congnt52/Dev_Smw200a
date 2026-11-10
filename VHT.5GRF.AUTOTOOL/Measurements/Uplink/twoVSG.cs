@@ -607,19 +607,19 @@ namespace _5GAutoTool
                     const int sweepTimeoutMs = 300000; // Giới hạn tạm thời để debug
                     while (sFreqChange <= isFreqToR)
                     {
-                        if (mainForm.measurementBackgroundWorker.CancellationPending)
-                        {
-                            Log("[INB2] Sweep cancelled.");
-                            break;
-                        }
+                        //if (mainForm.measurementBackgroundWorker.CancellationPending)
+                        //{
+                        //    Log("[INB2] Sweep cancelled.");
+                        //    break;
+                        //}
 
-                        if (sweepWatch.ElapsedMilliseconds > sweepTimeoutMs)
-                        {
-                            Log("[INB2] Sweep watchdog timeout.", LogLevel.ERROR);
-                            break;
-                        }
+                        //if (sweepWatch.ElapsedMilliseconds > sweepTimeoutMs)
+                        //{
+                        //    Log("[INB2] Sweep watchdog timeout.", LogLevel.ERROR);
+                        //    break;
+                        //}
 
-                        System.Threading.Thread.Sleep(10);
+                        //System.Threading.Thread.Sleep(10);
                         if (flagStep)
                         {
                             if (!firstStep)

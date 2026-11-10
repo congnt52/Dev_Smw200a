@@ -134,6 +134,53 @@ namespace _5GAutoTool
             return isDone;
         }
 
+        public bool SendCmdStatusIBB(string cmd)
+        {
+            string stage = "START";
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
+            try
+            {
+                stage = "WRITE_COMMAND";
+                Log($"{Alias} [IBB] {stage}");
+                smw.WriteString(cmd, true);
+
+                stage = "WRITE_OPC";
+                Log($"{Alias} [IBB] {stage}");
+                smw.WriteString("*OPC?", true);
+
+                stage = "READ_OPC";
+                Log($"{Alias} [IBB] {stage}");
+                string response = smw.ReadString();
+
+                Log($"{Alias} [IBB] Response=[{response}], " +
+                    $"Elapsed={watch.ElapsedMilliseconds} ms");
+
+                return response != null && response.Trim() == "1";
+            }
+            catch (System.Runtime.InteropServices.COMException ex)
+            {
+                Log(
+                    $"{Alias} [IBB] ERROR at {stage}; " +
+                    $"HRESULT=0x{ex.ErrorCode:X8}; " +
+                    $"Elapsed={watch.ElapsedMilliseconds} ms; " +
+                    $"Message={ex.Message}",
+                    LogLevel.ERROR);
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Log(
+                    $"{Alias} [IBB] ERROR at {stage}; " +
+                    $"Elapsed={watch.ElapsedMilliseconds} ms; " +
+                    $"Message={ex.Message}",
+                    LogLevel.ERROR);
+
+                return false;
+            }
+        }
+
         public void SetFreq(int sour, string freqSet)
         {
             try
@@ -192,10 +239,12 @@ namespace _5GAutoTool
         {
             try
             {
-                smw.WriteString($"SOUR{sour}:BB:NR5G:STAT {ON_OFF}", true);
+                smw.WriteString($":SOUR{sour}:BB:NR5G:STAT {ON_OFF}", true);
+                double triggerdelay_ms = triggerdelay / 1e3;
+                // System.Threading.Thread.Sleep(500);
+                smw.WriteString($":SOUR{sour}:BB:NR5G:TRIG:EXT:TDEL {triggerdelay_ms}", true);
                 System.Threading.Thread.Sleep(500);
-                smw.WriteString($"SOUR{sour}:BB:NR5G:TRIG:EXT:TDEL {triggerdelay}", true);
-                Log($"SMW200A RF{sour} State: {triggerdelay}");
+                Log($"SMW200A RF{sour} State: {triggerdelay} ms");
 
             }
             catch (Exception e)
@@ -439,48 +488,36 @@ namespace _5GAutoTool
         // Inband Blocking signal OFDM 100RB - SCS 15Khz
         public void SetInbandBlockingSignalLower()
         {
-            try
+            string path = "/var/user/congnt52/50MHz/IBB_low.savrcltxt";
+            string cmd = $":SYST:RCL '{path}'";
+
+            if (!SendCmdStatusIBB(cmd))
             {
-                //if (mainForm.measurementBackgroundWorker.CancellationPending) return;
-                //System.Threading.Thread.Sleep(100);
-                //smw.WriteString(":SYST:RCL '/var/user/test3gpp/INB_DFT-s-OFDM_100rb_15kHz_QPSK.savrcltxt'");
-                //Log("SMW200A Recell File: :SYST:RCL '/var/user/test3gpp/INB_DFT-s-OFDM_100rb_15kHz_QPSK.savrcltxt'");
-                //====================
-                string path = "/var/user/congnt52/50MHz/IBB_low.savrcltxt";
-                string cmd = $":SYST:RCL '{path}'";
-                bool tmp = SendCmdStatus(cmd);
-                if (tmp)
-                {
-                    Log($"{Alias} SMW Recall File: {path}");
-                }
+                Log($"{Alias} [IBB] Recall LOW failed: {path}",
+                    LogLevel.ERROR);
+
+                throw new InvalidOperationException(
+                    "IBB LOW waveform recall failed.");
             }
-            catch (Exception)
-            {
-                Log($"ERROR: {Alias} SMW load file fail", LogLevel.ERROR);
-            }
+
+            Log($"{Alias} [IBB] Recall LOW completed: {path}");
         }
 
         public void SetInbandBlockingSignalUpper()
         {
-            try
+            string path = "/var/user/congnt52/50MHz/IBB_high.savrcltxt";
+            string cmd = $":SYST:RCL '{path}'";
+
+            if (!SendCmdStatusIBB(cmd))
             {
-                //if (mainForm.measurementBackgroundWorker.CancellationPending) return;
-                //System.Threading.Thread.Sleep(100);
-                //smw.WriteString(":SYST:RCL '/var/user/test3gpp/INB_DFT-s-OFDM_100rb_15kHz_QPSK.savrcltxt'");
-                //Log("SMW200A Recell File: :SYST:RCL '/var/user/test3gpp/INB_DFT-s-OFDM_100rb_15kHz_QPSK.savrcltxt'");
-                //====================
-                string path = "/var/user/congnt52/50MHz/IBB_high.savrcltxt";
-                string cmd = $":SYST:RCL '{path}'";
-                bool tmp = SendCmdStatus(cmd);
-                if (tmp)
-                {
-                    Log($"{Alias} SMW Recall File: {path}");
-                }
+                Log($"{Alias} [IBB] Recall HIGH failed: {path}",
+                    LogLevel.ERROR);
+
+                throw new InvalidOperationException(
+                    "IBB HIGH waveform recall failed.");
             }
-            catch (Exception)
-            {
-                Log($"ERROR: {Alias} SMW load file fail", LogLevel.ERROR);
-            }
+
+            Log($"{Alias} [IBB] Recall HIGH completed: {path}");
         }
 
         public void NarrowbandLowerBlockingSignal()

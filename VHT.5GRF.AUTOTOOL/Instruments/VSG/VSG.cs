@@ -296,7 +296,7 @@ namespace _5GAutoTool
                 smw200a.SetFreq(source, freqSet);
                 smw200a.SetPower(source, powerSet);
                 smw200a.SetRFTrigger(1, 1, TriggerDelay);
-                System.Threading.Thread.Sleep(2000);  //8.4.2024 - tam thoi de thoi gian tang len
+                System.Threading.Thread.Sleep(200);  //8.4.2024 - tam thoi de thoi gian tang len
                 smw200a.IQOnOff(source, 1);
                 smw200a.RFOnOff(source, 1);
             }
