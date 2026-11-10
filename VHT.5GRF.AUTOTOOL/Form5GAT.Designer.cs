@@ -194,7 +194,8 @@
             this.tOOLSToolStripMenuItem});
             this.menuStripControl.Location = new System.Drawing.Point(0, 0);
             this.menuStripControl.Name = "menuStripControl";
-            this.menuStripControl.Size = new System.Drawing.Size(1721, 28);
+            this.menuStripControl.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
+            this.menuStripControl.Size = new System.Drawing.Size(1377, 24);
             this.menuStripControl.TabIndex = 0;
             this.menuStripControl.Text = "menuStrip1";
             // 
@@ -206,34 +207,34 @@
             this.tsmExport,
             this.exportToolStripMenuItem});
             this.FileToolStripMenuItem.Name = "FileToolStripMenuItem";
-            this.FileToolStripMenuItem.Size = new System.Drawing.Size(49, 24);
+            this.FileToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
             this.FileToolStripMenuItem.Text = "FILE";
             // 
             // tmsDL
             // 
             this.tmsDL.Name = "tmsDL";
-            this.tmsDL.Size = new System.Drawing.Size(233, 26);
+            this.tmsDL.Size = new System.Drawing.Size(186, 22);
             this.tmsDL.Text = "Load Setup Downlink";
             this.tmsDL.Click += new System.EventHandler(this.LoadToolStripMenuItem_Click);
             // 
             // tsmUL
             // 
             this.tsmUL.Name = "tsmUL";
-            this.tsmUL.Size = new System.Drawing.Size(233, 26);
+            this.tsmUL.Size = new System.Drawing.Size(186, 22);
             this.tsmUL.Text = "Load Setup Uplink";
             this.tsmUL.Click += new System.EventHandler(this.tsmUL_Click);
             // 
             // tsmExport
             // 
             this.tsmExport.Name = "tsmExport";
-            this.tsmExport.Size = new System.Drawing.Size(233, 26);
+            this.tsmExport.Size = new System.Drawing.Size(186, 22);
             this.tsmExport.Text = "Export Report";
             this.tsmExport.Click += new System.EventHandler(this.tsmiExport_Click);
             // 
             // exportToolStripMenuItem
             // 
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.exportToolStripMenuItem.Text = "Export listview";
             this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
             // 
@@ -247,62 +248,62 @@
             this.AttenuatorToolStripMenuItem,
             this.toolStripMenuItem1});
             this.InstrumentToolStripMenuItem.Name = "InstrumentToolStripMenuItem";
-            this.InstrumentToolStripMenuItem.Size = new System.Drawing.Size(113, 24);
+            this.InstrumentToolStripMenuItem.Size = new System.Drawing.Size(92, 20);
             this.InstrumentToolStripMenuItem.Text = "INSTRUMENT";
             // 
             // VSAToolStripMenuItem
             // 
             this.VSAToolStripMenuItem.Name = "VSAToolStripMenuItem";
-            this.VSAToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+            this.VSAToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.VSAToolStripMenuItem.Text = "VSA";
             this.VSAToolStripMenuItem.Click += new System.EventHandler(this.VSAToolStripMenuItem_Click);
             // 
             // VSGToolStripMenuItem
             // 
             this.VSGToolStripMenuItem.Name = "VSGToolStripMenuItem";
-            this.VSGToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+            this.VSGToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.VSGToolStripMenuItem.Text = "VSG";
             this.VSGToolStripMenuItem.Click += new System.EventHandler(this.VSGToolStripMenuItem_Click);
             // 
             // DUToolStripMenuItem
             // 
             this.DUToolStripMenuItem.Name = "DUToolStripMenuItem";
-            this.DUToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+            this.DUToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.DUToolStripMenuItem.Text = "DU";
             this.DUToolStripMenuItem.Click += new System.EventHandler(this.DUToolStripMenuItem_Click);
             // 
             // RFSwitchToolStripMenuItem
             // 
             this.RFSwitchToolStripMenuItem.Name = "RFSwitchToolStripMenuItem";
-            this.RFSwitchToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+            this.RFSwitchToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.RFSwitchToolStripMenuItem.Text = "RF SWITCH";
             this.RFSwitchToolStripMenuItem.Click += new System.EventHandler(this.RFSwitchToolStripMenuItem_Click);
             // 
             // AttenuatorToolStripMenuItem
             // 
             this.AttenuatorToolStripMenuItem.Name = "AttenuatorToolStripMenuItem";
-            this.AttenuatorToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+            this.AttenuatorToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.AttenuatorToolStripMenuItem.Text = "ATTENUATOR";
             this.AttenuatorToolStripMenuItem.Click += new System.EventHandler(this.AttenuatorToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(182, 26);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(147, 22);
             this.toolStripMenuItem1.Text = "RRU";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.ToolStripMenuItem1_Click);
             // 
             // HelpToolStripMenuItem
             // 
             this.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem";
-            this.HelpToolStripMenuItem.Size = new System.Drawing.Size(57, 24);
+            this.HelpToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.HelpToolStripMenuItem.Text = "HELP";
             this.HelpToolStripMenuItem.Click += new System.EventHandler(this.HelpToolStripMenuItem_Click);
             // 
             // diagramsToolStripMenuItem
             // 
             this.diagramsToolStripMenuItem.Name = "diagramsToolStripMenuItem";
-            this.diagramsToolStripMenuItem.Size = new System.Drawing.Size(98, 24);
+            this.diagramsToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
             this.diagramsToolStripMenuItem.Text = "DIAGRAMS";
             this.diagramsToolStripMenuItem.Click += new System.EventHandler(this.diagramsToolStripMenuItem_Click);
             // 
@@ -312,30 +313,29 @@
             this.duplicateFromFileToolStripMenuItem,
             this.createATTFilesToolStripMenuItem});
             this.tOOLSToolStripMenuItem.Name = "tOOLSToolStripMenuItem";
-            this.tOOLSToolStripMenuItem.Size = new System.Drawing.Size(67, 24);
+            this.tOOLSToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
             this.tOOLSToolStripMenuItem.Text = "TOOLS";
             // 
             // duplicateFromFileToolStripMenuItem
             // 
             this.duplicateFromFileToolStripMenuItem.Name = "duplicateFromFileToolStripMenuItem";
-            this.duplicateFromFileToolStripMenuItem.Size = new System.Drawing.Size(221, 26);
+            this.duplicateFromFileToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.duplicateFromFileToolStripMenuItem.Text = "Duplicate From File";
             this.duplicateFromFileToolStripMenuItem.Click += new System.EventHandler(this.duplicateFromFileToolStripMenuItem_Click);
             // 
             // createATTFilesToolStripMenuItem
             // 
             this.createATTFilesToolStripMenuItem.Name = "createATTFilesToolStripMenuItem";
-            this.createATTFilesToolStripMenuItem.Size = new System.Drawing.Size(221, 26);
+            this.createATTFilesToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.createATTFilesToolStripMenuItem.Text = "Create ATT Files";
             this.createATTFilesToolStripMenuItem.Click += new System.EventHandler(this.createATTFilesToolStripMenuItem_Click);
             // 
             // txtRRUSerial
             // 
             this.txtRRUSerial.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRRUSerial.Location = new System.Drawing.Point(102, 146);
-            this.txtRRUSerial.Margin = new System.Windows.Forms.Padding(4);
+            this.txtRRUSerial.Location = new System.Drawing.Point(82, 117);
             this.txtRRUSerial.Name = "txtRRUSerial";
-            this.txtRRUSerial.Size = new System.Drawing.Size(258, 46);
+            this.txtRRUSerial.Size = new System.Drawing.Size(207, 38);
             this.txtRRUSerial.TabIndex = 10;
             this.txtRRUSerial.Text = "MRU2146";
             // 
@@ -343,10 +343,9 @@
             // 
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label26.Location = new System.Drawing.Point(9, 159);
-            this.label26.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label26.Location = new System.Drawing.Point(7, 127);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(91, 25);
+            this.label26.Size = new System.Drawing.Size(75, 20);
             this.label26.TabIndex = 1;
             this.label26.Text = "RRU S/N";
             this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -363,11 +362,9 @@
             this.grpControl.Controls.Add(this.label26);
             this.grpControl.Controls.Add(this.txtRRUSerial);
             this.grpControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpControl.Location = new System.Drawing.Point(4, 4);
-            this.grpControl.Margin = new System.Windows.Forms.Padding(4);
+            this.grpControl.Location = new System.Drawing.Point(3, 3);
             this.grpControl.Name = "grpControl";
-            this.grpControl.Padding = new System.Windows.Forms.Padding(4);
-            this.grpControl.Size = new System.Drawing.Size(367, 304);
+            this.grpControl.Size = new System.Drawing.Size(294, 243);
             this.grpControl.TabIndex = 11;
             this.grpControl.TabStop = false;
             this.grpControl.Text = "OQC STATION";
@@ -377,10 +374,10 @@
             this.lblPassFail.AutoSize = true;
             this.lblPassFail.Font = new System.Drawing.Font("Arial Rounded MT Bold", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPassFail.ForeColor = System.Drawing.Color.Blue;
-            this.lblPassFail.Location = new System.Drawing.Point(130, 198);
+            this.lblPassFail.Location = new System.Drawing.Point(104, 158);
             this.lblPassFail.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblPassFail.Name = "lblPassFail";
-            this.lblPassFail.Size = new System.Drawing.Size(98, 34);
+            this.lblPassFail.Size = new System.Drawing.Size(78, 28);
             this.lblPassFail.TabIndex = 16;
             this.lblPassFail.Text = "STOP";
             // 
@@ -391,10 +388,9 @@
             this.lblStatusProgress.AutoSize = true;
             this.lblStatusProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStatusProgress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.lblStatusProgress.Location = new System.Drawing.Point(10, 276);
-            this.lblStatusProgress.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblStatusProgress.Location = new System.Drawing.Point(8, 221);
             this.lblStatusProgress.Name = "lblStatusProgress";
-            this.lblStatusProgress.Size = new System.Drawing.Size(40, 20);
+            this.lblStatusProgress.Size = new System.Drawing.Size(33, 16);
             this.lblStatusProgress.TabIndex = 14;
             this.lblStatusProgress.Text = "N/A";
             this.lblStatusProgress.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -405,10 +401,9 @@
             this.lblRuntime.AutoSize = true;
             this.lblRuntime.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRuntime.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblRuntime.Location = new System.Drawing.Point(118, 245);
-            this.lblRuntime.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblRuntime.Location = new System.Drawing.Point(94, 196);
             this.lblRuntime.Name = "lblRuntime";
-            this.lblRuntime.Size = new System.Drawing.Size(122, 25);
+            this.lblRuntime.Size = new System.Drawing.Size(99, 20);
             this.lblRuntime.TabIndex = 14;
             this.lblRuntime.Text = "00 : 00 : 00";
             this.lblRuntime.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -416,10 +411,9 @@
             // picLogoVHT
             // 
             this.picLogoVHT.Image = ((System.Drawing.Image)(resources.GetObject("picLogoVHT.Image")));
-            this.picLogoVHT.Location = new System.Drawing.Point(8, 32);
-            this.picLogoVHT.Margin = new System.Windows.Forms.Padding(4);
+            this.picLogoVHT.Location = new System.Drawing.Point(6, 26);
             this.picLogoVHT.Name = "picLogoVHT";
-            this.picLogoVHT.Size = new System.Drawing.Size(105, 110);
+            this.picLogoVHT.Size = new System.Drawing.Size(84, 88);
             this.picLogoVHT.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picLogoVHT.TabIndex = 15;
             this.picLogoVHT.TabStop = false;
@@ -429,11 +423,9 @@
             this.groupBox1.Controls.Add(this.btnStop);
             this.groupBox1.Controls.Add(this.btnConnect);
             this.groupBox1.Controls.Add(this.btnStart);
-            this.groupBox1.Location = new System.Drawing.Point(120, 29);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Location = new System.Drawing.Point(96, 23);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(232, 80);
+            this.groupBox1.Size = new System.Drawing.Size(186, 64);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             // 
@@ -441,10 +433,9 @@
             // 
             this.btnStop.Enabled = false;
             this.btnStop.Image = ((System.Drawing.Image)(resources.GetObject("btnStop.Image")));
-            this.btnStop.Location = new System.Drawing.Point(174, 20);
-            this.btnStop.Margin = new System.Windows.Forms.Padding(4);
+            this.btnStop.Location = new System.Drawing.Point(139, 16);
             this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(51, 48);
+            this.btnStop.Size = new System.Drawing.Size(41, 38);
             this.btnStop.TabIndex = 5;
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
@@ -452,10 +443,9 @@
             // btnConnect
             // 
             this.btnConnect.Image = ((System.Drawing.Image)(resources.GetObject("btnConnect.Image")));
-            this.btnConnect.Location = new System.Drawing.Point(8, 20);
-            this.btnConnect.Margin = new System.Windows.Forms.Padding(4);
+            this.btnConnect.Location = new System.Drawing.Point(6, 16);
             this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(51, 48);
+            this.btnConnect.Size = new System.Drawing.Size(41, 38);
             this.btnConnect.TabIndex = 8;
             this.btnConnect.UseVisualStyleBackColor = true;
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
@@ -466,8 +456,7 @@
             this.btnStart.AutoSize = true;
             this.btnStart.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnStart.Image = ((System.Drawing.Image)(resources.GetObject("btnStart.Image")));
-            this.btnStart.Location = new System.Drawing.Point(92, 20);
-            this.btnStart.Margin = new System.Windows.Forms.Padding(4);
+            this.btnStart.Location = new System.Drawing.Point(74, 16);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(38, 38);
             this.btnStart.TabIndex = 7;
@@ -497,20 +486,18 @@
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(445, 253);
+            this.tabControl1.Size = new System.Drawing.Size(355, 200);
             this.tabControl1.TabIndex = 30;
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.lvwResult);
-            this.tabPage1.Location = new System.Drawing.Point(4, 33);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage1.Location = new System.Drawing.Point(4, 27);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage1.Size = new System.Drawing.Size(437, 216);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Size = new System.Drawing.Size(347, 169);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "RESULT VIEW";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -532,10 +519,10 @@
             this.lvwResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lvwResult.GridLines = true;
             this.lvwResult.HideSelection = false;
-            this.lvwResult.Location = new System.Drawing.Point(4, 4);
-            this.lvwResult.Margin = new System.Windows.Forms.Padding(5);
+            this.lvwResult.Location = new System.Drawing.Point(3, 3);
+            this.lvwResult.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lvwResult.Name = "lvwResult";
-            this.lvwResult.Size = new System.Drawing.Size(429, 208);
+            this.lvwResult.Size = new System.Drawing.Size(341, 163);
             this.lvwResult.TabIndex = 7;
             this.lvwResult.UseCompatibleStateImageBehavior = false;
             this.lvwResult.View = System.Windows.Forms.View.Details;
@@ -592,11 +579,10 @@
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.chart1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 33);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage2.Location = new System.Drawing.Point(4, 27);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage2.Size = new System.Drawing.Size(437, 216);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage2.Size = new System.Drawing.Size(348, 171);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "CHART";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -610,10 +596,9 @@
             this.chart1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(12, 8);
-            this.chart1.Margin = new System.Windows.Forms.Padding(4);
+            this.chart1.Location = new System.Drawing.Point(10, 6);
             this.chart1.Name = "chart1";
-            this.chart1.Size = new System.Drawing.Size(4050, 2338);
+            this.chart1.Size = new System.Drawing.Size(3240, 1875);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             title1.Name = "Power";
@@ -622,11 +607,10 @@
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.grdParams);
-            this.tabPage3.Location = new System.Drawing.Point(4, 33);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage3.Location = new System.Drawing.Point(4, 27);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage3.Size = new System.Drawing.Size(437, 216);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage3.Size = new System.Drawing.Size(348, 171);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "PARAMS";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -636,11 +620,10 @@
             this.grdParams.BackgroundColor = System.Drawing.SystemColors.Window;
             this.grdParams.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdParams.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grdParams.Location = new System.Drawing.Point(4, 4);
-            this.grdParams.Margin = new System.Windows.Forms.Padding(4);
+            this.grdParams.Location = new System.Drawing.Point(3, 3);
             this.grdParams.Name = "grdParams";
             this.grdParams.RowHeadersWidth = 51;
-            this.grdParams.Size = new System.Drawing.Size(429, 208);
+            this.grdParams.Size = new System.Drawing.Size(342, 165);
             this.grdParams.TabIndex = 0;
             // 
             // tabLogs
@@ -649,20 +632,18 @@
             this.tabLogs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabLogs.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabLogs.Location = new System.Drawing.Point(0, 0);
-            this.tabLogs.Margin = new System.Windows.Forms.Padding(4);
             this.tabLogs.Name = "tabLogs";
             this.tabLogs.SelectedIndex = 0;
-            this.tabLogs.Size = new System.Drawing.Size(895, 253);
+            this.tabLogs.Size = new System.Drawing.Size(716, 200);
             this.tabLogs.TabIndex = 1;
             // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.lvwLog);
-            this.tabPage4.Location = new System.Drawing.Point(4, 33);
-            this.tabPage4.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage4.Location = new System.Drawing.Point(4, 27);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage4.Size = new System.Drawing.Size(887, 216);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage4.Size = new System.Drawing.Size(708, 169);
             this.tabPage4.TabIndex = 0;
             this.tabPage4.Text = "LOG";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -671,10 +652,9 @@
             // 
             this.lvwLog.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvwLog.HideSelection = false;
-            this.lvwLog.Location = new System.Drawing.Point(4, 4);
-            this.lvwLog.Margin = new System.Windows.Forms.Padding(4);
+            this.lvwLog.Location = new System.Drawing.Point(3, 3);
             this.lvwLog.Name = "lvwLog";
-            this.lvwLog.Size = new System.Drawing.Size(879, 208);
+            this.lvwLog.Size = new System.Drawing.Size(702, 163);
             this.lvwLog.TabIndex = 0;
             this.lvwLog.UseCompatibleStateImageBehavior = false;
             // 
@@ -686,10 +666,9 @@
             this.tableLayoutPanel2.SetColumnSpan(this.runningTask, 2);
             this.runningTask.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.runningTask.ForeColor = System.Drawing.Color.Black;
-            this.runningTask.Location = new System.Drawing.Point(4, 569);
-            this.runningTask.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.runningTask.Location = new System.Drawing.Point(3, 454);
             this.runningTask.Name = "runningTask";
-            this.runningTask.Size = new System.Drawing.Size(37, 38);
+            this.runningTask.Size = new System.Drawing.Size(31, 30);
             this.runningTask.TabIndex = 15;
             this.runningTask.Text = "N/A";
             this.runningTask.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -699,19 +678,18 @@
             this.proLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.proLoad.Location = new System.Drawing.Point(4, 6);
-            this.proLoad.Margin = new System.Windows.Forms.Padding(4);
+            this.proLoad.Location = new System.Drawing.Point(3, 5);
             this.proLoad.Name = "proLoad";
-            this.proLoad.Size = new System.Drawing.Size(473, 22);
+            this.proLoad.Size = new System.Drawing.Size(377, 17);
             this.proLoad.TabIndex = 12;
             // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 4;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 375F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 284F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 227F));
             this.tableLayoutPanel2.Controls.Add(this.grpConfig, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.realTimeClockLabel1, 3, 2);
             this.tableLayoutPanel2.Controls.Add(this.groupBox4, 0, 1);
@@ -720,14 +698,13 @@
             this.tableLayoutPanel2.Controls.Add(this.runningTask, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.splitContainer1, 1, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 28);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 3;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 312F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 250F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1721, 607);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1377, 484);
             this.tableLayoutPanel2.TabIndex = 33;
             // 
             // grpConfig
@@ -738,11 +715,9 @@
             this.grpConfig.Controls.Add(this.groupBox5);
             this.grpConfig.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grpConfig.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpConfig.Location = new System.Drawing.Point(379, 4);
-            this.grpConfig.Margin = new System.Windows.Forms.Padding(4);
+            this.grpConfig.Location = new System.Drawing.Point(303, 3);
             this.grpConfig.Name = "grpConfig";
-            this.grpConfig.Padding = new System.Windows.Forms.Padding(4);
-            this.grpConfig.Size = new System.Drawing.Size(1338, 304);
+            this.grpConfig.Size = new System.Drawing.Size(1071, 244);
             this.grpConfig.TabIndex = 7;
             this.grpConfig.TabStop = false;
             this.grpConfig.Text = "CONFIGURATION";
@@ -767,11 +742,9 @@
             this.groupBox6.Controls.Add(this.label6);
             this.groupBox6.Controls.Add(this.label9);
             this.groupBox6.Controls.Add(this.label8);
-            this.groupBox6.Location = new System.Drawing.Point(546, 29);
-            this.groupBox6.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox6.Location = new System.Drawing.Point(437, 23);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox6.Size = new System.Drawing.Size(468, 266);
+            this.groupBox6.Size = new System.Drawing.Size(374, 213);
             this.groupBox6.TabIndex = 30;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "RRU Config";
@@ -779,20 +752,18 @@
             // txtFreqTo
             // 
             this.txtFreqTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFreqTo.Location = new System.Drawing.Point(325, 213);
-            this.txtFreqTo.Margin = new System.Windows.Forms.Padding(4);
+            this.txtFreqTo.Location = new System.Drawing.Point(260, 170);
             this.txtFreqTo.Name = "txtFreqTo";
-            this.txtFreqTo.Size = new System.Drawing.Size(83, 30);
+            this.txtFreqTo.Size = new System.Drawing.Size(67, 26);
             this.txtFreqTo.TabIndex = 33;
             this.txtFreqTo.Text = "2400";
             // 
             // txtFreqFrom
             // 
             this.txtFreqFrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFreqFrom.Location = new System.Drawing.Point(179, 213);
-            this.txtFreqFrom.Margin = new System.Windows.Forms.Padding(4);
+            this.txtFreqFrom.Location = new System.Drawing.Point(143, 170);
             this.txtFreqFrom.Name = "txtFreqFrom";
-            this.txtFreqFrom.Size = new System.Drawing.Size(83, 30);
+            this.txtFreqFrom.Size = new System.Drawing.Size(67, 26);
             this.txtFreqFrom.TabIndex = 32;
             this.txtFreqFrom.Text = "2300";
             // 
@@ -800,10 +771,9 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(8, 216);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(6, 173);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(148, 25);
+            this.label1.Size = new System.Drawing.Size(120, 20);
             this.label1.TabIndex = 29;
             this.label1.Text = "Operating Freq.";
             // 
@@ -811,10 +781,9 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(285, 216);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(228, 173);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(24, 25);
+            this.label4.Size = new System.Drawing.Size(18, 20);
             this.label4.TabIndex = 31;
             this.label4.Text = " -";
             // 
@@ -822,10 +791,9 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(416, 216);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(333, 173);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 25);
+            this.label2.Size = new System.Drawing.Size(42, 20);
             this.label2.TabIndex = 31;
             this.label2.Text = "MHz";
             // 
@@ -833,10 +801,9 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(416, 121);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Location = new System.Drawing.Point(333, 97);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(48, 25);
+            this.label11.Size = new System.Drawing.Size(37, 20);
             this.label11.TabIndex = 26;
             this.label11.Text = "mW";
             // 
@@ -846,20 +813,18 @@
             this.cbbRruType.Items.AddRange(new object[] {
             "32T32R",
             "8T8R"});
-            this.cbbRruType.Location = new System.Drawing.Point(179, 32);
-            this.cbbRruType.Margin = new System.Windows.Forms.Padding(4);
+            this.cbbRruType.Location = new System.Drawing.Point(143, 26);
             this.cbbRruType.Name = "cbbRruType";
-            this.cbbRruType.Size = new System.Drawing.Size(109, 32);
+            this.cbbRruType.Size = new System.Drawing.Size(88, 26);
             this.cbbRruType.TabIndex = 28;
             this.cbbRruType.SelectedIndexChanged += new System.EventHandler(this.cbbRruType_SelectedIndexChanged);
             // 
             // textBandwidth
             // 
             this.textBandwidth.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBandwidth.Location = new System.Drawing.Point(179, 162);
-            this.textBandwidth.Margin = new System.Windows.Forms.Padding(4);
+            this.textBandwidth.Location = new System.Drawing.Point(143, 130);
             this.textBandwidth.Name = "textBandwidth";
-            this.textBandwidth.Size = new System.Drawing.Size(83, 30);
+            this.textBandwidth.Size = new System.Drawing.Size(67, 26);
             this.textBandwidth.TabIndex = 21;
             this.textBandwidth.Text = "50";
             // 
@@ -867,10 +832,9 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(8, 165);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Location = new System.Drawing.Point(6, 132);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(107, 25);
+            this.label7.Size = new System.Drawing.Size(87, 20);
             this.label7.TabIndex = 20;
             this.label7.Text = "Bandwildth";
             // 
@@ -878,10 +842,9 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(8, 35);
-            this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label16.Location = new System.Drawing.Point(6, 28);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(57, 25);
+            this.label16.Size = new System.Drawing.Size(43, 20);
             this.label16.TabIndex = 27;
             this.label16.Text = "Type";
             this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -889,10 +852,9 @@
             // txtPWR
             // 
             this.txtPWR.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPWR.Location = new System.Drawing.Point(331, 121);
-            this.txtPWR.Margin = new System.Windows.Forms.Padding(4);
+            this.txtPWR.Location = new System.Drawing.Point(265, 97);
             this.txtPWR.Name = "txtPWR";
-            this.txtPWR.Size = new System.Drawing.Size(80, 30);
+            this.txtPWR.Size = new System.Drawing.Size(65, 26);
             this.txtPWR.TabIndex = 25;
             this.txtPWR.Text = "1000";
             this.txtPWR.TextChanged += new System.EventHandler(this.txtPWR_TextChanged);
@@ -900,10 +862,9 @@
             // txtFrequency
             // 
             this.txtFrequency.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFrequency.Location = new System.Drawing.Point(179, 71);
-            this.txtFrequency.Margin = new System.Windows.Forms.Padding(4);
+            this.txtFrequency.Location = new System.Drawing.Point(143, 57);
             this.txtFrequency.Name = "txtFrequency";
-            this.txtFrequency.Size = new System.Drawing.Size(83, 30);
+            this.txtFrequency.Size = new System.Drawing.Size(67, 26);
             this.txtFrequency.TabIndex = 16;
             this.txtFrequency.Text = "2350";
             // 
@@ -911,10 +872,9 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(271, 121);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Location = new System.Drawing.Point(217, 97);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(52, 25);
+            this.label10.Size = new System.Drawing.Size(42, 20);
             this.label10.TabIndex = 25;
             this.label10.Text = "dBm";
             // 
@@ -922,20 +882,18 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(8, 74);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(6, 59);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(110, 25);
+            this.label3.Size = new System.Drawing.Size(88, 20);
             this.label3.TabIndex = 12;
             this.label3.Text = "Frequency ";
             // 
             // txtPower
             // 
             this.txtPower.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPower.Location = new System.Drawing.Point(179, 119);
-            this.txtPower.Margin = new System.Windows.Forms.Padding(4);
+            this.txtPower.Location = new System.Drawing.Point(143, 95);
             this.txtPower.Name = "txtPower";
-            this.txtPower.Size = new System.Drawing.Size(83, 30);
+            this.txtPower.Size = new System.Drawing.Size(67, 26);
             this.txtPower.TabIndex = 24;
             this.txtPower.Text = "30";
             // 
@@ -943,10 +901,9 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(271, 74);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Location = new System.Drawing.Point(217, 59);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(53, 25);
+            this.label6.Size = new System.Drawing.Size(42, 20);
             this.label6.TabIndex = 19;
             this.label6.Text = "MHz";
             // 
@@ -954,10 +911,9 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(8, 121);
-            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label9.Location = new System.Drawing.Point(6, 97);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(67, 25);
+            this.label9.Size = new System.Drawing.Size(53, 20);
             this.label9.TabIndex = 23;
             this.label9.Text = "Power";
             // 
@@ -965,10 +921,9 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(271, 165);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Location = new System.Drawing.Point(217, 132);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(53, 25);
+            this.label8.Size = new System.Drawing.Size(42, 20);
             this.label8.TabIndex = 22;
             this.label8.Text = "MHz";
             // 
@@ -985,11 +940,9 @@
             this.groupBox3.Controls.Add(this.label13);
             this.groupBox3.Controls.Add(this.txtOOB1);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(1022, 29);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox3.Location = new System.Drawing.Point(818, 23);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox3.Size = new System.Drawing.Size(368, 266);
+            this.groupBox3.Size = new System.Drawing.Size(294, 213);
             this.groupBox3.TabIndex = 29;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Out of band Blocking";
@@ -1000,10 +953,9 @@
             this.chckExcludeCoLoRange.Checked = true;
             this.chckExcludeCoLoRange.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chckExcludeCoLoRange.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chckExcludeCoLoRange.Location = new System.Drawing.Point(8, 146);
-            this.chckExcludeCoLoRange.Margin = new System.Windows.Forms.Padding(4);
+            this.chckExcludeCoLoRange.Location = new System.Drawing.Point(6, 117);
             this.chckExcludeCoLoRange.Name = "chckExcludeCoLoRange";
-            this.chckExcludeCoLoRange.Size = new System.Drawing.Size(270, 29);
+            this.chckExcludeCoLoRange.Size = new System.Drawing.Size(218, 24);
             this.chckExcludeCoLoRange.TabIndex = 35;
             this.chckExcludeCoLoRange.Text = "Exclude Co-location Bands";
             this.chckExcludeCoLoRange.UseVisualStyleBackColor = true;
@@ -1013,10 +965,9 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(229, 64);
-            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label14.Location = new System.Drawing.Point(183, 51);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(53, 25);
+            this.label14.Size = new System.Drawing.Size(42, 20);
             this.label14.TabIndex = 34;
             this.label14.Text = "MHz";
             // 
@@ -1024,20 +975,18 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(2, 62);
-            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label15.Location = new System.Drawing.Point(2, 50);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(119, 25);
+            this.label15.Size = new System.Drawing.Size(97, 20);
             this.label15.TabIndex = 33;
             this.label15.Text = "Delta_Foob:";
             // 
             // deltaFoob
             // 
             this.deltaFoob.Enabled = false;
-            this.deltaFoob.Location = new System.Drawing.Point(142, 60);
-            this.deltaFoob.Margin = new System.Windows.Forms.Padding(4);
+            this.deltaFoob.Location = new System.Drawing.Point(114, 48);
             this.deltaFoob.Name = "deltaFoob";
-            this.deltaFoob.Size = new System.Drawing.Size(62, 29);
+            this.deltaFoob.Size = new System.Drawing.Size(50, 24);
             this.deltaFoob.TabIndex = 32;
             this.deltaFoob.Text = "60";
             // 
@@ -1047,10 +996,9 @@
             this.chkOOB3.Checked = true;
             this.chkOOB3.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkOOB3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkOOB3.Location = new System.Drawing.Point(8, 29);
-            this.chkOOB3.Margin = new System.Windows.Forms.Padding(4);
+            this.chkOOB3.Location = new System.Drawing.Point(6, 23);
             this.chkOOB3.Name = "chkOOB3";
-            this.chkOOB3.Size = new System.Drawing.Size(181, 29);
+            this.chkOOB3.Size = new System.Drawing.Size(147, 24);
             this.chkOOB3.TabIndex = 31;
             this.chkOOB3.Text = "CW Freq. Range";
             this.chkOOB3.UseVisualStyleBackColor = true;
@@ -1060,10 +1008,9 @@
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(308, 100);
-            this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label18.Location = new System.Drawing.Point(246, 80);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(53, 25);
+            this.label18.Size = new System.Drawing.Size(42, 20);
             this.label18.TabIndex = 28;
             this.label18.Text = "MHz";
             // 
@@ -1071,20 +1018,18 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(212, 100);
-            this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label17.Location = new System.Drawing.Point(170, 80);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(19, 25);
+            this.label17.Size = new System.Drawing.Size(14, 20);
             this.label17.TabIndex = 27;
             this.label17.Text = "-";
             // 
             // txtOOB2
             // 
             this.txtOOB2.Enabled = false;
-            this.txtOOB2.Location = new System.Drawing.Point(238, 99);
-            this.txtOOB2.Margin = new System.Windows.Forms.Padding(4);
+            this.txtOOB2.Location = new System.Drawing.Point(190, 79);
             this.txtOOB2.Name = "txtOOB2";
-            this.txtOOB2.Size = new System.Drawing.Size(62, 29);
+            this.txtOOB2.Size = new System.Drawing.Size(50, 24);
             this.txtOOB2.TabIndex = 25;
             this.txtOOB2.Text = "12750";
             // 
@@ -1092,20 +1037,18 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(2, 100);
-            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label13.Location = new System.Drawing.Point(2, 80);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(134, 25);
+            this.label13.Size = new System.Drawing.Size(108, 20);
             this.label13.TabIndex = 23;
             this.label13.Text = "Meas. Range:";
             // 
             // txtOOB1
             // 
             this.txtOOB1.Enabled = false;
-            this.txtOOB1.Location = new System.Drawing.Point(142, 99);
-            this.txtOOB1.Margin = new System.Windows.Forms.Padding(4);
+            this.txtOOB1.Location = new System.Drawing.Point(114, 79);
             this.txtOOB1.Name = "txtOOB1";
-            this.txtOOB1.Size = new System.Drawing.Size(62, 29);
+            this.txtOOB1.Size = new System.Drawing.Size(50, 24);
             this.txtOOB1.TabIndex = 20;
             this.txtOOB1.Text = "1";
             // 
@@ -1144,11 +1087,9 @@
             this.groupBox5.Controls.Add(this.chkPort5);
             this.groupBox5.Controls.Add(this.chkPort2);
             this.groupBox5.Controls.Add(this.chkPort1);
-            this.groupBox5.Location = new System.Drawing.Point(8, 29);
-            this.groupBox5.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox5.Location = new System.Drawing.Point(6, 23);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox5.Size = new System.Drawing.Size(531, 266);
+            this.groupBox5.Size = new System.Drawing.Size(425, 213);
             this.groupBox5.TabIndex = 10;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Measuring Port";
@@ -1156,10 +1097,9 @@
             // chkPort32
             // 
             this.chkPort32.AutoSize = true;
-            this.chkPort32.Location = new System.Drawing.Point(461, 135);
-            this.chkPort32.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort32.Location = new System.Drawing.Point(369, 108);
             this.chkPort32.Name = "chkPort32";
-            this.chkPort32.Size = new System.Drawing.Size(64, 28);
+            this.chkPort32.Size = new System.Drawing.Size(53, 22);
             this.chkPort32.TabIndex = 32;
             this.chkPort32.Text = "P32";
             this.chkPort32.UseVisualStyleBackColor = true;
@@ -1167,10 +1107,9 @@
             // chkPort31
             // 
             this.chkPort31.AutoSize = true;
-            this.chkPort31.Location = new System.Drawing.Point(461, 101);
-            this.chkPort31.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort31.Location = new System.Drawing.Point(369, 81);
             this.chkPort31.Name = "chkPort31";
-            this.chkPort31.Size = new System.Drawing.Size(64, 28);
+            this.chkPort31.Size = new System.Drawing.Size(53, 22);
             this.chkPort31.TabIndex = 33;
             this.chkPort31.Text = "P31";
             this.chkPort31.UseVisualStyleBackColor = true;
@@ -1178,10 +1117,9 @@
             // chkPort30
             // 
             this.chkPort30.AutoSize = true;
-            this.chkPort30.Location = new System.Drawing.Point(461, 66);
-            this.chkPort30.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort30.Location = new System.Drawing.Point(369, 53);
             this.chkPort30.Name = "chkPort30";
-            this.chkPort30.Size = new System.Drawing.Size(64, 28);
+            this.chkPort30.Size = new System.Drawing.Size(53, 22);
             this.chkPort30.TabIndex = 34;
             this.chkPort30.Text = "P30";
             this.chkPort30.UseVisualStyleBackColor = true;
@@ -1189,10 +1127,9 @@
             // chkPort29
             // 
             this.chkPort29.AutoSize = true;
-            this.chkPort29.Location = new System.Drawing.Point(461, 32);
-            this.chkPort29.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort29.Location = new System.Drawing.Point(369, 26);
             this.chkPort29.Name = "chkPort29";
-            this.chkPort29.Size = new System.Drawing.Size(64, 28);
+            this.chkPort29.Size = new System.Drawing.Size(53, 22);
             this.chkPort29.TabIndex = 35;
             this.chkPort29.Text = "P29";
             this.chkPort29.UseVisualStyleBackColor = true;
@@ -1200,10 +1137,9 @@
             // chkPort28
             // 
             this.chkPort28.AutoSize = true;
-            this.chkPort28.Location = new System.Drawing.Point(398, 135);
-            this.chkPort28.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort28.Location = new System.Drawing.Point(318, 108);
             this.chkPort28.Name = "chkPort28";
-            this.chkPort28.Size = new System.Drawing.Size(64, 28);
+            this.chkPort28.Size = new System.Drawing.Size(53, 22);
             this.chkPort28.TabIndex = 28;
             this.chkPort28.Text = "P28";
             this.chkPort28.UseVisualStyleBackColor = true;
@@ -1211,10 +1147,9 @@
             // chkPort27
             // 
             this.chkPort27.AutoSize = true;
-            this.chkPort27.Location = new System.Drawing.Point(398, 101);
-            this.chkPort27.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort27.Location = new System.Drawing.Point(318, 81);
             this.chkPort27.Name = "chkPort27";
-            this.chkPort27.Size = new System.Drawing.Size(64, 28);
+            this.chkPort27.Size = new System.Drawing.Size(53, 22);
             this.chkPort27.TabIndex = 29;
             this.chkPort27.Text = "P27";
             this.chkPort27.UseVisualStyleBackColor = true;
@@ -1222,10 +1157,9 @@
             // chkPort26
             // 
             this.chkPort26.AutoSize = true;
-            this.chkPort26.Location = new System.Drawing.Point(398, 66);
-            this.chkPort26.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort26.Location = new System.Drawing.Point(318, 53);
             this.chkPort26.Name = "chkPort26";
-            this.chkPort26.Size = new System.Drawing.Size(64, 28);
+            this.chkPort26.Size = new System.Drawing.Size(53, 22);
             this.chkPort26.TabIndex = 30;
             this.chkPort26.Text = "P26";
             this.chkPort26.UseVisualStyleBackColor = true;
@@ -1233,10 +1167,9 @@
             // chkPort25
             // 
             this.chkPort25.AutoSize = true;
-            this.chkPort25.Location = new System.Drawing.Point(398, 32);
-            this.chkPort25.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort25.Location = new System.Drawing.Point(318, 26);
             this.chkPort25.Name = "chkPort25";
-            this.chkPort25.Size = new System.Drawing.Size(64, 28);
+            this.chkPort25.Size = new System.Drawing.Size(53, 22);
             this.chkPort25.TabIndex = 31;
             this.chkPort25.Text = "P25";
             this.chkPort25.UseVisualStyleBackColor = true;
@@ -1244,10 +1177,9 @@
             // chkPort24
             // 
             this.chkPort24.AutoSize = true;
-            this.chkPort24.Location = new System.Drawing.Point(334, 135);
-            this.chkPort24.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort24.Location = new System.Drawing.Point(267, 108);
             this.chkPort24.Name = "chkPort24";
-            this.chkPort24.Size = new System.Drawing.Size(64, 28);
+            this.chkPort24.Size = new System.Drawing.Size(53, 22);
             this.chkPort24.TabIndex = 24;
             this.chkPort24.Text = "P24";
             this.chkPort24.UseVisualStyleBackColor = true;
@@ -1255,10 +1187,9 @@
             // chkPort23
             // 
             this.chkPort23.AutoSize = true;
-            this.chkPort23.Location = new System.Drawing.Point(334, 101);
-            this.chkPort23.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort23.Location = new System.Drawing.Point(267, 81);
             this.chkPort23.Name = "chkPort23";
-            this.chkPort23.Size = new System.Drawing.Size(64, 28);
+            this.chkPort23.Size = new System.Drawing.Size(53, 22);
             this.chkPort23.TabIndex = 25;
             this.chkPort23.Text = "P23";
             this.chkPort23.UseVisualStyleBackColor = true;
@@ -1266,10 +1197,9 @@
             // chkPort22
             // 
             this.chkPort22.AutoSize = true;
-            this.chkPort22.Location = new System.Drawing.Point(334, 66);
-            this.chkPort22.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort22.Location = new System.Drawing.Point(267, 53);
             this.chkPort22.Name = "chkPort22";
-            this.chkPort22.Size = new System.Drawing.Size(64, 28);
+            this.chkPort22.Size = new System.Drawing.Size(53, 22);
             this.chkPort22.TabIndex = 26;
             this.chkPort22.Text = "P22";
             this.chkPort22.UseVisualStyleBackColor = true;
@@ -1277,10 +1207,9 @@
             // chkPort21
             // 
             this.chkPort21.AutoSize = true;
-            this.chkPort21.Location = new System.Drawing.Point(334, 32);
-            this.chkPort21.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort21.Location = new System.Drawing.Point(267, 26);
             this.chkPort21.Name = "chkPort21";
-            this.chkPort21.Size = new System.Drawing.Size(64, 28);
+            this.chkPort21.Size = new System.Drawing.Size(53, 22);
             this.chkPort21.TabIndex = 27;
             this.chkPort21.Text = "P21";
             this.chkPort21.UseVisualStyleBackColor = true;
@@ -1288,10 +1217,9 @@
             // chkPort20
             // 
             this.chkPort20.AutoSize = true;
-            this.chkPort20.Location = new System.Drawing.Point(270, 134);
-            this.chkPort20.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort20.Location = new System.Drawing.Point(216, 107);
             this.chkPort20.Name = "chkPort20";
-            this.chkPort20.Size = new System.Drawing.Size(64, 28);
+            this.chkPort20.Size = new System.Drawing.Size(53, 22);
             this.chkPort20.TabIndex = 20;
             this.chkPort20.Text = "P20";
             this.chkPort20.UseVisualStyleBackColor = true;
@@ -1299,10 +1227,9 @@
             // chkPort19
             // 
             this.chkPort19.AutoSize = true;
-            this.chkPort19.Location = new System.Drawing.Point(270, 100);
-            this.chkPort19.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort19.Location = new System.Drawing.Point(216, 80);
             this.chkPort19.Name = "chkPort19";
-            this.chkPort19.Size = new System.Drawing.Size(64, 28);
+            this.chkPort19.Size = new System.Drawing.Size(53, 22);
             this.chkPort19.TabIndex = 21;
             this.chkPort19.Text = "P19";
             this.chkPort19.UseVisualStyleBackColor = true;
@@ -1310,10 +1237,9 @@
             // chkPort18
             // 
             this.chkPort18.AutoSize = true;
-            this.chkPort18.Location = new System.Drawing.Point(270, 65);
-            this.chkPort18.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort18.Location = new System.Drawing.Point(216, 52);
             this.chkPort18.Name = "chkPort18";
-            this.chkPort18.Size = new System.Drawing.Size(64, 28);
+            this.chkPort18.Size = new System.Drawing.Size(53, 22);
             this.chkPort18.TabIndex = 22;
             this.chkPort18.Text = "P18";
             this.chkPort18.UseVisualStyleBackColor = true;
@@ -1321,10 +1247,9 @@
             // chkPort17
             // 
             this.chkPort17.AutoSize = true;
-            this.chkPort17.Location = new System.Drawing.Point(270, 31);
-            this.chkPort17.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort17.Location = new System.Drawing.Point(216, 25);
             this.chkPort17.Name = "chkPort17";
-            this.chkPort17.Size = new System.Drawing.Size(64, 28);
+            this.chkPort17.Size = new System.Drawing.Size(53, 22);
             this.chkPort17.TabIndex = 23;
             this.chkPort17.Text = "P17";
             this.chkPort17.UseVisualStyleBackColor = true;
@@ -1332,10 +1257,9 @@
             // chkPort16
             // 
             this.chkPort16.AutoSize = true;
-            this.chkPort16.Location = new System.Drawing.Point(202, 135);
-            this.chkPort16.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort16.Location = new System.Drawing.Point(162, 108);
             this.chkPort16.Name = "chkPort16";
-            this.chkPort16.Size = new System.Drawing.Size(64, 28);
+            this.chkPort16.Size = new System.Drawing.Size(53, 22);
             this.chkPort16.TabIndex = 16;
             this.chkPort16.Text = "P16";
             this.chkPort16.UseVisualStyleBackColor = true;
@@ -1343,10 +1267,9 @@
             // chkPort15
             // 
             this.chkPort15.AutoSize = true;
-            this.chkPort15.Location = new System.Drawing.Point(202, 101);
-            this.chkPort15.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort15.Location = new System.Drawing.Point(162, 81);
             this.chkPort15.Name = "chkPort15";
-            this.chkPort15.Size = new System.Drawing.Size(64, 28);
+            this.chkPort15.Size = new System.Drawing.Size(53, 22);
             this.chkPort15.TabIndex = 17;
             this.chkPort15.Text = "P15";
             this.chkPort15.UseVisualStyleBackColor = true;
@@ -1354,10 +1277,9 @@
             // chkPort14
             // 
             this.chkPort14.AutoSize = true;
-            this.chkPort14.Location = new System.Drawing.Point(202, 66);
-            this.chkPort14.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort14.Location = new System.Drawing.Point(162, 53);
             this.chkPort14.Name = "chkPort14";
-            this.chkPort14.Size = new System.Drawing.Size(64, 28);
+            this.chkPort14.Size = new System.Drawing.Size(53, 22);
             this.chkPort14.TabIndex = 18;
             this.chkPort14.Text = "P14";
             this.chkPort14.UseVisualStyleBackColor = true;
@@ -1365,10 +1287,9 @@
             // chkPort13
             // 
             this.chkPort13.AutoSize = true;
-            this.chkPort13.Location = new System.Drawing.Point(202, 32);
-            this.chkPort13.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort13.Location = new System.Drawing.Point(162, 26);
             this.chkPort13.Name = "chkPort13";
-            this.chkPort13.Size = new System.Drawing.Size(64, 28);
+            this.chkPort13.Size = new System.Drawing.Size(53, 22);
             this.chkPort13.TabIndex = 19;
             this.chkPort13.Text = "P13";
             this.chkPort13.UseVisualStyleBackColor = true;
@@ -1376,10 +1297,9 @@
             // chkPort12
             // 
             this.chkPort12.AutoSize = true;
-            this.chkPort12.Location = new System.Drawing.Point(138, 134);
-            this.chkPort12.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort12.Location = new System.Drawing.Point(110, 107);
             this.chkPort12.Name = "chkPort12";
-            this.chkPort12.Size = new System.Drawing.Size(64, 28);
+            this.chkPort12.Size = new System.Drawing.Size(53, 22);
             this.chkPort12.TabIndex = 12;
             this.chkPort12.Text = "P12";
             this.chkPort12.UseVisualStyleBackColor = true;
@@ -1387,10 +1307,9 @@
             // chkPort11
             // 
             this.chkPort11.AutoSize = true;
-            this.chkPort11.Location = new System.Drawing.Point(138, 101);
-            this.chkPort11.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort11.Location = new System.Drawing.Point(110, 81);
             this.chkPort11.Name = "chkPort11";
-            this.chkPort11.Size = new System.Drawing.Size(64, 28);
+            this.chkPort11.Size = new System.Drawing.Size(53, 22);
             this.chkPort11.TabIndex = 13;
             this.chkPort11.Text = "P11";
             this.chkPort11.UseVisualStyleBackColor = true;
@@ -1398,10 +1317,9 @@
             // chkPort10
             // 
             this.chkPort10.AutoSize = true;
-            this.chkPort10.Location = new System.Drawing.Point(138, 65);
-            this.chkPort10.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort10.Location = new System.Drawing.Point(110, 52);
             this.chkPort10.Name = "chkPort10";
-            this.chkPort10.Size = new System.Drawing.Size(64, 28);
+            this.chkPort10.Size = new System.Drawing.Size(53, 22);
             this.chkPort10.TabIndex = 14;
             this.chkPort10.Text = "P10";
             this.chkPort10.UseVisualStyleBackColor = true;
@@ -1409,10 +1327,9 @@
             // chkPort9
             // 
             this.chkPort9.AutoSize = true;
-            this.chkPort9.Location = new System.Drawing.Point(138, 31);
-            this.chkPort9.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort9.Location = new System.Drawing.Point(110, 25);
             this.chkPort9.Name = "chkPort9";
-            this.chkPort9.Size = new System.Drawing.Size(54, 28);
+            this.chkPort9.Size = new System.Drawing.Size(45, 22);
             this.chkPort9.TabIndex = 15;
             this.chkPort9.Text = "P9";
             this.chkPort9.UseVisualStyleBackColor = true;
@@ -1422,10 +1339,9 @@
             this.chkALL.AutoSize = true;
             this.chkALL.Checked = true;
             this.chkALL.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkALL.Location = new System.Drawing.Point(18, 168);
-            this.chkALL.Margin = new System.Windows.Forms.Padding(4);
+            this.chkALL.Location = new System.Drawing.Point(14, 134);
             this.chkALL.Name = "chkALL";
-            this.chkALL.Size = new System.Drawing.Size(65, 28);
+            this.chkALL.Size = new System.Drawing.Size(52, 22);
             this.chkALL.TabIndex = 1;
             this.chkALL.Text = "ALL";
             this.chkALL.UseVisualStyleBackColor = true;
@@ -1436,10 +1352,9 @@
             this.chkPort8.AutoSize = true;
             this.chkPort8.Checked = true;
             this.chkPort8.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkPort8.Location = new System.Drawing.Point(76, 135);
-            this.chkPort8.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort8.Location = new System.Drawing.Point(61, 108);
             this.chkPort8.Name = "chkPort8";
-            this.chkPort8.Size = new System.Drawing.Size(54, 28);
+            this.chkPort8.Size = new System.Drawing.Size(45, 22);
             this.chkPort8.TabIndex = 2;
             this.chkPort8.Text = "P8";
             this.chkPort8.UseVisualStyleBackColor = true;
@@ -1449,10 +1364,9 @@
             this.chkPort4.AutoSize = true;
             this.chkPort4.Checked = true;
             this.chkPort4.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkPort4.Location = new System.Drawing.Point(18, 134);
-            this.chkPort4.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort4.Location = new System.Drawing.Point(14, 107);
             this.chkPort4.Name = "chkPort4";
-            this.chkPort4.Size = new System.Drawing.Size(54, 28);
+            this.chkPort4.Size = new System.Drawing.Size(45, 22);
             this.chkPort4.TabIndex = 3;
             this.chkPort4.Text = "P4";
             this.chkPort4.UseVisualStyleBackColor = true;
@@ -1462,10 +1376,9 @@
             this.chkPort7.AutoSize = true;
             this.chkPort7.Checked = true;
             this.chkPort7.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkPort7.Location = new System.Drawing.Point(76, 101);
-            this.chkPort7.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort7.Location = new System.Drawing.Point(61, 81);
             this.chkPort7.Name = "chkPort7";
-            this.chkPort7.Size = new System.Drawing.Size(54, 28);
+            this.chkPort7.Size = new System.Drawing.Size(45, 22);
             this.chkPort7.TabIndex = 4;
             this.chkPort7.Text = "P7";
             this.chkPort7.UseVisualStyleBackColor = true;
@@ -1475,10 +1388,9 @@
             this.chkPort6.AutoSize = true;
             this.chkPort6.Checked = true;
             this.chkPort6.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkPort6.Location = new System.Drawing.Point(76, 66);
-            this.chkPort6.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort6.Location = new System.Drawing.Point(61, 53);
             this.chkPort6.Name = "chkPort6";
-            this.chkPort6.Size = new System.Drawing.Size(54, 28);
+            this.chkPort6.Size = new System.Drawing.Size(45, 22);
             this.chkPort6.TabIndex = 5;
             this.chkPort6.Text = "P6";
             this.chkPort6.UseVisualStyleBackColor = true;
@@ -1488,10 +1400,9 @@
             this.chkPort3.AutoSize = true;
             this.chkPort3.Checked = true;
             this.chkPort3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkPort3.Location = new System.Drawing.Point(18, 100);
-            this.chkPort3.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort3.Location = new System.Drawing.Point(14, 80);
             this.chkPort3.Name = "chkPort3";
-            this.chkPort3.Size = new System.Drawing.Size(54, 28);
+            this.chkPort3.Size = new System.Drawing.Size(45, 22);
             this.chkPort3.TabIndex = 6;
             this.chkPort3.Text = "P3";
             this.chkPort3.UseVisualStyleBackColor = true;
@@ -1501,10 +1412,9 @@
             this.chkPort5.AutoSize = true;
             this.chkPort5.Checked = true;
             this.chkPort5.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkPort5.Location = new System.Drawing.Point(76, 32);
-            this.chkPort5.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort5.Location = new System.Drawing.Point(61, 26);
             this.chkPort5.Name = "chkPort5";
-            this.chkPort5.Size = new System.Drawing.Size(54, 28);
+            this.chkPort5.Size = new System.Drawing.Size(45, 22);
             this.chkPort5.TabIndex = 7;
             this.chkPort5.Text = "P5";
             this.chkPort5.UseVisualStyleBackColor = true;
@@ -1514,10 +1424,9 @@
             this.chkPort2.AutoSize = true;
             this.chkPort2.Checked = true;
             this.chkPort2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkPort2.Location = new System.Drawing.Point(18, 65);
-            this.chkPort2.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort2.Location = new System.Drawing.Point(14, 52);
             this.chkPort2.Name = "chkPort2";
-            this.chkPort2.Size = new System.Drawing.Size(54, 28);
+            this.chkPort2.Size = new System.Drawing.Size(45, 22);
             this.chkPort2.TabIndex = 8;
             this.chkPort2.Text = "P2";
             this.chkPort2.UseVisualStyleBackColor = true;
@@ -1527,10 +1436,9 @@
             this.chkPort1.AutoSize = true;
             this.chkPort1.Checked = true;
             this.chkPort1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkPort1.Location = new System.Drawing.Point(18, 32);
-            this.chkPort1.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPort1.Location = new System.Drawing.Point(14, 26);
             this.chkPort1.Name = "chkPort1";
-            this.chkPort1.Size = new System.Drawing.Size(54, 28);
+            this.chkPort1.Size = new System.Drawing.Size(45, 22);
             this.chkPort1.TabIndex = 9;
             this.chkPort1.Text = "P1";
             this.chkPort1.UseVisualStyleBackColor = true;
@@ -1539,10 +1447,9 @@
             // 
             this.realTimeClockLabel1.AutoSize = true;
             this.realTimeClockLabel1.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.realTimeClockLabel1.Location = new System.Drawing.Point(1441, 569);
-            this.realTimeClockLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.realTimeClockLabel1.Location = new System.Drawing.Point(1153, 454);
             this.realTimeClockLabel1.Name = "realTimeClockLabel1";
-            this.realTimeClockLabel1.Size = new System.Drawing.Size(112, 32);
+            this.realTimeClockLabel1.Size = new System.Drawing.Size(88, 25);
             this.realTimeClockLabel1.TabIndex = 36;
             this.realTimeClockLabel1.Text = "00:00:00";
             this.realTimeClockLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1555,11 +1462,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.Controls.Add(this.trvTestCases);
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox4.Location = new System.Drawing.Point(4, 316);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox4.Location = new System.Drawing.Point(3, 253);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox4.Size = new System.Drawing.Size(367, 249);
+            this.groupBox4.Size = new System.Drawing.Size(294, 198);
             this.groupBox4.TabIndex = 16;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "TREE VIEW";
@@ -1568,10 +1473,9 @@
             // 
             this.trvTestCases.CheckBoxes = true;
             this.trvTestCases.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.trvTestCases.Location = new System.Drawing.Point(4, 26);
-            this.trvTestCases.Margin = new System.Windows.Forms.Padding(4);
+            this.trvTestCases.Location = new System.Drawing.Point(3, 20);
             this.trvTestCases.Name = "trvTestCases";
-            this.trvTestCases.Size = new System.Drawing.Size(359, 219);
+            this.trvTestCases.Size = new System.Drawing.Size(288, 175);
             this.trvTestCases.TabIndex = 0;
             this.trvTestCases.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.trvTestCases_AfterCheck);
             this.trvTestCases.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.trvTestCases_AfterSelect);
@@ -1581,10 +1485,10 @@
             this.panel1.Controls.Add(this.lblProgressVal);
             this.panel1.Controls.Add(this.proLoad);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(908, 571);
+            this.panel1.Location = new System.Drawing.Point(727, 456);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(527, 34);
+            this.panel1.Size = new System.Drawing.Size(421, 26);
             this.panel1.TabIndex = 16;
             // 
             // lblProgressVal
@@ -1595,10 +1499,9 @@
             this.lblProgressVal.BackColor = System.Drawing.Color.Transparent;
             this.lblProgressVal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblProgressVal.ForeColor = System.Drawing.Color.Black;
-            this.lblProgressVal.Location = new System.Drawing.Point(479, 8);
-            this.lblProgressVal.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblProgressVal.Location = new System.Drawing.Point(382, 6);
             this.lblProgressVal.Name = "lblProgressVal";
-            this.lblProgressVal.Size = new System.Drawing.Size(33, 20);
+            this.lblProgressVal.Size = new System.Drawing.Size(28, 17);
             this.lblProgressVal.TabIndex = 16;
             this.lblProgressVal.Text = "0%";
             this.lblProgressVal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1607,7 +1510,7 @@
             // 
             this.tableLayoutPanel2.SetColumnSpan(this.splitContainer1, 3);
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(377, 314);
+            this.splitContainer1.Location = new System.Drawing.Point(302, 252);
             this.splitContainer1.Margin = new System.Windows.Forms.Padding(2);
             this.splitContainer1.Name = "splitContainer1";
             // 
@@ -1618,24 +1521,23 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabLogs);
-            this.splitContainer1.Size = new System.Drawing.Size(1342, 253);
-            this.splitContainer1.SplitterDistance = 445;
+            this.splitContainer1.Size = new System.Drawing.Size(1073, 200);
+            this.splitContainer1.SplitterDistance = 355;
             this.splitContainer1.SplitterWidth = 2;
             this.splitContainer1.TabIndex = 37;
             // 
             // Form5GAT
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1721, 635);
+            this.ClientSize = new System.Drawing.Size(1377, 508);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.menuStripControl);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStripControl;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form5GAT";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

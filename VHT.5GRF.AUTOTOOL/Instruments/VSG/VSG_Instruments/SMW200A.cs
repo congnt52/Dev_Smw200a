@@ -240,11 +240,11 @@ namespace _5GAutoTool
             try
             {
                 smw.WriteString($":SOUR{sour}:BB:NR5G:STAT {ON_OFF}", true);
-                double triggerdelay_ms = triggerdelay / 1e3;
+                double triggerdelay_ms = triggerdelay ;
                 // System.Threading.Thread.Sleep(500);
                 smw.WriteString($":SOUR{sour}:BB:NR5G:TRIG:EXT:TDEL {triggerdelay_ms}", true);
                 System.Threading.Thread.Sleep(500);
-                Log($"SMW200A RF{sour} State: {triggerdelay} ms");
+                Log($"SMW200A RF{sour} State: {triggerdelay*1e3} ms");
 
             }
             catch (Exception e)

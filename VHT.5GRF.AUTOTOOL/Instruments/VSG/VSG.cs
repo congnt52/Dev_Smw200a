@@ -661,13 +661,16 @@ namespace _5GAutoTool
                 int.TryParse(RBOffset, out int intRBOffset);
                 if (intRBOffset < 82)
                 {
-                    smw200a.SetRFTrigger(1, 1, TriggerDelay);
+                    
                     smw200a.SetOOBLower(RBOffset);
+                    smw200a.SetRFTrigger(1, 1, TriggerDelay);
                 }
                 else
                 {
+
+                    smw200a.SetOOBHigher(RBOffset); 
                     smw200a.SetRFTrigger(1, 1, TriggerDelay);
-                    smw200a.SetOOBHigher(RBOffset);
+                    
                 }
                 //smw200a.SetACSInterferenceSignal();
                 //System.Threading.Thread.Sleep(2000);

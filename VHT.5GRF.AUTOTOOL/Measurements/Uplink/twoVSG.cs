@@ -77,9 +77,9 @@ namespace _5GAutoTool
             }
             else
             {
-                double _isATT = vsg2.AttenuatorLevel;
-                Log($"{vsg2.Alias}: Expected Power Level={_isPower}dBm, ATT_Port{setPort} Level={_isATT}dB");
-                isPower = (_isPower + _isATT).ToString("N3");
+                //double _isATT = vsg2.AttenuatorLevel;
+                //Log($"{vsg2.Alias}: Expected Power Level={_isPower}dBm, ATT_Port{setPort} Level={_isATT}dB");
+                //isPower = (_isPower + _isATT).ToString("N3");
             }
 
             //doc gia tri suy hao cua VSGs
