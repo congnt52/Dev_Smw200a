@@ -263,6 +263,7 @@
     <Compile Include="Instruments\VSA\N9020B.cs" />
     <Compile Include="Instruments\VSG\VSG_Instruments\M9140a.cs" />
     <Compile Include="Instruments\VSG\VSG_Instruments\SGS100A.cs" />
+    <Compile Include="Instruments\VSG\VSG_Instruments\SMBV100B.cs" />
     <Compile Include="Instruments\VSG\VSG_Instruments\SMW200A.cs" />
     <Compile Include="ISFreqRange.cs">
       <SubType>Form</SubType>

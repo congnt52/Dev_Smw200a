@@ -101,7 +101,7 @@ namespace _5GAutoTool
                 System.Threading.Thread.Sleep(1);
                 //Generate wanted signal_Chung cho tất cả các bài
                 //vsg1.SetPsenWaveform(wsPower, wsFreq);
-                if (vsg1.Model == "SMW200A")
+                if (vsg1.Model == "SMW200A" || vsg1.Model == "SMBV100B")
                 {
                     switch (mode)
                     {

@@ -148,7 +148,7 @@ namespace _5GAutoTool
                     }
                     if (testingMode == "RX")
                     {
-                        BBU.TDDMODE("RX_ONLY");
+                       // BBU.TDDMODE("RX_ONLY");
                     }
                     //change node to Run Status
                     testcaseInTesting.Status = TestcaseStatus.Running;
@@ -2551,12 +2551,12 @@ namespace _5GAutoTool
 
                                 if (VSG2 != null)
                                 {
-                                    VSG2.OnOffSignal(0);
+                      //              VSG2.OnOffSignal(0);
                                 }
 
                                 if (VSG3 != null)
                                 {
-                                    VSG3.OnOffSignal(0);
+                          //          VSG3.OnOffSignal(0);
                                 }
 
                                 if (measurementBackgroundWorker.CancellationPending) return;

@@ -45,6 +45,7 @@ namespace _5GAutoTool
         public N5182B N5182b;
         public CMW100 cmw100;
         private SMW200A smw200a;
+        private SMBV100B smbv100b;
         private SGS100A sgs100a;
         public M9410a m9410a;
         string instrumentVSG = "0";
@@ -56,6 +57,7 @@ namespace _5GAutoTool
             cmw100 = new CMW100(mainForm);
             sgs100a = new SGS100A(mainForm);
             smw200a = new SMW200A(mainForm);
+            smbv100b = new SMBV100B(mainForm);
             m9410a = new M9410a(mainForm);
         }
 
@@ -106,6 +108,11 @@ namespace _5GAutoTool
                 smw200a.Connection(ip, cmd, out manufacturer, out model, out serial);
                 Model = "SMW200A";
             }
+            else if (instrumentVSG == "SMBV100B")
+            {
+                smbv100b.Connection(ip, cmd, out manufacturer, out model, out serial);
+                Model = "SMBV100B";
+            }
             else if (instrumentVSG == "SGS100A")
             {
                 sgs100a.Connection(ip, cmd, out manufacturer, out model, out serial);
@@ -141,6 +148,10 @@ namespace _5GAutoTool
             {
                 smw200a.SendCmd("*IDN?", out tmp);
             }
+            else if (instrumentVSG == "SMBV100B")
+            {
+                smbv100b.SendCmd("*IDN?", out tmp);
+            }
             else if (instrumentVSG == "SGS100A")
             {
                 sgs100a.SendCmd("*IDN?", out tmp);
@@ -165,6 +176,10 @@ namespace _5GAutoTool
             else if (instrumentVSG == "SMW200A")
             {
                 smw200a.Disconnect();
+            }
+            else if (instrumentVSG == "SMBV100B")
+            {
+                smbv100b.Disconnect();
             }
             else if (instrumentVSG == "SGS100A")
             {
@@ -199,6 +214,10 @@ namespace _5GAutoTool
             {
                 smw200a.SendCmd(Cmd, out respond);
             }
+            else if (instrumentVSG == "SMBV100B")
+            {
+                smbv100b.SendCmd(Cmd, out respond);
+            }
             else if (instrumentVSG == "SGS100A")
             {
                 sgs100a.SendCmd(Cmd, out respond);
@@ -222,6 +241,11 @@ namespace _5GAutoTool
             {
                 smw200a.SetFreq(1, freqSet);
                 smw200a.SetFreq(2, freqSet);
+            }
+            else if (instrumentVSG == "SMBV100B")
+            {
+                smbv100b.SetFreq(1, freqSet);
+                //smw200a.SetFreq(2, freqSet);
             }
             else if (instrumentVSG == "SGS100A")
             {
@@ -253,6 +277,11 @@ namespace _5GAutoTool
             {
                 smw200a.SetPower(1, powerSet);
                 smw200a.Alias = Name;
+            }
+            else if (instrumentVSG == "SMBV100B")
+            {
+                smbv100b.SetPower(1, powerSet);
+                smbv100b.Alias = Name;
             }
             else if (instrumentVSG == "SGS100A")
             {
@@ -299,6 +328,18 @@ namespace _5GAutoTool
                 System.Threading.Thread.Sleep(200);  //8.4.2024 - tam thoi de thoi gian tang len
                 smw200a.IQOnOff(source, 1);
                 smw200a.RFOnOff(source, 1);
+            }
+            else if (instrumentVSG == "SMBV100B")
+            {
+                //smw200a.IQOnOff(source, 0);
+                //smw200a.RFOnOff(source, 0);
+                //System.Threading.Thread.Sleep(500);
+                smbv100b.SetFreq(source, freqSet);
+                smbv100b.SetPower(source, powerSet);
+                smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+                System.Threading.Thread.Sleep(200);  //8.4.2024 - tam thoi de thoi gian tang len
+                smbv100b.IQOnOff(source, 1);
+                smbv100b.RFOnOff(source, 1);
             }
             else if (instrumentVSG == "SGS100A")
             {
@@ -359,6 +400,16 @@ namespace _5GAutoTool
                 System.Threading.Thread.Sleep(500);
                 smw200a.RFOnOff(1, 1);
             }
+            else if (instrumentVSG == "SMBV100B")
+            {
+                smbv100b.LoadGFR1A15(freqSet);
+                System.Threading.Thread.Sleep(2000);
+                smbv100b.SetFreq(1, freqSet);
+                System.Threading.Thread.Sleep(2000);
+                smbv100b.SetPower(1, powerSet);
+                System.Threading.Thread.Sleep(500);
+                smbv100b.RFOnOff(1, 1);
+            }
             else if (instrumentVSG == "M9410A")
             {
                 string filename = "FRC-A1-5-51rb_7d1s2u_oran";
@@ -389,6 +440,12 @@ namespace _5GAutoTool
 
 
                 smw200a.TriggerDelay = delay;
+            }
+            else if (instrumentVSG == "SMBV100B")
+            {
+
+
+                smbv100b.TriggerDelay = delay;
             }
         }
 
@@ -426,6 +483,18 @@ namespace _5GAutoTool
                 smw200a.RFOnOff(1, 1);
                 System.Threading.Thread.Sleep(500);
                 smw200a.IQOnOff(1, 1);
+            }
+            else if (instrumentVSG == "SMBV100B")
+            {
+                smbv100b.LoadGFR1A15(freqSet);
+                System.Threading.Thread.Sleep(2000);
+                smbv100b.SetFreq(1, freqSet);
+                System.Threading.Thread.Sleep(2000);
+                smbv100b.SetPower(1, powerSet);
+                //System.Threading.Thread.Sleep(500);
+                //smbv100b.RFOnOff(1, 1);
+                System.Threading.Thread.Sleep(500);
+                smbv100b.IQOnOff(1, 1);
             }
             else if (instrumentVSG == "M9410A")
             {
@@ -472,6 +541,18 @@ namespace _5GAutoTool
                 smw200a.SetPower(1, powerSet);
                 System.Threading.Thread.Sleep(500);
                 smw200a.RFOnOff(1, 1);
+            }
+            else if (instrumentVSG == "SMBV100B")
+            {
+                smbv100b.LoadGFR1A15(freqSet);
+                System.Threading.Thread.Sleep(2000);
+                smbv100b.SetFreq(1, freqSet);
+                System.Threading.Thread.Sleep(2000);
+                smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+                System.Threading.Thread.Sleep(2000);
+                smbv100b.SetPower(1, powerSet);
+                //System.Threading.Thread.Sleep(500);
+                //smbv100b.RFOnOff(1, 1);
             }
             else if (instrumentVSG == "M9410A")
             {
@@ -537,6 +618,18 @@ namespace _5GAutoTool
                 System.Threading.Thread.Sleep(2000);
                 smw200a.RFOnOff(1, 1);
             }
+            else if (instrumentVSG == "SMBV100B")
+            {
+                smbv100b.LoadGFR1A25(freqSet);
+                System.Threading.Thread.Sleep(2000);
+                smbv100b.SetFreq(1, freqSet);
+                System.Threading.Thread.Sleep(2000);
+                smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+                System.Threading.Thread.Sleep(2000);
+                smbv100b.SetPower(1, powerSet);
+                //System.Threading.Thread.Sleep(2000);
+                //smbv100b.RFOnOff(1, 1);
+            }
             else if (instrumentVSG == "CMW100")
             {
                 Log($"CMW100 not supported", LogLevel.WARN);
@@ -566,6 +659,16 @@ namespace _5GAutoTool
                 smw200a.SetPower(2, powerSet);
                 System.Threading.Thread.Sleep(4000);
                 smw200a.RFOnOff(2, 1);
+            }
+            else if (instrumentVSG == "SMBV100B")
+            {
+                smbv100b.SetICSInterferenceSignalLower(RBOffset);
+                System.Threading.Thread.Sleep(4000);
+                smbv100b.SetFreq(2, freqSet);
+                System.Threading.Thread.Sleep(4000);
+                smbv100b.SetPower(2, powerSet);
+                //System.Threading.Thread.Sleep(4000);
+                //smbv100b.RFOnOff(2, 1);
             }
             else if (instrumentVSG == "M9410A")
             {
@@ -601,6 +704,16 @@ namespace _5GAutoTool
                 System.Threading.Thread.Sleep(4000);
                 smw200a.RFOnOff(2, 1);
             }
+            else if (instrumentVSG == "SMBV100B")
+            {
+                smbv100b.SetICSInterferenceSignalUpper(RBOffset);
+                System.Threading.Thread.Sleep(4000);
+                smbv100b.SetFreq(2, freqSet);
+                System.Threading.Thread.Sleep(4000);
+                smbv100b.SetPower(2, powerSet);
+                //System.Threading.Thread.Sleep(4000);
+                //smbv100b.RFOnOff(2, 1);
+            }
 
         }
         // Load test vector In-channel selectivity
@@ -630,6 +743,20 @@ namespace _5GAutoTool
                 {
                     smw200a.SetRFTrigger(1, 1, TriggerDelay);
                     smw200a.SetICSInterferenceSignalUpper(RBOffset);
+                }
+            }
+            else if (instrumentVSG == "SMBV100B")
+            {
+                int.TryParse(RBOffset, out int intRBOffset);
+                if (intRBOffset < 66)
+                {
+                    smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+                    smbv100b.SetICSInterferenceSignalLower(RBOffset);
+                }
+                else
+                {
+                    smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+                    smbv100b.SetICSInterferenceSignalUpper(RBOffset);
                 }
             }
             else if (instrumentVSG == "M9410A")
@@ -671,6 +798,30 @@ namespace _5GAutoTool
                     smw200a.SetOOBHigher(RBOffset); 
                     smw200a.SetRFTrigger(1, 1, TriggerDelay);
                     
+                }
+                //smw200a.SetACSInterferenceSignal();
+                //System.Threading.Thread.Sleep(2000);
+                //smw200a.SetFreq(2, freqSet);
+                //System.Threading.Thread.Sleep(2000);
+                //smw200a.SetPower(2, powerSet);
+                //System.Threading.Thread.Sleep(500);
+                //smw200a.RFOnOff(2, 1);
+            }
+            else if (instrumentVSG == "SMBV100B")
+            {
+                int.TryParse(RBOffset, out int intRBOffset);
+                if (intRBOffset < 82)
+                {
+
+                    smbv100b.SetOOBLower(RBOffset);
+                    smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+                }
+                else
+                {
+
+                    smbv100b.SetOOBHigher(RBOffset);
+                    smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+
                 }
                 //smw200a.SetACSInterferenceSignal();
                 //System.Threading.Thread.Sleep(2000);
@@ -724,6 +875,27 @@ namespace _5GAutoTool
                 //System.Threading.Thread.Sleep(500);
                 //smw200a.RFOnOff(2, 1);
             }
+            else if (instrumentVSG == "SMBV100B")
+            {
+                int.TryParse(RBOffset, out int intRBOffset);
+                if (intRBOffset < 82)
+                {
+                    smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+                    smbv100b.SetACSInterferenceSignalLower(RBOffset);
+                }
+                else
+                {
+                    smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+                    smbv100b.SetACSInterferenceSignalUpper(RBOffset);
+                }
+                //smw200a.SetACSInterferenceSignal();
+                //System.Threading.Thread.Sleep(2000);
+                //smw200a.SetFreq(2, freqSet);
+                //System.Threading.Thread.Sleep(2000);
+                //smw200a.SetPower(2, powerSet);
+                //System.Threading.Thread.Sleep(500);
+                //smw200a.RFOnOff(2, 1);
+            }
             else if (instrumentVSG == "M9410A")
             {
                 m9410a.SetACSInterferenceSignal(freqSet, BW);
@@ -755,6 +927,16 @@ namespace _5GAutoTool
                 smw200a.SetPower(2, powerSet);
                 System.Threading.Thread.Sleep(500);
                 smw200a.RFOnOff(2, 1);
+            }
+            else if (instrumentVSG == "SMBV100B")
+            {
+                smbv100b.SetACSInterferenceSignal();
+                System.Threading.Thread.Sleep(2000);
+                smbv100b.SetFreq(2, freqSet);
+                System.Threading.Thread.Sleep(2000);
+                smbv100b.SetPower(2, powerSet);
+                //System.Threading.Thread.Sleep(500);
+                //smbv100b.RFOnOff(2, 1);
             }
             else if (instrumentVSG == "M9410A")
             {
@@ -996,7 +1178,7 @@ namespace _5GAutoTool
                 System.Threading.Thread.Sleep(1); //08.01.2024 -test chu ky 100ms
                 sgs100a.SetFreq(freqSet);
                //sgs100a.SetPower(powerSet);
-                sgs100a.RFOnOff(1);
+                //sgs100a.RFOnOff(1);
             }
             else if (instrumentVSG == "SMW200A")
             {

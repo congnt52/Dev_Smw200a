@@ -103,7 +103,7 @@
             this.cboIP1.Name = "cboIP1";
             this.cboIP1.Size = new System.Drawing.Size(180, 24);
             this.cboIP1.TabIndex = 41;
-            this.cboIP1.Text = "172.16.27.140";
+            this.cboIP1.Text = "192.168.48.201";
             this.cboIP1.SelectedIndexChanged += new System.EventHandler(this.cboIP1_SelectedIndexChanged);
             // 
             // btnOk
@@ -518,13 +518,14 @@
             "M9410A",
             "N5182B",
             "SMW200A",
-            "CMW100"});
+            "CMW100",
+            "SMBV100B"});
             this.cboVSGList1.Location = new System.Drawing.Point(198, 62);
             this.cboVSGList1.Margin = new System.Windows.Forms.Padding(4);
             this.cboVSGList1.Name = "cboVSGList1";
             this.cboVSGList1.Size = new System.Drawing.Size(93, 24);
             this.cboVSGList1.TabIndex = 33;
-            this.cboVSGList1.Text = "SMW200A";
+            this.cboVSGList1.Text = "SMBV100B";
             this.cboVSGList1.TextChanged += new System.EventHandler(this.cboInstrument_TextChanged);
             // 
             // lblAddress1
