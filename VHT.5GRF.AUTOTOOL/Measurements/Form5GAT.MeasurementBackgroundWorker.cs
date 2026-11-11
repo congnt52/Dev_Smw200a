@@ -3698,6 +3698,28 @@ namespace _5GAutoTool
                             portResult.Values["TEST TIME"] = DateTime.Now.ToString("HH:mm:ss");
                             portResult.Values["PASS/FAIL"] = PassFail;
                         }
+                        if (testcaseInTesting.Text == "Reference Sensitivity Level")
+                        {
+                            portResult.Values["PORT"] = "PORT" + testingPort;
+                            portResult.Values["CLAUSE"] = testcaseInTesting.Text;
+                            portResult.Values["UNIT"] = "dBm";
+                            portResult.Values["CONFIG"] = "NR5G";
+                            portResult.Values["PARAM"] = "Reference Sensitivity";
+
+                            string sensitivitySpec = ReadValueByHeader(
+                                testcaseInTesting.Parameters, "Spec");
+
+                            portResult.Values["SPECS"] =
+                                "Sensitivity <= " + sensitivitySpec +
+                                " dBm; TP >= 95%";
+
+                            portResult.Values["RESULT"] = result;
+
+                            portResult.Values["TEST TIME"] =
+                                DateTime.Now.ToString("HH:mm:ss");
+
+                            portResult.Values["PASS/FAIL"] = PassFail;
+                        }
                         //add to report                        
                         portResult.Values.Add("TACT TIME", tactTime.ToString(@"hh\:mm\:ss"));
                         _reportManager.AddResult(portResult);
