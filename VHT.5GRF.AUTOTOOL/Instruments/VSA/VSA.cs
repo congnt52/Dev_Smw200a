@@ -15,6 +15,7 @@ namespace _5GAutoTool
 
         public FSV3030 fsv3030;
         public N9020A n9020a;
+        public FSV13 fsv13;
         public FSW26 fsw26;
         public N9020B n9020b;
         public M9410A m9410a;
@@ -28,6 +29,7 @@ namespace _5GAutoTool
             fsw26 = new FSW26(mainForm);
             n9020b = new N9020B(mainForm);
             m9410a = new M9410A(mainForm);
+            fsv13 = new FSV13(mainForm);
         }
 
         /// <summary>
@@ -84,6 +86,9 @@ namespace _5GAutoTool
                 case "FSV3030":
                     fsv3030.Connection(IP, Cmd, instrumentVSA, out Manufacturer, out Model, out Serial);
                     break;
+                case "FSV13":
+                    fsv13.Connection(IP, Cmd, instrumentVSA, out Manufacturer, out Model, out Serial);
+                    break;
                 case "N9020A":
                     n9020a.Connection(IP, Cmd, instrumentVSA, out Manufacturer, out Model, out Serial);
                     break;
@@ -109,6 +114,9 @@ namespace _5GAutoTool
             {
                 case "FSV3030":
                     fsv3030.Disconnect();
+                    break;
+                case "FSV13":
+                    fsv13.Disconnect();
                     break;
                 case "FSW26":
                     fsw26.Disconnect();
@@ -143,6 +151,9 @@ namespace _5GAutoTool
                 case "N9020B":
                     n9020b.SendCmd(Cmd, out respond);
                     break;
+                case "FSV13":
+                    fsv13.SendCmd(Cmd, out respond);
+                    break;
             }
         }
         /*..............................................Setup tham số................................................................*/
@@ -153,6 +164,10 @@ namespace _5GAutoTool
                 case "FSV3030":
                     fsv3030.FreqCent(freq);
                     fsv3030.RLEVOFFS(att);
+                    break;
+                case "FSV13":
+                    fsv13.FreqCent(freq);
+                    fsv13.RLEVOFFS(att);
                     break;
                 case "N9020A":
                     n9020a.SetFreqCent(freq);

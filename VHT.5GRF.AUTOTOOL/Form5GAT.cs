@@ -222,20 +222,20 @@ namespace _5GAutoTool
         List<TestcaseNode> TestcasePending;
 
 
-        private bool ConfirmInstrumentReady()
-        {
-            DialogResult result = MessageBox.Show(
-                this,
-                "Bạn đã bật nguồn và chuẩn bị các máy đo chưa?\n\n" +
-                "Vui lòng kiểm tra trạng thái thiết bị trước khi tiếp tục.",
-                "Xác nhận máy đo",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question,
-                MessageBoxDefaultButton.Button2
-            );
+        //private bool ConfirmInstrumentReady()
+        //{
+        //    DialogResult result = MessageBox.Show(
+        //        this,
+        //        "Bạn đã bật nguồn và chuẩn bị các máy đo chưa?\n\n" +
+        //        "Vui lòng kiểm tra trạng thái thiết bị trước khi tiếp tục.",
+        //        "Xác nhận máy đo",
+        //        MessageBoxButtons.YesNo,
+        //        MessageBoxIcon.Question,
+        //        MessageBoxDefaultButton.Button2
+        //    );
 
-            return result == DialogResult.Yes;
-        }
+        //    return result == DialogResult.Yes;
+        //}
 
         #region button event cick
         string ruIP = "192.168.120.3";
@@ -244,8 +244,26 @@ namespace _5GAutoTool
         bool ruConflag = false;
         private void btnStart_Click(object sender, EventArgs e)
         {
+            DialogResult confirm = MessageBox.Show(
+                this,
+                "Bạn đã bật nguồn các máy đo theo Topology chưa?\n\n" +
+                "YES: Tiếp tục chạy Measurement.\n" +
+                "NO: Chưa chạy Measurement.",
+                "Instrument Power Confirmation",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button2
+            );
+
+            if (confirm != DialogResult.Yes)
+            {
+                return;
+            }
 
             lblPassFail.Text = "RUNNING";
+
+            measurementBackgroundWorker.RunWorkerAsync();
+        
 
             if (clearFlag)
             {                
@@ -310,17 +328,17 @@ namespace _5GAutoTool
                     if (measurementBackgroundWorker.IsBusy)
                     {
                         measurementBackgroundWorker.CancelAsync();
-                        if (!ConfirmInstrumentReady())
-                        {
-                            Log(
-                                "[MEASUREMENT] Người dùng chưa xác nhận máy đo sẵn sàng.",
-                                LogLevel.WARN);
+                        //if (!ConfirmInstrumentReady())
+                        //{
+                        //    Log(
+                        //        "[MEASUREMENT] Người dùng chưa xác nhận máy đo sẵn sàng.",
+                        //        LogLevel.WARN);
 
-                            return;
-                        }
+                        //    return;
+                        //}
 
                         
-                        measurementBackgroundWorker.RunWorkerAsync();
+                       // measurementBackgroundWorker.RunWorkerAsync();
                     }
                     else
                     {

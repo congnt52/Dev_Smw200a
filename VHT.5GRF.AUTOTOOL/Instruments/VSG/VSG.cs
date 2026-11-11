@@ -280,7 +280,7 @@ namespace _5GAutoTool
             }
             else if (instrumentVSG == "SMBV100B")
             {
-                smbv100b.SetPower(1, powerSet);
+              //  smbv100b.SetPower(1, powerSet);
                 smbv100b.Alias = Name;
             }
             else if (instrumentVSG == "SGS100A")
@@ -294,6 +294,33 @@ namespace _5GAutoTool
             }
         }
 
+
+        public bool LoadOOBUserCorrection(
+            string sgsCorrectionPath,
+            string smwCorrectionPath)
+        {
+            if (instrumentVSG == "SGS100A")
+            {
+                sgs100a.LoadUserCorrectionSettingFile(
+                    sgsCorrectionPath);
+
+                Log("[OOB] SGS100A: UCOR load requested.");
+                return true;
+            }
+
+            if (instrumentVSG == "SMBV100B")
+            {
+                return smbv100b.LoadUserCorrectionSettingFile(
+                    2, smwCorrectionPath);
+            }
+
+            Log(
+                "[OOB] User Correction not supported for: " +
+                instrumentVSG,
+                LogLevel.ERROR);
+
+            return false;
+        }
 
         public void setParameter(int source, string powerSet, string freqSet,double TriggerDelay)
         {
@@ -334,12 +361,12 @@ namespace _5GAutoTool
                 //smw200a.IQOnOff(source, 0);
                 //smw200a.RFOnOff(source, 0);
                 //System.Threading.Thread.Sleep(500);
-                smbv100b.SetFreq(source, freqSet);
-                smbv100b.SetPower(source, powerSet);
-                smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+               smbv100b.SetFreq(source, freqSet);
+             //   smbv100b.SetPower(source, powerSet);
+             //   smbv100b.SetRFTrigger(1, 1, TriggerDelay);
                 System.Threading.Thread.Sleep(200);  //8.4.2024 - tam thoi de thoi gian tang len
-                smbv100b.IQOnOff(source, 1);
-                smbv100b.RFOnOff(source, 1);
+              //  smbv100b.IQOnOff(source, 1);
+             //   smbv100b.RFOnOff(source, 1);
             }
             else if (instrumentVSG == "SGS100A")
             {
@@ -548,9 +575,9 @@ namespace _5GAutoTool
                 System.Threading.Thread.Sleep(2000);
                 smbv100b.SetFreq(1, freqSet);
                 System.Threading.Thread.Sleep(2000);
-                smbv100b.SetRFTrigger(1, 1, TriggerDelay);
-                System.Threading.Thread.Sleep(2000);
-                smbv100b.SetPower(1, powerSet);
+               // smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+              //  System.Threading.Thread.Sleep(2000);
+              //  smbv100b.SetPower(1, powerSet);
                 //System.Threading.Thread.Sleep(500);
                 //smbv100b.RFOnOff(1, 1);
             }
@@ -624,9 +651,9 @@ namespace _5GAutoTool
                 System.Threading.Thread.Sleep(2000);
                 smbv100b.SetFreq(1, freqSet);
                 System.Threading.Thread.Sleep(2000);
-                smbv100b.SetRFTrigger(1, 1, TriggerDelay);
-                System.Threading.Thread.Sleep(2000);
-                smbv100b.SetPower(1, powerSet);
+             //   smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+               // System.Threading.Thread.Sleep(2000);
+              //  smbv100b.SetPower(1, powerSet);
                 //System.Threading.Thread.Sleep(2000);
                 //smbv100b.RFOnOff(1, 1);
             }
@@ -814,13 +841,13 @@ namespace _5GAutoTool
                 {
 
                     smbv100b.SetOOBLower(RBOffset);
-                    smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+                   // smbv100b.SetRFTrigger(1, 1, TriggerDelay);
                 }
                 else
                 {
 
                     smbv100b.SetOOBHigher(RBOffset);
-                    smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+                //    smbv100b.SetRFTrigger(1, 1, TriggerDelay);
 
                 }
                 //smw200a.SetACSInterferenceSignal();

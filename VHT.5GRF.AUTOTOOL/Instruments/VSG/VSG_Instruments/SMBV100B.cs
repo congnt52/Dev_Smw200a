@@ -204,6 +204,64 @@ namespace _5GAutoTool
                 Console.WriteLine($"{Alias} Source{sour} set frequencye Fail! {e.Message}");
             }
         }
+
+        public bool LoadUserCorrectionSettingFile(
+            int source, string correctionPath)
+        {
+            try
+            {
+                if (source != 1 && source != 2)
+                    throw new ArgumentOutOfRangeException("source");
+
+                if (smw.IO == null)
+                    throw new InvalidOperationException(
+                        "SMW200A not connected.");
+
+                string escapedPath =
+                    correctionPath.Replace("'", "''");
+
+                smw.WriteString(
+                    $":SOUR{source}:CORR:CSET '{escapedPath}'",
+                    true);
+
+                smw.WriteString(
+                    $":SOUR{source}:CORR:STAT ON",
+                    true);
+
+                smw.WriteString("*OPC?", true);
+
+                if (smw.ReadNumber() != 1)
+                    throw new Exception("UCOR operation incomplete.");
+
+                // Kiểm tra lỗi SCPI của máy.
+                smw.WriteString(":SYST:ERR?", true);
+                string error = smw.ReadString();
+
+                if (!error.TrimStart().StartsWith("0,") &&
+                    !error.TrimStart().StartsWith("+0,"))
+                {
+                    throw new Exception(
+                        "SMW200A SCPI error: " + error);
+                }
+
+                Log(
+                    $"[OOB][SMW200A] Source {source} " +
+                    $"UCOR loaded: {correctionPath}",
+                    LogLevel.SUCCESS);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log(
+                    "[OOB][SMW200A] UCOR failed: " +
+                    ex.Message,
+                    LogLevel.ERROR);
+
+                return false;
+            }
+        }
+
         public void SetPower(int sour, string setPower)
         {
             try
@@ -264,7 +322,8 @@ namespace _5GAutoTool
                 //Log("SMW200A Recell File: :SYST:RCL '/var/user/test3gpp/FRC-A1-5-51rb_7d1s2u_oran.savrcltxt'");
                 //========================
                 //string path = "/var/user/test3gpp/FRC-A1-5-51rb_7d1s2u_oran.savrcltxt";
-                string path= "/var/user/congnt52/SENS_50M.savrcltxt";
+                //string path= "/var/user/congnt52/SENS_50M.savrcltxt";
+                string path = "/var/user/VHT-32T-n40-QC128/Rx-SEN.savrcltxt";
                 //ring path = "/var/user/congnt52/GeneralIMD_low.savrcltxt";
                 string cmd = $":SYST:RCL '{path}'";
                 bool tmp = SendCmdStatus(cmd);

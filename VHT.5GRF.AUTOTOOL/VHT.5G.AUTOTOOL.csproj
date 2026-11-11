@@ -258,6 +258,7 @@
     </Compile>
     <Compile Include="Instruments\IInstrument.cs" />
     <Compile Include="Instruments\RRU\RRU.cs" />
+    <Compile Include="Instruments\VSA\VSA_Instruments\FSV13.cs" />
     <Compile Include="Instruments\VSA\VSA_Instruments\M9410A.cs" />
     <Compile Include="Instruments\VSA\VSA_Instruments\M941x.cs" />
     <Compile Include="Instruments\VSA\N9020B.cs" />

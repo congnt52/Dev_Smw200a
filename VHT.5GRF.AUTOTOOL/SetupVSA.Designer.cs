@@ -303,13 +303,14 @@
             "N9020B",
             "FSW26",
             "FSV3030",
-            "M9410A"});
+            "M9410A",
+            "FSV13"});
             this.cboVSAList.Location = new System.Drawing.Point(247, 31);
             this.cboVSAList.Margin = new System.Windows.Forms.Padding(4);
             this.cboVSAList.Name = "cboVSAList";
             this.cboVSAList.Size = new System.Drawing.Size(307, 24);
             this.cboVSAList.TabIndex = 31;
-            this.cboVSAList.Text = "FSW26";
+            this.cboVSAList.Text = "FSV13";
             this.cboVSAList.SelectedIndexChanged += new System.EventHandler(this.cboInstrument_TextChanged);
             // 
             // lblAddress

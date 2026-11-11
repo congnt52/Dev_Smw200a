@@ -65,14 +65,14 @@ namespace _5GAutoTool
             double _isPower = double.Parse(isPowerStr);
             //double _wsATT = vsg1.Attenuators[setPort - 1];
             double _wsATT = vsg1.AttenuatorLevel;
-            Log($"{vsg1.Name}: Expected Power Level={_wsPower}dBm, ATT_Port{setPort} Level={_wsATT}dB");
+      //      Log($"{vsg1.Name}: Expected Power Level={_wsPower}dBm, ATT_Port{setPort} Level={_wsATT}dB");
             string wsPower = (_wsPower + _wsATT).ToString("N3"); //công suất tai cong output cua VSG1 WS
 
             if (mode != "OOB2" && mode != "OOB1" && mode != "INB2")
             {
                 //double _isATT = vsg2.Attenuators[setPort - 1];
                 double _isATT = vsg2.AttenuatorLevel;
-                Log($"{vsg2.Alias}: Expected Power Level={_isPower}dBm, ATT_Port{setPort} Level={_isATT}dB");
+          //      Log($"{vsg2.Alias}: Expected Power Level={_isPower}dBm, ATT_Port{setPort} Level={_isATT}dB");
                 isPower = (_isPower + _isATT).ToString("N3"); //công suất tai cong output cua VSG2 IS - 3 numerics
             }
             else
@@ -108,8 +108,8 @@ namespace _5GAutoTool
                         case "ICS":
                             vsg1.SetICSWaveform(isPower, isFreq, IsRBOffset, Bandwidth,TriggerDelay);
                             vsg1.TypeOfSignal = "DFT-s-OFDM";
-                            vsg1.setParameter(1, wsPower, wsFreq,TriggerDelay); //smw200a 
-                            vsg1.setParameter(2, isPower, isFreq,TriggerDelay); //smw200a
+                       //     vsg1.setParameter(1, wsPower, wsFreq,TriggerDelay); //smw200a 
+                          //  vsg1.setParameter(2, isPower, isFreq,TriggerDelay); //smw200a
                             bbu.NEW_RXSENS(Bandwidth, WsRBOffset, out throughput);
                             //26.2.2024 - sua code
                             writeCSVThroughputValue(mode, setPort, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, throughput, out TP);
@@ -117,8 +117,8 @@ namespace _5GAutoTool
                         case "ACS":
                             vsg1.SetACSWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
                             vsg1.TypeOfSignal = "DFT-s-OFDM";
-                            vsg1.setParameter(1, wsPower, wsFreq,TriggerDelay);
-                            vsg1.setParameter(2, isPower, isFreq, TriggerDelay);
+                         //   vsg1.setParameter(1, wsPower, wsFreq,TriggerDelay);
+                         //   vsg1.setParameter(2, isPower, isFreq, TriggerDelay);
                             bbu.NEW_RXSENS(Bandwidth, WsRBOffset, out throughput);
                             //26.2.2024 - sua code
                             writeCSVThroughputValue(mode, setPort, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, throughput, out TP);
@@ -127,8 +127,8 @@ namespace _5GAutoTool
                             {
                                 vsg1.SetOOBWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
                                 vsg1.TypeOfSignal = "DFT-s-OFDM";
-                                vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
-                                if (vsg1.Model == "SMW200A") vsg1.OffSignal(2);
+                            //    vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
+                              //  if (vsg1.Model == "SMW200A") vsg1.OffSignal(2);
                                 List<string[]> oobMeasRange = new List<string[]>();
                                 oobMeasRange.Add(new string[] { "", isLowerFreqRange, isUpperFreqRange });
                                 List<string[]> oobExRange = new List<string[]>();
@@ -200,10 +200,10 @@ namespace _5GAutoTool
                                     isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
 
                                 vsg1.TypeOfSignal = "DFT-s-OFDM";
-                                vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
+                          //      vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
 
-                                if (vsg1.Model == "SMW200A")
-                                    vsg1.OffSignal(2);
+                          //      if (vsg1.Model == "SMW200A")
+                            //        vsg1.OffSignal(2);
 
                                 // Read Co-location DL bands from Excel Sheet2.
                                 getISCoLocationRangeFromExcel();
