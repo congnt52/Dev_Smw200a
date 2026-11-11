@@ -158,6 +158,7 @@
         public void NEW_RXSENS(string Bandwidth, string RbOffset, out string TP)
         {
             oam.NEW_RXSENS(Bandwidth, RbOffset, out TP);
+            //System.Threading.Thread.Sleep(10000);
         }
 
         public void RXDYN(int port, out string TP)

@@ -1,4 +1,5 @@
 ﻿
+using Keysight.SignalStudio.N7631;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ namespace _5GAutoTool
     class OAM
     {
         public Form5GAT mainForm;
-        public string Name="OAM";
+        public string Name = "OAM";
         public OAM(Form5GAT mMainForm)
         {
             mainForm = mMainForm;
@@ -66,7 +67,7 @@ namespace _5GAutoTool
             // RX SENS
             [JsonProperty("TP")]
             public string TP { get; set; }
-         
+
 
             // Noise
             public string gain { get; set; }
@@ -723,21 +724,80 @@ namespace _5GAutoTool
                     oam.Send($"TST RXSENS: DUId=1, NumberSlot=8000, RBOffset={RBOffset}, bandwidth={Bandwidth};");
                     var header = new OamHeader();
                     var received = oam.Receive(header);
-                    Data json = JsonConvert.DeserializeObject<Data>(received);
-                    if (json.status == 0)
+                    //Data json = JsonConvert.DeserializeObject<Data>(received);
+                    //if (json.status == 0)
+                    //{
+                    //    foreach (Root item in json.data)
+                    //    {
+                    //        //TP += Math.Round(double.Parse((item.TP).Substring(1, 5)), 1).ToString() + " ";
+                    //        TP += (item.TP).Substring(1, 5) + " ";//lay theo dung gia tri doc ve
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    Log("command RXSENS: FAIL");
+                    //}
+                    //Log(TP);
+
+
+                    try
                     {
-                        foreach (Root item in json.data)
+                        var json = Newtonsoft.Json.Linq.JObject.Parse(received);
+
+                        int status = json.Value<int>("status");
+
+                        if (status != 0)
                         {
-                            //TP += Math.Round(double.Parse((item.TP).Substring(1, 5)), 1).ToString() + " ";
-                            TP += (item.TP).Substring(1, 5) + " ";//lay theo dung gia tri doc ve
+                            Log("[RXSENS] OAM status error: " + status);
+                            return;
                         }
+
+                        var data = json["data"] as Newtonsoft.Json.Linq.JArray;
+
+                        if (data == null || data.Count == 0)
+                        {
+                            Log("[RXSENS] No data returned.");
+                            return;
+                        }
+
+                        foreach (var item in data)
+                        {
+                            string rx = item["RX"]?.ToString();
+                            string rawTP = item["TP "]?.ToString();
+
+                            Log($"[RXSENS] RX={rx}, Raw TP={rawTP}");
+
+                            // Tạm thời lấy RX1
+                            if (rx != "1")
+                                continue;
+
+                            string tpText = rawTP?.Replace("%", "").Trim();
+
+                            if (double.TryParse(
+                                tpText,
+                                System.Globalization.NumberStyles.Float,
+                                System.Globalization.CultureInfo.InvariantCulture,
+                                out double tpValue))
+                            {
+                                TP = tpValue.ToString(
+                                    "0.######",
+                                    System.Globalization.CultureInfo.InvariantCulture);
+
+                                Log($"[RXSENS] RX={rx}, TP={TP}%");
+
+                                return;
+                            }
+                        }
+
+                        Log("[RXSENS] Cannot find valid TP for RX1.");
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        Log("command RXSENS: FAIL");
+                        Log("[RXSENS] JSON parse error: " + ex.Message);
                     }
-                    Log(TP);
+
                 }
+
             }
             catch (Exception e)
             {
@@ -1777,51 +1837,96 @@ namespace _5GAutoTool
         }
 
         public void RXSENS_V2(out string TP)
-        {                        
+        {
             TP = "";
             try
             {
                 if (oam.IsConnected)
                 {
-                    string cli = "SHW RXSENS_V2: DUId=1;";
-                    
-                    oam.Send(cli);
-                    Log("Send command: " + cli);
+                    oam.Send($"SHW RXSENS_V2: DUId=1;");
                     var header = new OamHeader();
                     var received = oam.Receive(header);
-                    Log("[RXSENS_V2][SHW] Raw response: " + received);
-                    Data json = JsonConvert.DeserializeObject<Data>(received);
-                    Log($"[RXSENS_V2][SHW] Status={json.status}");
-                    string json1 = JsonConvert.SerializeObject(json);
-                    if (json.status == 0)
+                    //Data json = JsonConvert.DeserializeObject<Data>(received);
+                    //if (json.status == 0)
+                    //{
+                    //    foreach (Root item in json.data)
+                    //    {
+                    //        //TP += Math.Round(double.Parse((item.TP).Substring(1, 5)), 1).ToString() + " ";
+                    //        TP += (item.TP).Substring(1, 5) + " ";//lay theo dung gia tri doc ve
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    Log("command RXSENS: FAIL");
+                    //}
+                    //Log(TP);
+
+
+                    try
                     {
-                        foreach (Root item in json.data)
+                        var json = Newtonsoft.Json.Linq.JObject.Parse(received);
+
+                        int status = json.Value<int>("status");
+
+                        if (status != 0)
                         {
-                            //TP += Math.Round(double.Parse((item.TP).Substring(1, 5)), 1).ToString() + " ";
-                            // TP = (item.TP).Substring(1, 5);//lay theo dung gia tri doc ve
-                            var rawTP = item.TP?.Replace("%", "").Trim();
+                            Log("[RXSENS] OAM status error: " + status);
+                            return;
+                        }
+
+                        var data = json["data"] as Newtonsoft.Json.Linq.JArray;
+
+                        if (data == null || data.Count == 0)
+                        {
+                            Log("[RXSENS] No data returned.");
+                            return;
+                        }
+
+                        foreach (var item in data)
+                        {
+                            string rx = item["RX"]?.ToString();
+                            string rawTP = item["TP "]?.ToString();
+
+                            Log($"[RXSENS] RX={rx}, Raw TP={rawTP}");
+
+                            // Tạm thời lấy RX1
+                            if (rx != "1")
+                                continue;
+
+                            string tpText = rawTP?.Replace("%", "").Trim();
 
                             if (double.TryParse(
-                                    rawTP,
-                                    System.Globalization.NumberStyles.Float,
-                                    System.Globalization.CultureInfo.InvariantCulture,
-                                    out double tpValue))
+                                tpText,
+                                System.Globalization.NumberStyles.Float,
+                                System.Globalization.CultureInfo.InvariantCulture,
+                                out double tpValue))
                             {
-                                TP = tpValue.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture);
+                                TP = tpValue.ToString(
+                                    "0.######",
+                                    System.Globalization.CultureInfo.InvariantCulture);
+
+                                Log($"[RXSENS] RX={rx}, TP={TP}%");
+
+                                return;
                             }
                         }
+
+                        Log("[RXSENS] Cannot find valid TP for RX1.");
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        Log("command RXSENS_V2: FAIL", LogLevel.ERROR);
+                        Log("[RXSENS] JSON parse error: " + ex.Message);
                     }
+
                 }
+
             }
             catch (Exception e)
             {
                 Log("OAM Exception: " + e.Message, LogLevel.ERROR);
             }
         }
+    
         public void RXSENS_V3(out string TP)
         {
             TP = "";

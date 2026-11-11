@@ -327,24 +327,13 @@ namespace _5GAutoTool
                     RruSerial = txtRRUSerial.Text;
                     if (measurementBackgroundWorker.IsBusy)
                     {
-                        measurementBackgroundWorker.CancelAsync();
-                        //if (!ConfirmInstrumentReady())
-                        //{
-                        //    Log(
-                        //        "[MEASUREMENT] Người dùng chưa xác nhận máy đo sẵn sàng.",
-                        //        LogLevel.WARN);
-
-                        //    return;
-                        //}
-
-                        
-                       // measurementBackgroundWorker.RunWorkerAsync();
+                        Log(
+                            "[MEASUREMENT] BackgroundWorker is already running.",
+                            LogLevel.WARN);
+                        return;
                     }
-                    else
-                    {
-                        measurementBackgroundWorker.RunWorkerAsync();
 
-                    }
+                    measurementBackgroundWorker.RunWorkerAsync();
                     timerProcess.Start();
                     //connectionCheckTimer.Start(); //tam thoi khong thuc hien kiem tra
                     btnStop.Enabled = true;
