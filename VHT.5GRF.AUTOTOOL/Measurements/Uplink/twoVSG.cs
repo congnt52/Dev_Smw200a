@@ -1930,20 +1930,46 @@ private List<string[]> BuildSupportedUlExclusionsMHz()
             mainForm.ULCsvRecord(mode, csvHeader, data);
             //Log("-----------------------------------------------------------");
         }
+        //private double GetthroughputFromString(string tp, int port)
+        //{
+        //    double tmpTP = -1;
+        //    tmpArr = tp.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        //    //28.3.2024 - sua lai code xu ly neu tra ve chuoi null
+        //    if (tmpArr != null && tmpArr.Length > 0)
+        //    {
+        //        //int index = (port - 1) % tmpArr.Length;
+        //        //double.TryParse(tmpArr[index], out tmpTP);
+        //        //Redhat - get throughput
+        //        double.TryParse(tmpArr[(currPort.StreamIndex - 1) % tmpArr.Length], out tmpTP);
+        //    }
+        //    return tmpTP;
+        //}
+
         private double GetthroughputFromString(string tp, int port)
         {
-            double tmpTP = -1;
-            tmpArr = tp.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            //28.3.2024 - sua lai code xu ly neu tra ve chuoi null
-            if (tmpArr != null && tmpArr.Length > 0)
+            if (string.IsNullOrWhiteSpace(tp))
+                return -1;
+
+            string tpText = tp.Replace("%", "").Trim();
+
+            double tpValue;
+
+            if (double.TryParse(
+                tpText,
+                System.Globalization.NumberStyles.Float,
+                System.Globalization.CultureInfo.InvariantCulture,
+                out tpValue))
             {
-                //int index = (port - 1) % tmpArr.Length;
-                //double.TryParse(tmpArr[index], out tmpTP);
-                //Redhat - get throughput
-                double.TryParse(tmpArr[(currPort.StreamIndex - 1) % tmpArr.Length], out tmpTP);
+                if (tpValue >= 0 && tpValue <= 100)
+                    return tpValue;
             }
-            return tmpTP;
+
+            Log("[Throughput] Invalid TP: " + tp,
+                LogLevel.ERROR);
+
+            return -1;
         }
+
         private void getISCoLocationRangeFromExcel()
         {
             //xoa list

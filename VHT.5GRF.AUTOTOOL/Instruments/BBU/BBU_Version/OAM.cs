@@ -1862,6 +1862,7 @@ namespace _5GAutoTool
                     //Log(TP);
 
 
+
                     try
                     {
                         var json = Newtonsoft.Json.Linq.JObject.Parse(received);
@@ -1870,7 +1871,8 @@ namespace _5GAutoTool
 
                         if (status != 0)
                         {
-                            Log("[RXSENS] OAM status error: " + status);
+                            Log("[RXSENS_V2] OAM error: " + received,
+                                LogLevel.ERROR);
                             return;
                         }
 
@@ -1878,45 +1880,52 @@ namespace _5GAutoTool
 
                         if (data == null || data.Count == 0)
                         {
-                            Log("[RXSENS] No data returned.");
+                            Log("[RXSENS_V2] No data returned.",
+                                LogLevel.ERROR);
                             return;
                         }
 
                         foreach (var item in data)
                         {
-                            string rx = item["RX"]?.ToString();
-                            string rawTP = item["TP "]?.ToString();
+                            // Hỗ trợ cả "TP" và "TP " từ OAM
+                            string rawTP = item["TP "]?.ToString()
+                                        ?? item["TP"]?.ToString();
 
-                            Log($"[RXSENS] RX={rx}, Raw TP={rawTP}");
+                            Log("[RXSENS_V2] Raw TP = " + rawTP);
 
-                            // Tạm thời lấy RX1
-                            if (rx != "1")
+                            if (string.IsNullOrWhiteSpace(rawTP))
                                 continue;
 
-                            string tpText = rawTP?.Replace("%", "").Trim();
+                            string tpText = rawTP.Replace("%", "").Trim();
+
+                            double tpValue;
 
                             if (double.TryParse(
                                 tpText,
                                 System.Globalization.NumberStyles.Float,
                                 System.Globalization.CultureInfo.InvariantCulture,
-                                out double tpValue))
+                                out tpValue)
+                                && tpValue >= 0
+                                && tpValue <= 100)
                             {
                                 TP = tpValue.ToString(
                                     "0.######",
                                     System.Globalization.CultureInfo.InvariantCulture);
 
-                                Log($"[RXSENS] RX={rx}, TP={TP}%");
-
+                                Log("[RXSENS_V2] TP = " + TP + "%");
                                 return;
                             }
                         }
 
-                        Log("[RXSENS] Cannot find valid TP for RX1.");
+                        Log("[RXSENS_V2] No valid TP found.",
+                            LogLevel.ERROR);
                     }
                     catch (Exception ex)
                     {
-                        Log("[RXSENS] JSON parse error: " + ex.Message);
+                        Log("[RXSENS_V2] Parse error: " + ex.Message,
+                            LogLevel.ERROR);
                     }
+
 
                 }
 
