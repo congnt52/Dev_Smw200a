@@ -1171,134 +1171,171 @@ namespace _5GAutoTool
         long chartCount = 0;
         public void PopulateMeasurementChart(string seriesName, string portName, string strValue, string strLimitL, string strLimitH)
         {
-            if (InvokeRequired)
+            //if (InvokeRequired)
+            //{
+            //    Invoke(new Action(() => PopulateMeasurementChart(seriesName, portName, strValue, strLimitL, strLimitH)));
+            //    return;
+            //}
             {
-                Invoke(new Action(() => PopulateMeasurementChart(seriesName, portName, strValue, strLimitL, strLimitH)));
-                return;
-            }
+                if (IsDisposed || Disposing)
+                    return;
 
-            double value, limitL, limitH;
-
-            if (!double.TryParse(strLimitL, out limitL))
-            {
-                limitL = 0;
-            }
-            if (!double.TryParse(strLimitH, out limitH))
-            {
-                limitH = 0;
-            }
-            if (!double.TryParse(strValue, out value))
-            {
-                //Random rand = new Random();
-                //value = rand.NextDouble()*(limitH-limitL +10) +limitH -5; //test-xoa bo
-                //value = Math.Round(value, 3);
-                value = 0;
-            }
-
-            ChartArea chartArea = chart1.ChartAreas[0];
-            chartArea.CursorX.IsUserSelectionEnabled = true;
-
-            // Check if the series with the given name already exists in the chart
-            Series existingSeries = chart1.Series.FindByName(seriesName);
-            Series limitLSeries = new Series($"Limit_L");
-            limitLSeries.ChartType = SeriesChartType.Line;
-            limitLSeries.Color = Color.Magenta;
-
-            Series limitHSeries = new Series($"Limit_H");
-            limitHSeries.ChartType = SeriesChartType.Line;
-            limitHSeries.Color = Color.Magenta;
-
-            if (existingSeries == null)
-            {
-                //clear chart's series
-                chart1.Series.Clear();
-                chartCount = 0;
-
-                // Create a new series "seriesName"
-                Series newSeries = new Series(seriesName);
-                //Type
-                if (seriesName.Contains("Blocking"))
+                if (InvokeRequired)
                 {
-                    newSeries.ChartType = SeriesChartType.Line;
-                }
-                else
-                {
-                    newSeries.ChartType = SeriesChartType.Column;
+                    if (!IsHandleCreated)
+                        return;
+
+                    try
+                    {
+                        BeginInvoke(new Action(() =>
+                        {
+                            if (!IsDisposed && !Disposing)
+                            {
+                                PopulateMeasurementChart(
+                                    seriesName,
+                                    portName,
+                                    strValue,
+                                    strLimitL,
+                                    strLimitH);
+                            }
+                        }));
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        // UI handle không còn khả dụng.
+                    }
+                    //}
+                    //catch (ObjectDisposedException)
+                    //{
+                    //    // Form đã bị đóng.
+                    //}
+
+                    return;
                 }
 
-                newSeries.Color = Color.Blue;
+                double value, limitL, limitH;
 
-
-                chart1.Series.Add(newSeries);
-                existingSeries = newSeries;
-
-                // clear limit line
-                chartArea.AxisY.StripLines.Clear();
-                limitLSeries.Points.Clear();
-                chart1.Series.Add(limitLSeries);
-                limitHSeries.Points.Clear();
-                chart1.Series.Add(limitHSeries);
-            }
-
-
-
-            // Add data point to the series
-            existingSeries.Points.AddXY(portName, value);
-            chartCount++;
-
-            //add limit lines
-            limitLSeries.Points.AddXY(portName, limitL);
-            StripLine stripline1 = new StripLine();
-            stripline1.Interval = 0;
-            stripline1.IntervalOffset = limitL;
-            stripline1.StripWidth = 0.1;
-            stripline1.BackColor = Color.Magenta;
-            chartArea.AxisY.StripLines.Add(stripline1);
-
-            limitHSeries.Points.AddXY(portName, limitH);
-            StripLine stripline2 = new StripLine();
-            stripline2.Interval = 0;
-            stripline2.IntervalOffset = limitH;
-            stripline2.StripWidth = 0.1;
-            stripline2.BackColor = Color.Magenta;
-            chartArea.AxisY.StripLines.Add(stripline2);
-
-            chartArea.AxisX.Title = seriesName;
-            chartArea.AxisY.Title = "Measurement Value";
-            chartArea.AxisY.LabelStyle.Format = "0.00";
-
-            // Set axis scrollbar properties
-            chartArea.AxisX.ScrollBar.Enabled = true;
-            chartArea.AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.All;
-
-            // Set the minimum and maximum values for the Y-axis
-            double minValue = Math.Min(existingSeries.Points.FindMinByValue().YValues[0], limitL);
-            double maxValue = Math.Max(existingSeries.Points.FindMaxByValue().YValues[0], limitH);
-            double range = maxValue - minValue;
-            double offset = range * 0.1; // 20% offset
-            chartArea.AxisY.Minimum = minValue - offset;
-            chartArea.AxisY.Maximum = maxValue + offset;
-
-            // Adjust visible range X-axis
-            int startIndex = Math.Max(0, existingSeries.Points.Count - 100);
-            int endIndex = existingSeries.Points.Count - 1;
-            chartArea.AxisX.ScaleView.Size = 50;
-            chartArea.AxisX.ScaleView.Position = startIndex;
-
-            foreach (DataPoint point in existingSeries.Points)
-            {
-                if (point.YValues[0] < limitL || point.YValues[0] > limitH)
+                if (!double.TryParse(strLimitL, out limitL))
                 {
-                    Invoke(new Action(() => point.Color = Color.Red));
-                    point.IsValueShownAsLabel = true;
+                    limitL = 0;
                 }
-                else
+                if (!double.TryParse(strLimitH, out limitH))
                 {
-                    Invoke(new Action(() => point.Color = existingSeries.Color));
-                    point.IsValueShownAsLabel = false;
+                    limitH = 0;
                 }
+                if (!double.TryParse(strValue, out value))
+                {
+                    //Random rand = new Random();
+                    //value = rand.NextDouble()*(limitH-limitL +10) +limitH -5; //test-xoa bo
+                    //value = Math.Round(value, 3);
+                    value = 0;
+                }
+
+                ChartArea chartArea = chart1.ChartAreas[0];
+                chartArea.CursorX.IsUserSelectionEnabled = true;
+
+                // Check if the series with the given name already exists in the chart
+                Series existingSeries = chart1.Series.FindByName(seriesName);
+                Series limitLSeries = new Series($"Limit_L");
+                limitLSeries.ChartType = SeriesChartType.Line;
+                limitLSeries.Color = Color.Magenta;
+
+                Series limitHSeries = new Series($"Limit_H");
+                limitHSeries.ChartType = SeriesChartType.Line;
+                limitHSeries.Color = Color.Magenta;
+
+                if (existingSeries == null)
+                {
+                    //clear chart's series
+                    chart1.Series.Clear();
+                    chartCount = 0;
+
+                    // Create a new series "seriesName"
+                    Series newSeries = new Series(seriesName);
+                    //Type
+                    if (seriesName.Contains("Blocking"))
+                    {
+                        newSeries.ChartType = SeriesChartType.Line;
+                    }
+                    else
+                    {
+                        newSeries.ChartType = SeriesChartType.Column;
+                    }
+
+                    newSeries.Color = Color.Blue;
+
+
+                    chart1.Series.Add(newSeries);
+                    existingSeries = newSeries;
+
+                    // clear limit line
+                    chartArea.AxisY.StripLines.Clear();
+                    limitLSeries.Points.Clear();
+                    chart1.Series.Add(limitLSeries);
+                    limitHSeries.Points.Clear();
+                    chart1.Series.Add(limitHSeries);
+                }
+
+
+
+                // Add data point to the series
+                existingSeries.Points.AddXY(portName, value);
+                chartCount++;
+
+                //add limit lines
+                limitLSeries.Points.AddXY(portName, limitL);
+                StripLine stripline1 = new StripLine();
+                stripline1.Interval = 0;
+                stripline1.IntervalOffset = limitL;
+                stripline1.StripWidth = 0.1;
+                stripline1.BackColor = Color.Magenta;
+                chartArea.AxisY.StripLines.Add(stripline1);
+
+                limitHSeries.Points.AddXY(portName, limitH);
+                StripLine stripline2 = new StripLine();
+                stripline2.Interval = 0;
+                stripline2.IntervalOffset = limitH;
+                stripline2.StripWidth = 0.1;
+                stripline2.BackColor = Color.Magenta;
+                chartArea.AxisY.StripLines.Add(stripline2);
+
+                chartArea.AxisX.Title = seriesName;
+                chartArea.AxisY.Title = "Measurement Value";
+                chartArea.AxisY.LabelStyle.Format = "0.00";
+
+                // Set axis scrollbar properties
+                chartArea.AxisX.ScrollBar.Enabled = true;
+                chartArea.AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.All;
+
+                // Set the minimum and maximum values for the Y-axis
+                double minValue = Math.Min(existingSeries.Points.FindMinByValue().YValues[0], limitL);
+                double maxValue = Math.Max(existingSeries.Points.FindMaxByValue().YValues[0], limitH);
+                double range = maxValue - minValue;
+                double offset = range * 0.1; // 20% offset
+                chartArea.AxisY.Minimum = minValue - offset;
+                chartArea.AxisY.Maximum = maxValue + offset;
+
+                // Adjust visible range X-axis
+                int startIndex = Math.Max(0, existingSeries.Points.Count - 100);
+                int endIndex = existingSeries.Points.Count - 1;
+                chartArea.AxisX.ScaleView.Size = 50;
+                chartArea.AxisX.ScaleView.Position = startIndex;
+
+                foreach (DataPoint point in existingSeries.Points)
+                {
+                    if (point.YValues[0] < limitL || point.YValues[0] > limitH)
+                    {
+                        Invoke(new Action(() => point.Color = Color.Red));
+                        point.IsValueShownAsLabel = true;
+                    }
+                    else
+                    {
+                        Invoke(new Action(() => point.Color = existingSeries.Color));
+                        point.IsValueShownAsLabel = false;
+                    }
+                }
+                Invoke(new Action(() => chart1.Invalidate()));
             }
-            Invoke(new Action(() => chart1.Invalidate()));
         }
 
         //10.4.2024
