@@ -123,9 +123,9 @@ namespace _5GAutoTool
             // Read attenuation and set VSG power level
             string path = $@"{AttenuatorPath}/RX{port}.csv";
             double attVal = vsg.ReadATTfromCSVFile(path, freq);
-            Log($"[{vsg.Alias}] Set ATT_Port{port} = {attVal} dB at frequency = {freq / 1e6}MHz");
+           // Log($"[{vsg.Alias}] Set ATT_Port{port} = {attVal} dB at frequency = {freq / 1e6}MHz");
             double currentPowerLevel = initLevel + attVal;
-            vsg.SetPsenWaveform(currentPowerLevel.ToString(), freq.ToString(), Bandwidth);
+          //  vsg.SetPsenWaveform(currentPowerLevel.ToString(), freq.ToString(), Bandwidth);
 
             double limLow = currentPowerLevel - 5.0;
             double limHigh = currentPowerLevel + 5.0;

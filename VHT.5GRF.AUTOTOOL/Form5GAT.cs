@@ -244,21 +244,21 @@ namespace _5GAutoTool
         bool ruConflag = false;
         private void btnStart_Click(object sender, EventArgs e)
         {
-            DialogResult confirm = MessageBox.Show(
-                this,
-                "Bạn đã bật nguồn các máy đo theo Topology chưa?\n\n" +
-                "YES: Tiếp tục chạy Measurement.\n" +
-                "NO: Chưa chạy Measurement.",
-                "Instrument Power Confirmation",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question,
-                MessageBoxDefaultButton.Button2
-            );
+            //DialogResult confirm = MessageBox.Show(
+            //    this,
+            //    "Bạn đã bật nguồn các máy đo theo Topology chưa?\n\n" +
+            //    "YES: Tiếp tục chạy Measurement.\n" +
+            //    "NO: Chưa chạy Measurement.",
+            //    "Instrument Power Confirmation",
+            //    MessageBoxButtons.YesNo,
+            //    MessageBoxIcon.Question,
+            //    MessageBoxDefaultButton.Button2
+            //);
 
-            if (confirm != DialogResult.Yes)
-            {
-                return;
-            }
+            //if (confirm != DialogResult.Yes)
+            //{
+            //    return;
+            //}
 
             lblPassFail.Text = "RUNNING";
 

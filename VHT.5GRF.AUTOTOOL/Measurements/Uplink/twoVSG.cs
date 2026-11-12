@@ -1580,10 +1580,10 @@ namespace _5GAutoTool
                 Log("OOB valid CW points: " + points.Count);
 
                 vsg2.TypeOfSignal = "CW";
-                vsg2.LoadUserCorrDataSGS100A(@"/var/user/RxBlocking");
+                //vsg2.LoadUserCorrDataSGS100A(@"/var/user/RxBlocking");
                 // Configure first VALID frequency before starting BBU measurement.
                 vsg2.SetCWWaveform(isPower, points[0].Item2.ToString(culture));
-                vsg2.LogUserCorrectionSGS100A(isPower, points[0].Item2);
+             //   vsg2.LogUserCorrectionSGS100A(isPower, points[0].Item2);
 
                 for (int startAttempt = 0; startAttempt < 2 && !testMacStarted; startAttempt++)
                 {

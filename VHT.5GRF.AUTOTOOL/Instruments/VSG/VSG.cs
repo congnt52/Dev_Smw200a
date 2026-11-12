@@ -817,13 +817,13 @@ namespace _5GAutoTool
                 {
                     
                     smw200a.SetOOBLower(RBOffset);
-                    smw200a.SetRFTrigger(1, 1, TriggerDelay);
+                //    smw200a.SetRFTrigger(1, 1, TriggerDelay);
                 }
                 else
                 {
 
                     smw200a.SetOOBHigher(RBOffset); 
-                    smw200a.SetRFTrigger(1, 1, TriggerDelay);
+                   // smw200a.SetRFTrigger(1, 1, TriggerDelay);
                     
                 }
                 //smw200a.SetACSInterferenceSignal();
@@ -1216,7 +1216,7 @@ namespace _5GAutoTool
         {
             if (instrumentVSG == "SGS100A")
             {
-                sgs100a.LogUserCorrectionSGS100A(isPower, sFreqChange);
+   //             sgs100a.LogUserCorrectionSGS100A(isPower, sFreqChange);
             }
         }
         public void SetGeneralIMDWaveformLower(string powerSet, string freqSet, string Bw)

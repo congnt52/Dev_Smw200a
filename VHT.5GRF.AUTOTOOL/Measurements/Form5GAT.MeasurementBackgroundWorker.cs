@@ -152,6 +152,29 @@ namespace _5GAutoTool
                     }
                     //change node to Run Status
                     testcaseInTesting.Status = TestcaseStatus.Running;
+                    DialogResult confirm = (DialogResult)this.Invoke(
+    new Func<DialogResult>(() =>
+        MessageBox.Show(
+            this,
+            "Bạn đã bật và chuẩn bị máy đo cho bài:\n\n"
+                + testcaseInTesting.Text
+                + "\n\nNhấn YES để tiếp tục đo."
+                + "\nNhấn NO để dừng.",
+            "XÁC NHẬN TRƯỚC KHI ĐO",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Question,
+            MessageBoxDefaultButton.Button2
+        )
+    )
+);
+
+                    if (confirm != DialogResult.Yes)
+                    {
+                        Log("Người dùng chọn NO. Dừng Measurement.", LogLevel.WARN);
+
+                        e.Cancel = true;
+                        return;
+                    }
                     ChangeTestcaseNodeStatus(testcaseInTesting.Text, TestcaseStatus.Running);
                     //UpdateNodeStatusToTreeView(testcaseInTesting, trvTestCases.Nodes[0]);
 
@@ -2540,7 +2563,7 @@ namespace _5GAutoTool
 
                                 double.TryParse(strWSTrigDelay, out double wsTrigDelay);
                                 wsTrigDelay = wsTrigDelay * 1e-3;
-                                VSG1.SetTriggerDelay(wsTrigDelay);
+                              //  VSG1.SetTriggerDelay(wsTrigDelay);
 
                                 double.TryParse(strLimMax, out limitMax);
                                 double.TryParse(strLimMin, out limitMin);
@@ -3094,6 +3117,7 @@ namespace _5GAutoTool
                             #region OOB
                             else if (testcaseInTesting.Text == "Out-of-band Blocking")
                             {
+
                                 VSG1.SetFrequencyValue = double.Parse(setFrequency);
                                 GeneralDataSetupRX(testcaseInTesting.Text, testingPort, out attSetVal);
                                 VSG1.AttenuatorLevel = attSetVal;
@@ -3214,7 +3238,7 @@ namespace _5GAutoTool
 
                                 double.TryParse(strWSTrigDelay, out double wsTrigDelay);
                                 wsTrigDelay = wsTrigDelay * 1e-3;
-                                VSG1.SetTriggerDelay(wsTrigDelay);
+                            //    VSG1.SetTriggerDelay(wsTrigDelay);
 
                                 double.TryParse(strLimMax, out limitMax);
                                 double.TryParse(strLimMin, out limitMin);

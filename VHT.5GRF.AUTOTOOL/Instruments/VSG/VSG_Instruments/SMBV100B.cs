@@ -488,7 +488,8 @@ namespace _5GAutoTool
                 //smw.WriteString(":SYST:RCL '/var/user/test3gpp/ACS_DFT-s-OFDM_100rb_15kHz_QPSK.savrcltxt'");
                 //Log("SMW200A Recell File: :SYST:RCL '/var/user/test3gpp/ACS_DFT-s-OFDM_100rb_15kHz_QPSK.savrcltxt'");
                 //====================
-                string path = "/var/user/congnt52/50MHz/OOB_low.savrcltxt";
+              //  string path = "/var/user/congnt52/50MHz/OOB_low.savrcltxt";
+                string path = "/var/user/VHT-32T-n40-QC128/Rx-SEN2.savrcltxt";
                 string cmd = $":SYST:RCL '{path}'";
                 bool tmp = SendCmdStatus(cmd);
                 if (tmp)
@@ -510,7 +511,7 @@ namespace _5GAutoTool
                 //smw.WriteString(":SYST:RCL '/var/user/test3gpp/ACS_DFT-s-OFDM_100rb_15kHz_QPSK.savrcltxt'");
                 //Log("SMW200A Recell File: :SYST:RCL '/var/user/test3gpp/ACS_DFT-s-OFDM_100rb_15kHz_QPSK.savrcltxt'");
                 //====================
-                string path = "/var/user/congnt52/50MHz/OOB_high.savrcltxt";
+                string path = "/var/user/VHT-32T-n40-QC128/Rx-SEN2.savrcltxt";
                 string cmd = $":SYST:RCL '{path}'";
                 bool tmp = SendCmdStatus(cmd);
                 if (tmp)
