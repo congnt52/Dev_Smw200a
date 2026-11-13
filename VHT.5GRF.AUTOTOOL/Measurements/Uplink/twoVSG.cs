@@ -1672,8 +1672,8 @@ namespace _5GAutoTool
                         isPower, IsRBOffset, throughput, out currentTP);
                     if (currentTP >= 0 && currentTP <= 100 && (minTP < 0 || currentTP < minTP))
                         minTP = currentTP;
-                    mainForm.PopulateMeasurementChart("Out-of-band Blocking: Port " + setPort,
-                        freqMHz.ToString(culture), currentTP.ToString(culture), "95", "100");
+                 //   mainForm.PopulateMeasurementChart("Out-of-band Blocking: Port " + setPort,
+                  //      freqMHz.ToString(culture), currentTP.ToString(culture), "95", "100");
                     Log("OOB min throughput = " + minTP + "%");
                 }
                 //131126
