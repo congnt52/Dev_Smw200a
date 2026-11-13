@@ -571,8 +571,8 @@ namespace _5GAutoTool
             }
             else if (instrumentVSG == "SMBV100B")
             {
-                smbv100b.LoadGFR1A15(freqSet);
-                System.Threading.Thread.Sleep(2000);
+               // smbv100b.LoadGFR1A15(freqSet);
+               // System.Threading.Thread.Sleep(2000);
                 smbv100b.SetFreq(1, freqSet);
                 System.Threading.Thread.Sleep(2000);
                // smbv100b.SetRFTrigger(1, 1, TriggerDelay);
@@ -1216,7 +1216,7 @@ namespace _5GAutoTool
         {
             if (instrumentVSG == "SGS100A")
             {
-   //             sgs100a.LogUserCorrectionSGS100A(isPower, sFreqChange);
+    //            sgs100a.LogUserCorrectionSGS100A(isPower, sFreqChange);
             }
         }
         public void SetGeneralIMDWaveformLower(string powerSet, string freqSet, string Bw)

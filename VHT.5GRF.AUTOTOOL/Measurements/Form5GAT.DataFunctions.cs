@@ -1510,8 +1510,8 @@ namespace _5GAutoTool
                 string path = $@"{wsCSVFilePathRX}\RX{testingPort}.csv";
                 double.TryParse(setFrequency, out double freq);
                 attSetVal = RRU.ReadATTfromCSVFile(path, freq);
-                Log($"{VSG1.Name}: Set ATT_Port{testingPort}={attSetVal} dB at f={freq / 1e6} MHz");
-                Log($"{VSG1.Name}: Path = {path}");
+            //    Log($"{VSG1.Name}: Set ATT_Port{testingPort}={attSetVal} dB at f={freq / 1e6} MHz");
+            //    Log($"{VSG1.Name}: Path = {path}");
             }
             //Log($"{VSG1.Name}: Set ATT_Port{testingPort}={VSG1.Attenuators[testingPort]} dB at f={VSG1.SetFrequencyValue / 1e6} MHz");
             //Log($"{VSG1.Name}: Path = {VSG1.AttenuatorCSVpath}");

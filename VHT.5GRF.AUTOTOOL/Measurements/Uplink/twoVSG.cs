@@ -106,7 +106,7 @@ namespace _5GAutoTool
                     switch (mode)
                     {
                         case "ICS":
-                            vsg1.SetICSWaveform(isPower, isFreq, IsRBOffset, Bandwidth,TriggerDelay);
+                         //   vsg1.SetICSWaveform(isPower, isFreq, IsRBOffset, Bandwidth,TriggerDelay);
                             vsg1.TypeOfSignal = "DFT-s-OFDM";
                        //     vsg1.setParameter(1, wsPower, wsFreq,TriggerDelay); //smw200a 
                           //  vsg1.setParameter(2, isPower, isFreq,TriggerDelay); //smw200a
@@ -115,7 +115,7 @@ namespace _5GAutoTool
                             writeCSVThroughputValue(mode, setPort, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, throughput, out TP);
                             break;
                         case "ACS":
-                            vsg1.SetACSWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
+                        //    vsg1.SetACSWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
                             vsg1.TypeOfSignal = "DFT-s-OFDM";
                          //   vsg1.setParameter(1, wsPower, wsFreq,TriggerDelay);
                          //   vsg1.setParameter(2, isPower, isFreq, TriggerDelay);
@@ -125,7 +125,7 @@ namespace _5GAutoTool
                             break;
                         case "OOB2": // General OOB; CW target -15 dBm at DUT reference plane
                             {
-                                vsg1.SetOOBWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
+                         //       vsg1.SetOOBWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
                                 vsg1.TypeOfSignal = "DFT-s-OFDM";
                             //    vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
                               //  if (vsg1.Model == "SMW200A") vsg1.OffSignal(2);
@@ -1583,7 +1583,7 @@ namespace _5GAutoTool
                 //vsg2.LoadUserCorrDataSGS100A(@"/var/user/RxBlocking");
                 // Configure first VALID frequency before starting BBU measurement.
                 vsg2.SetCWWaveform(isPower, points[0].Item2.ToString(culture));
-             //   vsg2.LogUserCorrectionSGS100A(isPower, points[0].Item2);
+             /  vsg2.LogUserCorrectionSGS100A(isPower, points[0].Item2);
 
                 for (int startAttempt = 0; startAttempt < 2 && !testMacStarted; startAttempt++)
                 {

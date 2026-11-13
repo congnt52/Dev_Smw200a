@@ -262,7 +262,7 @@ namespace _5GAutoTool
 
             lblPassFail.Text = "RUNNING";
 
-            measurementBackgroundWorker.RunWorkerAsync();
+          //  measurementBackgroundWorker.RunWorkerAsync();
         
 
             if (clearFlag)
@@ -384,19 +384,33 @@ namespace _5GAutoTool
                 UpdateToTreeView();
             }
         }
+        //public void btnStop_Click(object sender, EventArgs e)
+        //{
+        //    BBU.StopProcess();
+        //    clearFlag = true;
+        //    if (measurementBackgroundWorker.IsBusy == true)
+        //    {
+        //        measurementBackgroundWorker.CancelAsync();
+        //        lblStatusProgress_TextChanged("Đang dừng");
+        //    }
+        //    timerProcess.Stop();
+        //    btnConnect_Enable();
+        //    instruments.Clear();
         public void btnStop_Click(object sender, EventArgs e)
         {
-            BBU.StopProcess();
-            clearFlag = true;
-            if (measurementBackgroundWorker.IsBusy == true)
+            if (measurementBackgroundWorker.IsBusy)
             {
                 measurementBackgroundWorker.CancelAsync();
-                lblStatusProgress_TextChanged("Đang dừng");
+
+                Log("[STOP] Đã gửi yêu cầu dừng Measurement.",
+                    LogLevel.WARN);
+
+                lblStatusProgress_TextChanged("Đang dừng Measurement...");
+
+                btnStop.Enabled = false;
             }
-            timerProcess.Stop();
-            btnConnect_Enable();
-            instruments.Clear();
         }
+        //}
         bool rfsFlagconnect = false, rruSync = false, duSync = false, sync = false, statusConnection = false, flagConnectedtoOAM = false;
         int port = 1970, portRFS = 0;
         string manufacturerVSA = "", instrVSA = "", modelVSA = "", serialVSA = "";

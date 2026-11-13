@@ -212,7 +212,12 @@ namespace _5GAutoTool
                     //TODO: run sequence testing port in list
                     foreach (int testingPort in testingPortList)
                     {
-                        if (measurementBackgroundWorker.CancellationPending) return;
+                        // if (measurementBackgroundWorker.CancellationPending) return;131126
+                        if (measurementBackgroundWorker.CancellationPending)
+                        {
+                            e.Cancel = true;
+                            return;
+                        }
                         System.Threading.Thread.Sleep(1);
 
                         //khai báo dữ liệu report cho từng port
@@ -3824,15 +3829,15 @@ namespace _5GAutoTool
             VSG2.OnOffSignal(0);
             VSG3.OnOffSignal(0);
             BBU.StopProcess();
-            measurementBackgroundWorker.CancelAsync();
+           // measurementBackgroundWorker.CancelAsync();131126
             endingTime = lblRuntime.Text;
             lblStatusProgress_TextChanged("Đang lưu File kết quả");
             timerProcess.Stop();
             //ExporttoHtml();
             //ExportListView();
             //ExportLogToTxt();
-            
 
+            /*131126
             lblStatusProgress_TextChanged("Quá trình đo đã kết thúc");
             runningTask.Text = "";
             clearFlag = true;
@@ -3850,6 +3855,86 @@ namespace _5GAutoTool
             //UE
             txtSerial_TextChanged("");
             btnConnect_Enable();
+            */
+
+            lblStatusProgress_TextChanged("Đang lưu kết quả...");
+            runningTask.Text = "";
+            clearFlag = true;
+            enRecordLog = false;
+
+            // Lưu serial trước khi xóa textbox
+            string finishedSerial = RruSerial;
+
+            // Xuất báo cáo của phiên đo vừa hoàn thành
+            if (!e.Cancelled && e.Error == null)
+            {
+                _reportManager.EndReport();
+
+                _reportEngine.ExportAll(
+                    _reportManager.Report,
+                    _excelTemplatePath,
+                    lvwLog);
+
+                CaptureResultWindow(
+                    _reportManager.Report.ReportFolder,
+                    finishedSerial);
+
+                bool isPass =
+                    _reportManager.Report.Summary.OverallResult == "PASS";
+
+                lblPassFail.Text = isPass ? "PASS" : "FAIL";
+                lblPassFail.ForeColor = isPass ? Color.Green : Color.Red;
+            }
+            else if (e.Cancelled)
+            {
+                lblPassFail.Text = "STOP";
+                lblPassFail.ForeColor = Color.Blue;
+            }
+            else
+            {
+                lblPassFail.Text = "ERROR";
+                lblPassFail.ForeColor = Color.Red;
+            }
+
+            // ========================================
+            // RESET PHIÊN ĐO CŨ
+            // ========================================
+
+            // 1. Xóa danh sách testcase đang chờ
+            if (TestcasePending != null)
+            {
+                TestcasePending.Clear();
+            }
+
+            // 2. Xóa danh sách port của phiên đo cũ
+            if (testingPortList != null)
+            {
+                testingPortList.Clear();
+            }
+
+            // 3. Xóa testcase hiện tại
+            CurrentTestcase = null;
+
+            // 4. Không xóa TestcaseNodes
+            // 5. Không xóa trvTestCases.Nodes
+            // 6. Không reset checkbox ở đây
+
+            // 7. Reset trạng thái nút
+            btnStop.Enabled = false;
+            btnStart.Enabled = true;
+
+            // 8. Xóa serial cũ, chuẩn bị serial mới
+            txtSerial_TextChanged("");
+
+            // 9. Cập nhật trạng thái
+            lblStatusProgress_TextChanged(
+                "Đã kết thúc phiên đo. Sẵn sàng đo serial mới.");
+
+            btnConnect_Enable();
+
+            Log("[SESSION] Old measurement session cleared.",
+                LogLevel.SUCCESS);
+
         }
         #endregion
         #region measurementBackgroundWorker_ProgressChanged
