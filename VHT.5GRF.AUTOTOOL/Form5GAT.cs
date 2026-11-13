@@ -1015,10 +1015,26 @@ namespace _5GAutoTool
                 //openfile excel
                 OpenFileData(filename);
             }
+
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                string error =
+                    "Startup error:\r\n" +
+                    ex.ToString() +
+                    "\r\n\r\nBaseDirectory: " +
+                    AppDomain.CurrentDomain.BaseDirectory +
+                    "\r\nConfig path: " + textFile +
+                    "\r\nExcel path: " + filename;
+
+                MessageBox.Show(
+                    error,
+                    "5GAutoTool - Startup Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                Log(error, LogLevel.ERROR);
             }
+
         }
 
         private void ClearLogView()

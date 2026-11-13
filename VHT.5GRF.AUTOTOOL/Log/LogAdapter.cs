@@ -20,6 +20,7 @@ namespace _5GAutoTool
     }
     public class LogAdapter
     {
+        private static readonly System.Threading.SemaphoreSlim _logFileLock = new System.Threading.SemaphoreSlim(1, 1);
         private ListView _listView;
         private TextBox _searchTextBox;
         private Label _searchCountLabel;
@@ -297,6 +298,14 @@ namespace _5GAutoTool
 
         private void AddLogToListView(string timestamp, LogLevel logLevel, string logMessage, string device = "", string source = "")
         {
+            if (_listView.Columns.Count >= 5)
+            {
+                _listView.Columns[0].Width = 170;
+                _listView.Columns[1].Width = 100;
+                _listView.Columns[2].Width = 230;
+                _listView.Columns[3].Width = 650;
+                _listView.Columns[4].Width = 120;
+            }
             _listView.BeginUpdate();
 
             ListViewItem newItem = new ListViewItem(timestamp);
@@ -308,7 +317,13 @@ namespace _5GAutoTool
             newItem.SubItems.Add(source);
             newItem.ForeColor = GetLogLevelColor(logLevel);
             _listView.Items.Add(newItem);
-            _listView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            const int maxDisplayLogs = 3000;
+
+            if (_listView.Items.Count > maxDisplayLogs)
+            {
+                _listView.Items.RemoveAt(0);
+            }
+            // _listView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             // Scroll to the last item
             _listView.EnsureVisible(_listView.Items.Count - 1);
 
@@ -321,7 +336,11 @@ namespace _5GAutoTool
 
             ListView filteredLog = ViewLogs.FirstOrDefault(n => n.Name == logLevel.ToString());
             filteredLog.Items.Add(cloneItem);
-            filteredLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            if (filteredLog.Items.Count > maxDisplayLogs)
+            {
+                filteredLog.Items.RemoveAt(0);
+            }
+            //filteredLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             filteredLog.EnsureVisible(filteredLog.Items.Count - 1);
 
             //foreach (ListView view in ViewLogs)
@@ -352,11 +371,31 @@ namespace _5GAutoTool
             string filepath = Path.Combine(directoryPath, $"{serial}_{time}.txt");
 
             // Use StreamWriter with 'using' to ensure proper disposal
-            using (FileStream fs = new FileStream(filepath, FileMode.Append, FileAccess.Write, FileShare.Read))
-            using (StreamWriter sWriter = new StreamWriter(fs, Encoding.UTF8))
+            //using (FileStream fs = new FileStream(filepath, FileMode.Append, FileAccess.Write, FileShare.Read))
+            //using (StreamWriter sWriter = new StreamWriter(fs, Encoding.UTF8))
+            //{
+            //    string text = $"{timestamp}:{strLogLevel}\t{strLogDevice}:{logMessage}";
+            //    await sWriter.WriteLineAsync(text);
+            //}
+            string text = $"{timestamp}:{strLogLevel}\t{strLogDevice}:{logMessage}";
+
+            await _logFileLock.WaitAsync();
+
+            try
             {
-                string text = $"{timestamp}:{strLogLevel}\t{strLogDevice}:{logMessage}";
-                await sWriter.WriteLineAsync(text);
+                using (FileStream fs = new FileStream(
+                    filepath,
+                    FileMode.Append,
+                    FileAccess.Write,
+                    FileShare.Read))
+                using (StreamWriter sWriter = new StreamWriter(fs, Encoding.UTF8))
+                {
+                    await sWriter.WriteLineAsync(text);
+                }
+            }
+            finally
+            {
+                _logFileLock.Release();
             }
         }
         private Color GetLogLevelColor(LogLevel logLevel)
