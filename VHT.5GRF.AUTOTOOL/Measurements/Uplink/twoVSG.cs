@@ -1503,6 +1503,8 @@ namespace _5GAutoTool
             var worker = mainForm.measurementBackgroundWorker;
             var exclusions = new List<double[]>();
             var seenHz = new HashSet<long>();
+            bool hasInvalidPoint = false;
+            int invalidPointCount = 0;
 
             try
             {
@@ -1583,7 +1585,7 @@ namespace _5GAutoTool
                 //vsg2.LoadUserCorrDataSGS100A(@"/var/user/RxBlocking");
                 // Configure first VALID frequency before starting BBU measurement.
                 vsg2.SetCWWaveform(isPower, points[0].Item2.ToString(culture));
-             /  vsg2.LogUserCorrectionSGS100A(isPower, points[0].Item2);
+              // vsg2.LogUserCorrectionSGS100A(isPower, points[0].Item2);
 
                 for (int startAttempt = 0; startAttempt < 2 && !testMacStarted; startAttempt++)
                 {
@@ -1626,15 +1628,42 @@ namespace _5GAutoTool
                     {
                         if (worker.CancellationPending) return;
                         bbu.RXSENS_V2(out throughput);
+                       // 131126double tempTP = GetthroughputFromString(throughput, setPort);
+                        //if (tempTP > 0 && tempTP <= 100) { valid = true; break; }
                         double tempTP = GetthroughputFromString(throughput, setPort);
-                        if (tempTP > 0 && tempTP <= 100) { valid = true; break; }
+
+                        if (!double.IsNaN(tempTP) &&
+                            !double.IsInfinity(tempTP) &&
+                            tempTP >= 0 &&
+                            tempTP <= 100)
+                        {
+                            valid = true;
+                            break;
+                        }
                         if (attempt + 1 < maxReadAttempts)
                             for (int waited = 0; waited < dwellMs; waited += 500)
                             { if (worker.CancellationPending) return; 
                                 System.Threading.Thread.Sleep(Math.Min(500, dwellMs - waited)); }
                     }
+                    // 131126 if (!valid)
+                    //  { Log("OOB: no valid throughput at " + freqMHz.ToString("F3", culture) + " MHz.", LogLevel.ERROR); return; }
+
                     if (!valid)
-                    { Log("OOB: no valid throughput at " + freqMHz.ToString("F3", culture) + " MHz.", LogLevel.ERROR); return; }
+                    {
+                        hasInvalidPoint = true;
+                        invalidPointCount++;
+
+                        Log(
+                            "[OOB] INVALID throughput at CW = " +
+                            freqMHz.ToString("F3", culture) +
+                            " MHz after " + maxReadAttempts +
+                            " attempts. Continue sweep.",
+                            LogLevel.ERROR);
+
+                        // Bỏ qua điểm không có dữ liệu hợp lệ,
+                        // chuyển sang tần số CW tiếp theo.
+                        continue;
+                    }
 
                     string subName = string.IsNullOrEmpty(cw.Item1) ? "" : "_" + cw.Item1;
                     double currentTP;
@@ -1647,9 +1676,23 @@ namespace _5GAutoTool
                         freqMHz.ToString(culture), currentTP.ToString(culture), "95", "100");
                     Log("OOB min throughput = " + minTP + "%");
                 }
+                //131126
+                //  completed = true;
+                // TP = minTP;
+                // Log("OOB completed. Min TP = " + minTP + "%", minTP >= 95 ? LogLevel.SUCCESS : LogLevel.ERROR);
+
                 completed = true;
-                TP = minTP;
-                Log("OOB completed. Min TP = " + minTP + "%", minTP >= 95 ? LogLevel.SUCCESS : LogLevel.ERROR);
+
+                // Nếu có điểm không đọc được dữ liệu,
+                // không được kết luận PASS cho cả dải.
+                TP = hasInvalidPoint ? -1 : minTP;
+
+                Log(
+                    "[OOB] Sweep completed. " +
+                    "Min valid TP = " + minTP + "%, " +
+                    "Invalid points = " + invalidPointCount,
+                    TP >= 95 ? LogLevel.SUCCESS : LogLevel.ERROR);
+
             }
             catch (Exception ex) { Log("OOB stopped: " + ex.ToString(), LogLevel.ERROR); }
             finally

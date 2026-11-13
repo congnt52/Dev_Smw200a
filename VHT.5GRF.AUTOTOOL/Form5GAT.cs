@@ -260,6 +260,16 @@ namespace _5GAutoTool
             //    return;
             //}
 
+            if (measurementBackgroundWorker.IsBusy)
+            {
+                MessageBox.Show(
+                    "Phiên đo trước vẫn đang chạy hoặc chưa dừng hoàn toàn.",
+                    "Measurement",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
             lblPassFail.Text = "RUNNING";
 
           //  measurementBackgroundWorker.RunWorkerAsync();
@@ -314,7 +324,8 @@ namespace _5GAutoTool
 
             //Checking input validation
             ProgressLabel($"Validating RRU Serial in combobox...");
-            if (RruSerial.Contains("RU") || RruSerial.Contains("AIO")) //&& rruSerial.Length == 10
+           // if (RruSerial.Contains("RU") || RruSerial.Contains("AIO")) //&& rruSerial.Length == 10
+           if (!string.IsNullOrWhiteSpace(RruSerial))
             {
                 Config();
                 //clear TestcaseNodes status but still keep Parameters
@@ -322,17 +333,23 @@ namespace _5GAutoTool
                 UpdateToTreeView();
 
                 TestcasePending = GetTestcasesByStatus(TestcaseNodes, TestcaseStatus.Pending);
-                if (TestcasePending.Count > 0 && testingPortList.Count >= 0)
+                if (TestcasePending.Count == 0)
+                {
+                    MessageBox.Show(
+                        "Chưa có testcase nào được chọn để đo.",
+                        "Measurement",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
+                    lblPassFail.Text = "READY";
+                    return;
+                }
+                //if (TestcasePending.Count > 0 && testingPortList.Count >= 0)
+                if (TestcasePending.Count > 0)
                 {                    
                     RruSerial = txtRRUSerial.Text;
-                    if (measurementBackgroundWorker.IsBusy)
-                    {
-                        Log(
-                            "[MEASUREMENT] BackgroundWorker is already running.",
-                            LogLevel.WARN);
-                        return;
-                    }
-
+                   
+                    /*131126
                     measurementBackgroundWorker.RunWorkerAsync();
                     timerProcess.Start();
                     //connectionCheckTimer.Start(); //tam thoi khong thuc hien kiem tra
@@ -341,6 +358,30 @@ namespace _5GAutoTool
                     UpdateProgressBar(0);
                     //add instrument list
                     AddInstrumenttoList();
+                    */
+
+                    // Chuẩn bị giao diện và thiết bị trước khi worker chạy
+                   
+                    AddInstrumenttoList();
+                    UpdateProgressBar(0);
+                    if (measurementBackgroundWorker.IsBusy)
+                    {
+                        Log(
+                            "[MEASUREMENT] BackgroundWorker is already running.",
+                            LogLevel.WARN);
+                        return;
+                    }
+                    measurementBackgroundWorker.RunWorkerAsync();
+                    timerProcess.Start();
+                    btnStart.Enabled = false;
+                    btnStop.Enabled = true;
+                    Log($"Started measurement for serial: {RruSerial}");
+
+                    
+                    
+
+                   
+
                 }
 
             }
@@ -408,6 +449,7 @@ namespace _5GAutoTool
                 lblStatusProgress_TextChanged("Đang dừng Measurement...");
 
                 btnStop.Enabled = false;
+                btnStart.Enabled = false;
             }
         }
         //}
