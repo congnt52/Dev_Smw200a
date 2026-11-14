@@ -46,6 +46,7 @@ namespace _5GAutoTool
         public CMW100 cmw100;
         private SMW200A smw200a;
         private SMBV100B smbv100b;
+        private SMB100A smb100a;
         private SGS100A sgs100a;
         public M9410a m9410a;
         string instrumentVSG = "0";
@@ -56,6 +57,7 @@ namespace _5GAutoTool
             N5182b = new N5182B(mainForm);
             cmw100 = new CMW100(mainForm);
             sgs100a = new SGS100A(mainForm);
+            smb100a = new SMB100A(mainForm);
             smw200a = new SMW200A(mainForm);
             smbv100b = new SMBV100B(mainForm);
             m9410a = new M9410a(mainForm);
@@ -118,6 +120,11 @@ namespace _5GAutoTool
                 sgs100a.Connection(ip, cmd, out manufacturer, out model, out serial);
                 Model = "SGS100A";
             }
+            else if (instrumentVSG == "SMB100A")
+            {
+                smb100a.Connection(ip, cmd, out manufacturer, out model, out serial);
+                Model = "SMB100A";
+            }
             else if (instrumentVSG == "M9410A")
             {
                 m9410a.Connect(ip, cmd, out manufacturer, out model, out serial);
@@ -156,7 +163,11 @@ namespace _5GAutoTool
             {
                 sgs100a.SendCmd("*IDN?", out tmp);
             }
-            else if (instrumentVSG == "SGS100A")
+            else if (instrumentVSG == "SMB100A")
+            {
+                smb100a.SendCmd("*IDN?", out tmp);
+            }
+            else if (instrumentVSG == "M9410A")
             {
                 m9410a.SendCmd("*IDN?", out tmp);
             }
@@ -184,6 +195,10 @@ namespace _5GAutoTool
             else if (instrumentVSG == "SGS100A")
             {
                 sgs100a.Disconnect();
+            }
+            else if (instrumentVSG == "SMB100A")
+            {
+                smb100a.Disconnect();
             }
             else if (instrumentVSG == "M9410A")
             {
@@ -222,6 +237,10 @@ namespace _5GAutoTool
             {
                 sgs100a.SendCmd(Cmd, out respond);
             }
+            else if (instrumentVSG == "SMB100A")
+            {
+                smb100a.SendCmd(Cmd, out respond);
+            }
             else if (instrumentVSG == "M9410A")
             {
                 m9410a.SendCmd(Cmd, out respond);
@@ -250,6 +269,10 @@ namespace _5GAutoTool
             else if (instrumentVSG == "SGS100A")
             {
                 sgs100a.SetFreq(freqSet);
+            }
+            else if (instrumentVSG == "SMB100A")
+            {
+                smb100a.SetFreq(freqSet);
             }
             else if (instrumentVSG == "M9410A")
             {
@@ -288,6 +311,11 @@ namespace _5GAutoTool
                 sgs100a.SetPower(powerSet);
                 sgs100a.Alias = Name;
             }
+            else if (instrumentVSG == "SMB100A")
+            {
+                smb100a.SetPower(powerSet);
+                smb100a.Alias = Name;
+            }
             else if (instrumentVSG == "M9410A")
             {
                 m9410a.SetPower(powerSet);
@@ -321,6 +349,58 @@ namespace _5GAutoTool
 
             return false;
         }
+        public bool LoadOOBUserCorrectionSMB(
+    string sgsCorrectionPath,
+    string smbvCorrectionPath)
+        {
+            if (instrumentVSG == "SMB100A")
+            {
+                smb100a.LoadUserCorrectionSettingFile(
+                    sgsCorrectionPath);
+
+                Log("[OOB] SGS100A: UCOR load requested.");
+                return true;
+            }
+
+            if (instrumentVSG == "SMBV100B")
+            {
+                return smbv100b.LoadUserCorrectionSettingFile(
+                    2, smbvCorrectionPath);
+            }
+
+            Log(
+                "[OOB] User Correction not supported for: " +
+                instrumentVSG,
+                LogLevel.ERROR);
+
+            return false;
+        }
+    //    public bool LoadOOBUserCorrectionSMB(
+    //string smbCorrectionPath,
+    //string smbvCorrectionPath)
+    //    {
+    //        if (instrumentVSG == "SGS100A")
+    //        {
+    //            sgs100a.LoadUserCorrectionSettingFile(
+    //                smbCorrectionPath);
+
+    //            Log("[OOB] SGS100A: UCOR load requested.");
+    //            return true;
+    //        }
+
+    //        if (instrumentVSG == "SMBV100B")
+    //        {
+    //            return smbv100b.LoadUserCorrectionSettingFile(
+    //                2, smbCorrectionPath);
+    //        }
+
+    //        Log(
+    //            "[OOB] User Correction not supported for: " +
+    //            instrumentVSG,
+    //            LogLevel.ERROR);
+
+    //        return false;
+    //    }
 
         public void setParameter(int source, string powerSet, string freqSet,double TriggerDelay)
         {
@@ -376,6 +456,15 @@ namespace _5GAutoTool
                 sgs100a.SetPower(powerSet);
                 System.Threading.Thread.Sleep(500);
                 sgs100a.RFOnOff(1);
+            }
+            else if (instrumentVSG == "SMB100A")
+            {
+                //sgs100a.RFOnOff(0);
+                System.Threading.Thread.Sleep(500);
+                smb100a.SetFreq(freqSet);
+                smb100a.SetPower(powerSet);
+                System.Threading.Thread.Sleep(500);
+                smb100a.RFOnOff(1);
             }
             else if (instrumentVSG == "M9410A")
             {
@@ -1204,7 +1293,7 @@ namespace _5GAutoTool
                 //sgs100a.RFOnOff(0);
                 System.Threading.Thread.Sleep(1); //08.01.2024 -test chu ky 100ms
                 sgs100a.SetFreq(freqSet);
-               //sgs100a.SetPower(powerSet);
+              // sgs100a.SetPower(powerSet);
                 //sgs100a.RFOnOff(1);
             }
             else if (instrumentVSG == "SMW200A")
@@ -1216,7 +1305,14 @@ namespace _5GAutoTool
         {
             if (instrumentVSG == "SGS100A")
             {
-    //            sgs100a.LogUserCorrectionSGS100A(isPower, sFreqChange);
+                sgs100a.LogUserCorrectionSGS100A(isPower, sFreqChange);
+            }
+        }
+        public void LogUserCorrectionSMB100A(string isPower, double sFreqChange)
+        {
+            if (instrumentVSG == "SMB100A")
+            {
+                smb100a.LogUserCorrectionSMB100A(isPower, sFreqChange);
             }
         }
         public void SetGeneralIMDWaveformLower(string powerSet, string freqSet, string Bw)
@@ -1460,9 +1556,20 @@ namespace _5GAutoTool
                 smw200a.IQOnOff(1, OnOff);
                 smw200a.IQOnOff(2, OnOff);
             }
+            else if (instrumentVSG == "SMMBV100B")
+            {
+                smbv100b.RFOnOff(1, OnOff);
+              //  smbv100b.RFOnOff(2, OnOff);
+                smbv100b.IQOnOff(1, OnOff);
+               // smbv100b.IQOnOff(2, OnOff);
+            }
             else if (instrumentVSG == "SGS100A")
             {
                 sgs100a.RFOnOff(OnOff);
+            }
+            else if (instrumentVSG == "SGS100A")
+            {
+                smb100a.RFOnOff(OnOff);
             }
             else if (instrumentVSG == "M9410A")
             {
@@ -1475,6 +1582,13 @@ namespace _5GAutoTool
             if (instrumentVSG == "SGS100A")
             {
                 sgs100a.LoadUserCorrectionSettingFile(ucorrPath);
+            }
+        }
+        public void LoadUserCorrDataSMB100A(string ucorrPath)
+        {
+            if (instrumentVSG == "SMB100A")
+            {
+                smb100a.LoadUserCorrectionSettingFile(ucorrPath);
             }
         }
 

@@ -161,13 +161,41 @@ namespace _5GAutoTool
                 Console.WriteLine("ERROR:<SGS100A> cannot set power level! " + e.Message);
             }
         }
+        //public void LogUserCorrectionSGS100A(string isPower, double sFreqChange)
+        //{
+        //    try
+        //    {
+        //        sgs100a.WriteString(":SOUR:CORR:VAL?", true);
+                
+        //        double correction = sgs100a.ReadNumber();
+        //        double standardPower;
+        //        if (!double.TryParse(isPower, System.Globalization.NumberStyles.Float,
+        //            System.Globalization.CultureInfo.InvariantCulture, out standardPower))
+        //        {
+        //            Log("SGS100A: Invalid OOB standard power: " + isPower, LogLevel.WARN);
+        //            return;
+        //        }
+        //        double requiredSetPower = standardPower + correction;
+        //        sgs100a.WriteString($":SOUR:POW:LEV:IMM:AMPL {requiredSetPower}", true);
+        //        Log(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+        //            "[OOB] CW={0:F3} MHz | Standard={1:F3} dBm | UCOR={2:+0.000;-0.000;0.000} dB | Required SGS Set={3:F3} dBm | Current commanded Level={4:F3} dBm",
+        //            sFreqChange / 1e6, standardPower, correction, requiredSetPower, standardPower));
+        //        // IMPORTANT: Query/log only. Current SetCWWaveform(isPower, ...)
+        //        // still sets 'isPower' directly, NOT 'requiredSetPower'.
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Log("SGS100A: Cannot query current UCOR: " + e.Message, LogLevel.WARN);
+        //    }
+        //}
         public void LogUserCorrectionSGS100A(string isPower, double sFreqChange)
         {
             try
             {
-                sgs100a.WriteString(":SOUR:CORR:VAL?", true);
-                
-                double correction = sgs100a.ReadNumber();
+                //sgs100a.WriteString(":SOUR:CORR:VAL?", true);
+
+                // double correction = sgs100a.ReadNumber();
+                double correction = 0;
                 double standardPower;
                 if (!double.TryParse(isPower, System.Globalization.NumberStyles.Float,
                     System.Globalization.CultureInfo.InvariantCulture, out standardPower))
@@ -177,9 +205,10 @@ namespace _5GAutoTool
                 }
                 double requiredSetPower = standardPower + correction;
                 sgs100a.WriteString($":SOUR:POW:LEV:IMM:AMPL {requiredSetPower}", true);
-                Log(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                    "[OOB] CW={0:F3} MHz | Standard={1:F3} dBm | UCOR={2:+0.000;-0.000;0.000} dB | Required SGS Set={3:F3} dBm | Current commanded Level={4:F3} dBm",
-                    sFreqChange / 1e6, standardPower, correction, requiredSetPower, standardPower));
+                
+              //  Log(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+              //      "[OOB] CW={0:F3} MHz | Standard={1:F3} dBm | UCOR={2:+0.000;-0.000;0.000} dB | Required SGS Set={3:F3} dBm | Current commanded Level={4:F3} dBm",
+               //     sFreqChange / 1e6, standardPower, correction, requiredSetPower, standardPower));
                 // IMPORTANT: Query/log only. Current SetCWWaveform(isPower, ...)
                 // still sets 'isPower' directly, NOT 'requiredSetPower'.
             }

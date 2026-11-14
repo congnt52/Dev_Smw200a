@@ -585,7 +585,8 @@
             this.cboVSGList2.Items.AddRange(new object[] {
             "N5182B",
             "SMW200A",
-            "SGS100A"});
+            "SGS100A",
+            "SMB100A"});
             this.cboVSGList2.Location = new System.Drawing.Point(198, 102);
             this.cboVSGList2.Margin = new System.Windows.Forms.Padding(4);
             this.cboVSGList2.Name = "cboVSGList2";

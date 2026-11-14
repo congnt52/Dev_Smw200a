@@ -56,9 +56,9 @@ namespace _5GAutoTool
             string isPower = "";
             //ServerRedhat - finding PortMapping and switch group port
             currPort = mainForm.PortMappings.FirstOrDefault(item => item.Port == setPort);
-            //bbu.SwitchGroup(currPort.XRanIndex.ToString());
+            bbu.SwitchGroup(currPort.XRanIndex.ToString());
             //for debugging
-            //Log($"Current Testing Port = {currPort.Port}\tXran = {currPort.XRanIndex}\tStream = {currPort.StreamIndex}");
+            Log($"Current Testing Port = {currPort.Port}\tXran = {currPort.XRanIndex}\tStream = {currPort.StreamIndex}");
 
             //double _setAtt = double.Parse(setAtt);
             double _wsPower = double.Parse(wsPowerStr);
@@ -71,9 +71,9 @@ namespace _5GAutoTool
             if (mode != "OOB2" && mode != "OOB1" && mode != "INB2")
             {
                 //double _isATT = vsg2.Attenuators[setPort - 1];
-                double _isATT = vsg2.AttenuatorLevel;
+    //            double _isATT = vsg2.AttenuatorLevel;
           //      Log($"{vsg2.Alias}: Expected Power Level={_isPower}dBm, ATT_Port{setPort} Level={_isATT}dB");
-                isPower = (_isPower + _isATT).ToString("N3"); //công suất tai cong output cua VSG2 IS - 3 numerics
+      //          isPower = (_isPower + _isATT).ToString("N3"); //công suất tai cong output cua VSG2 IS - 3 numerics
             }
             else
             {
@@ -125,9 +125,9 @@ namespace _5GAutoTool
                             break;
                         case "OOB2": // General OOB; CW target -15 dBm at DUT reference plane
                             {
-                         //       vsg1.SetOOBWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
+                               // vsg1.SetOOBWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
                                 vsg1.TypeOfSignal = "DFT-s-OFDM";
-                            //    vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
+                                //vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
                               //  if (vsg1.Model == "SMW200A") vsg1.OffSignal(2);
                                 List<string[]> oobMeasRange = new List<string[]>();
                                 oobMeasRange.Add(new string[] { "", isLowerFreqRange, isUpperFreqRange });
@@ -196,8 +196,8 @@ namespace _5GAutoTool
                         case "OOB1": // Co-location Blocking - WA BS, n40
                             {
                                 // Keep wanted-signal setup consistent with OOB2.
-                                vsg1.SetOOBWaveform(
-                                    isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
+                               // vsg1.SetOOBWaveform(
+                               //     isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
 
                                 vsg1.TypeOfSignal = "DFT-s-OFDM";
                           //      vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
@@ -1617,8 +1617,11 @@ namespace _5GAutoTool
                     string freqText = cw.Item2.ToString(culture);
                     double freqMHz = cw.Item2 / 1e6;
                     vsg2.SetCWWaveform(isPower, freqText);
-                    vsg2.LogUserCorrectionSGS100A(isPower, cw.Item2);
-                    Log("OOB: CW = " + freqMHz.ToString("F3", culture) + " MHz");
+                    if (vsg2.Model == "SGS100A")
+                    { vsg2.LogUserCorrectionSGS100A(isPower, cw.Item2); }
+                    else if (vsg2.Model == "SMB100A")
+                    { vsg2.LogUserCorrectionSMB100A(isPower, cw.Item2); }
+                        Log("OOB: CW = " + freqMHz.ToString("F3", culture) + " MHz");
                     for (int waited = 0; waited < dwellMs; waited += 500)
                     { if (worker.CancellationPending) return; System.Threading.Thread.Sleep(Math.Min(500, dwellMs - waited)); }
 

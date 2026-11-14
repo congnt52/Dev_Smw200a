@@ -168,7 +168,7 @@ namespace _5GAutoTool
         new Func<DialogResult>(() =>
             MessageBox.Show(
                 this,
-                "Bạn đã bật và chuẩn bị máy đo cho bài:\n\n"
+                "Bạn đã LOAD state máy đo và ON tín hiệu chưa:\n\n"
                     + testcaseInTesting.Text
                     + "\n\nNhấn YES để tiếp tục đo."
                     + "\nNhấn NO để dừng.",
@@ -3162,7 +3162,7 @@ namespace _5GAutoTool
 
                                     double.TryParse(strWSTrigDelay, out double wsTrigDelay);
                                     wsTrigDelay = wsTrigDelay * 1e-3;
-                                    VSG1.SetTriggerDelay(wsTrigDelay);
+                                   // VSG1.SetTriggerDelay(wsTrigDelay);
 
                                     double.TryParse(strLimMax, out limitMax);
                                     double.TryParse(strLimMin, out limitMin);
