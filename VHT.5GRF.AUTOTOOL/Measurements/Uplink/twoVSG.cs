@@ -18,6 +18,8 @@ namespace _5GAutoTool
         private bool L1TestMacV2Start = false;
         private bool L1TestMacV3Start = false;
         private int portIndex;
+        public const bool INB2_MANUAL_VSG = true;
+
         public twoVSG(Form5GAT mMainForm)
         {
             mainForm = mMainForm;
@@ -52,6 +54,8 @@ namespace _5GAutoTool
         public void Measurement(VSG vsg1, VSG vsg2, BBU bbu, string mode, string WsRBOffset, string IsRBOffset, double step, string setAtt, int setPort, string wsPowerStr, string wsFreq, string isPowerStr, string isFreq, string isLowerFreqRange, string isUpperFreqRange, string Bandwidth, double TriggerDelay, out double TP)
         {
             TP = -1;
+       
+
             string throughput = "ERROR";
             string isPower = "";
             //ServerRedhat - finding PortMapping and switch group port
@@ -101,7 +105,8 @@ namespace _5GAutoTool
                 System.Threading.Thread.Sleep(1);
                 //Generate wanted signal_Chung cho tất cả các bài
                 //vsg1.SetPsenWaveform(wsPower, wsFreq);
-                if (vsg1.Model == "SMW200A" || vsg1.Model == "SMBV100B")
+                //if (vsg1.Model == "SMW200A" || vsg1.Model == "SMBV100B")
+                if ((INB2_MANUAL_VSG && (mode == "INB2" || mode == "OOB1" || mode == "OOB2")) || vsg1.Model == "SMW200A" || vsg1.Model == "SMBV100B")
                 {
                     switch (mode)
                     {
@@ -283,15 +288,22 @@ namespace _5GAutoTool
                                     //26.2.2024 - sua code
                                     writeCSVThroughputValue(mode, setPort, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, throughput, out TP);
                                     break;
-                                case "INB2":
-                            //measuring INB with TM run continuosly in xx (s)
-                                    vsg1.SetIBBWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
-                                    vsg2.TypeOfSignal = "DFT-s-OFDM";
-                                   //vsg2.SetIBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth);
-                                    vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay); //smw200a                      
-                                    vsg2.setParameter(2, isPower, isFreq, TriggerDelay); //smw200a
-                                    inbMeasurementInSequence(bbu, vsg2, mode, setPort, step, 10000, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, _isFreqLimitLeft.ToString(), isLowerFreqRange, isUpperFreqRange, _isFreqLimitRight.ToString(), Bandwidth, out TP);
-                                    break;
+                                
+                        //measuring INB with TM run continuosly in xx (s)
+                        // FILE: VHT.5GRF.AUTOTOOL/Measurements/Uplink/twoVSG.cs
+                        // PATCH 1: Replace only case "INB2" in Measurement() with the following.
+                                 case "INB2":
+                            // Keep the existing INB modulated waveform configuration.
+                            //vsg1.SetIBBWaveform(isPowerStr, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
+                            vsg2.TypeOfSignal = "DFT-s-OFDM";
+                            //vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
+                            // Source 2 is set by the sequence at each sweep frequency, with correction.
+                            inbMeasurementInSequence(
+                                bbu, vsg2, mode, setPort, 1000000, 1000,
+                                wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset,
+                                "2240", "2295", "2405", "2460", Bandwidth, out TP);
+                            break;
+
                             #region comment OOB old
                             //                        case "OOB2":
                             //                            //25.3.2024 - viet lai bai do oob                        
@@ -773,7 +785,237 @@ namespace _5GAutoTool
         // Requires: using System.Globalization; using System.Threading;
         #endregion
 
+        private void inbMeasurementInSequence(
+    BBU bbu, VSG vsg2, string mode, int setPort, double step, int timeSequence,
+    string wsFreq, string wsPower, string WsRBOffset, string isFreq,
+    string isPower, string IsRBOffset, string isLowerFreqFrom,
+    string isLowerFreqTo, string isUpperFreqFrom, string isUpperFreqTo,
+    string BW, out double TP)
+        {
+            TP = -1;
+            double minTP = -1;
+            bool testMacStarted = false;
+            bool completed = false;
+            bool hasInvalidPoint = false;
+            int invalidPointCount = 0;
+            const int syncTimeoutMs = 60000;
+            const int maxReadAttempts = 4;
+            int dwellMs = Math.Max(1000, timeSequence);
+            var culture = System.Globalization.CultureInfo.InvariantCulture;
+            var worker = mainForm.measurementBackgroundWorker;
 
+            try
+            {
+                if (Math.Abs(step - 1000000.0) > 0.001)
+                    throw new ArgumentException("INB2 step must be 1000000 Hz (1 MHz).");
+
+                // Same point-list preparation pattern as OOB2; only two INB ranges.
+                string[][] ranges =
+                {
+            new[] { "LOWER", isLowerFreqFrom, isLowerFreqTo },
+            new[] { "UPPER", isUpperFreqFrom, isUpperFreqTo }
+        };
+                var points = new List<Tuple<string, long>>();
+                var seenHz = new HashSet<long>();
+                double previousEnd = double.NegativeInfinity;
+                foreach (string[] range in ranges)
+                {
+                    double fromMHz, toMHz;
+                    if (!double.TryParse(range[1], System.Globalization.NumberStyles.Float, culture, out fromMHz) ||
+                        !double.TryParse(range[2], System.Globalization.NumberStyles.Float, culture, out toMHz) ||
+                        double.IsNaN(fromMHz) || double.IsNaN(toMHz) ||
+                        double.IsInfinity(fromMHz) || double.IsInfinity(toMHz) ||
+                        fromMHz > toMHz || fromMHz <= previousEnd)
+                        throw new FormatException("Invalid INB2 range: " + range[0]);
+
+                    previousEnd = toMHz;
+                    long count = (long)Math.Floor(toMHz - fromMHz + 1e-9) + 1;
+                    if (count < 1 || count > 1000000 || points.Count + count > 1000000)
+                        throw new InvalidOperationException("INB2 sweep has too many points.");
+                    Log("INB2 source range: " + range[0] + " [" + range[1] + ", " + range[2] + "] MHz");
+                    for (long index = 0; index < count; index++)
+                    {
+                        long freqHz = checked((long)Math.Round((fromMHz + index) * 1e6));
+                        if (seenHz.Add(freqHz)) points.Add(Tuple.Create(range[0], freqHz));
+                    }
+                }
+                if (points.Count == 0) throw new InvalidOperationException("INB2 has no sweep points.");
+                Log("INB2 valid points: " + points.Count + "; dwell=" + dwellMs + " ms");
+
+                // INB2 keeps its existing per-frequency correction file, unlike OOB2 CW.
+                string path = System.IO.Path.Combine(mainForm.isCSVFilePathRX, "ISRX" + setPort + ".csv");
+                if (!System.IO.File.Exists(path))
+                    throw new System.IO.FileNotFoundException("INB2 correction file missing", path);
+
+                double targetISPower;
+                if (!double.TryParse(isPower, System.Globalization.NumberStyles.Float, culture, out targetISPower) &&
+                    !double.TryParse(isPower, System.Globalization.NumberStyles.Float,
+                        System.Globalization.CultureInfo.CurrentCulture, out targetISPower))
+                    throw new FormatException("INB2 IS power is invalid: " + isPower);
+
+                // Configure the first interferer point BEFORE starting TestMAC, like OOB2.
+                // This helper is kept local to the sequence; it does not change the VSG class.
+                Action<long> setInterferer = freqHz =>
+                {
+                    double att = vsg2.ReadATTfromCSVFile(path, (double)freqHz);
+                    if (double.IsNaN(att) || double.IsInfinity(att))
+                        throw new InvalidOperationException("Invalid correction at " + freqHz + " Hz.");
+                    double instrumentPower = targetISPower + att;
+                    string freqText = freqHz.ToString(culture);
+                    string powerText = instrumentPower.ToString("F3", culture);
+                    if (vsg2.Model == "SMW200A")
+                    { 
+                    //    vsg2.setParameter(2, powerText, freqText, vsg2.TriggerDelay);
+                    }
+                    else
+                    {
+                        vsg2.SetFreq(freqText);
+                      //  vsg2.SetPower(powerText);
+                    }
+                    //Log("INB2: IS=" + (freqHz / 1e6).ToString("F3", culture) +
+                    //    " MHz; correction=" + att.ToString("F3", culture) +
+                    //    " dB; VSG power=" + instrumentPower.ToString("F3", culture) + " dBm");
+                };
+
+                if (worker.CancellationPending) return;
+                   setInterferer(points[0].Item2);
+
+                // Follow OOB2 TestMAC start/retry and synchronization sequence.
+                for (int startAttempt = 0; startAttempt < 2 && !testMacStarted; startAttempt++)
+                {
+                    if (worker.CancellationPending) return;
+                    if (startAttempt > 0)
+                    {
+                        bbu.STOP_L1TESTMAC();
+                        for (int waited = 0; waited < 30000; waited += 500)
+                        {
+                            if (worker.CancellationPending) return;
+                            System.Threading.Thread.Sleep(500);
+                        }
+                    }
+                    testMacStarted = bbu.STR_RXSENS_V2(BW, WsRBOffset, currPort.StreamIndex);
+                    L1TestMacV2Start = testMacStarted;
+                }
+                if (!testMacStarted)
+                {
+                    Log("INB2: cannot start RXSENS_V2.", LogLevel.ERROR);
+                    return;
+                }
+
+                var syncWatch = System.Diagnostics.Stopwatch.StartNew();
+                bool synchronized = false;
+                while (syncWatch.ElapsedMilliseconds < syncTimeoutMs)
+                {
+                    if (worker.CancellationPending) return;
+                    if (bbu.VALIDATEFILEOUT_RXSENS_V2()) { synchronized = true; break; }
+                    System.Threading.Thread.Sleep(100);
+                }
+                if (!synchronized)
+                {
+                    Log("INB2: timeout waiting for BBU file-out.", LogLevel.ERROR);
+                    return;
+                }
+
+                // Same sequential measurement and invalid-point policy as OOB2.
+                foreach (var point in points)
+                {
+                    if (worker.CancellationPending) return;
+                    long freqHz = point.Item2;
+                    string freqText = freqHz.ToString(culture);
+                    double freqMHz = freqHz / 1e6;
+                    setInterferer(freqHz);
+
+                    // 10 s after changing frequency; cancellation-aware.
+                    for (int waited = 0; waited < dwellMs; waited += 500)
+                    {
+                        if (worker.CancellationPending) return;
+                        System.Threading.Thread.Sleep(Math.Min(500, dwellMs - waited));
+                    }
+
+                    bool valid = false;
+                    string throughput = "ERROR";
+                    double measuredTP = -1;
+                    for (int attempt = 0; attempt < maxReadAttempts; attempt++)
+                    {
+                        if (worker.CancellationPending) return;
+                        try
+                        {
+                            bbu.RXSENS_V2(out throughput);
+                            measuredTP = GetthroughputFromString(throughput, setPort);
+                            if (!double.IsNaN(measuredTP) && !double.IsInfinity(measuredTP) &&
+                                measuredTP >= 0 && measuredTP <= 100)
+                            {
+                                valid = true;
+                                break;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Log("INB2: throughput read error at " + freqMHz.ToString("F3", culture) +
+                                " MHz: " + ex.Message, LogLevel.ERROR);
+                        }
+                        if (attempt + 1 < maxReadAttempts)
+                        {
+                            for (int waited = 0; waited < dwellMs; waited += 500)
+                            {
+                                if (worker.CancellationPending) return;
+                                System.Threading.Thread.Sleep(Math.Min(500, dwellMs - waited));
+                            }
+                        }
+                    }
+                    if (!valid)
+                    {
+                        hasInvalidPoint = true;
+                        invalidPointCount++;
+                        Log("[INB2] INVALID throughput at IS=" + freqMHz.ToString("F3", culture) +
+                            " MHz after " + maxReadAttempts + " attempts. Continue sweep.", LogLevel.ERROR);
+                        continue;
+                    }
+
+                    double csvTP;
+                    string subName = "_" + point.Item1;
+                    writeCSVThroughputValue(mode + "_P" + setPort + subName,
+                        setPort, wsFreq, wsPower, WsRBOffset, freqText,
+                        isPower, IsRBOffset, throughput, out csvTP);
+
+                    // Use the validated parsed throughput as the measured minimum.
+                    if (minTP < 0 || measuredTP < minTP) minTP = measuredTP;
+                    Log("INB2: IS=" + freqMHz.ToString("F3", culture) +
+                        " MHz; TP=" + measuredTP.ToString("F3", culture) +
+                        "%; Min TP=" + minTP.ToString("F3", culture) + "%");
+                }
+
+                completed = true;
+                TP = hasInvalidPoint ? -1 : minTP;
+                Log("[INB2] Sweep completed. Min valid TP=" + minTP.ToString("F3", culture) +
+                    "%; invalid points=" + invalidPointCount,
+                    TP >= 95 ? LogLevel.SUCCESS : LogLevel.ERROR);
+            }
+            catch (Exception ex)
+            {
+                Log("INB2 stopped: " + ex.ToString(), LogLevel.ERROR);
+                TP = -1;
+            }
+            finally
+            {
+                if (testMacStarted || L1TestMacV2Start)
+                {
+                    try { bbu.STOP_L1TESTMAC(); }
+                    catch (Exception ex) { Log("INB2 STOP_L1TESTMAC: " + ex.Message, LogLevel.ERROR); }
+                }
+                L1TestMacV2Start = false;
+                try { vsg2.OnOffSignal(0); }
+                catch (Exception ex) { Log("INB2 RF OFF: " + ex.Message, LogLevel.ERROR); }
+                if (!completed) TP = -1;
+            }
+        }
+
+
+       
+
+        // Phần code OOB cũ, giữ nguyên
+        //private void oobMeasurementInSequence(...)
+        /*Old1IB
         private void inbMeasurementInSequence(
             BBU bbu,
             VSG vsg2,
@@ -1126,12 +1368,12 @@ namespace _5GAutoTool
                     }
 
                     // ===== 11. Update chart =====
-                    mainForm.PopulateMeasurementChart(
-                        $"Inband-Blocking: Port {setPort}",
-                        freqMHz.ToString("F3", culture),
-                        tempTP.ToString("F3", culture),
-                        "95",
-                        "100");
+                    //mainForm.PopulateMeasurementChart(
+                    //    $"Inband-Blocking: Port {setPort}",
+                    //    freqMHz.ToString("F3", culture),
+                    //    tempTP.ToString("F3", culture),
+                    //    "95",
+                    //    "100");
 
                     Log(
                         $"[INB2] Min TP={minTP:F3}% " +
@@ -1211,7 +1453,7 @@ namespace _5GAutoTool
                 }
             }
         }
-
+*/
         #region oobMeasurementInSequence_old
         //private void oobMeasurementInSequence(
         //    BBU bbu, VSG vsg2, string mode, int setPort, double step, int timeSequence,

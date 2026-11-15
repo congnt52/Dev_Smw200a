@@ -356,6 +356,7 @@ namespace _5GAutoTool
 
 
         }
+        /*old savelog
         public async Task SaveLogToFile(string timestamp, LogLevel logLvl, string logMessage, string device = "", string source = "")
         {
             string serial = mainForm.RruSerial?.Trim() ?? "";
@@ -398,6 +399,65 @@ namespace _5GAutoTool
                 _logFileLock.Release();
             }
         }
+
+        */
+
+        public async Task SaveLogToFile(
+            string timestamp,
+            LogLevel logLvl,
+            string logMessage,
+            string device = "",
+            string source = "")
+        {
+            string strLogLevel =
+                (logLvl != LogLevel.DASH) ? $"[{logLvl}]" : "";
+
+            string strLogDevice =
+                !string.IsNullOrEmpty(device) ? $"[{device}]" : "";
+
+            // Giữ nguyên định dạng log cũ
+            string text =
+                $"{timestamp}:{strLogLevel}\t{strLogDevice}:{logMessage}";
+
+            // Chờ quyền ghi file trước khi xác định đường dẫn
+            await _logFileLock.WaitAsync();
+
+            try
+            {
+                string serial = mainForm.LogSessionSerial;
+                string sessionTime = mainForm.LogSessionTime;
+
+                string date = DateTime.Now.ToString("ddMMyyyy");
+
+                string directoryPath = Path.Combine(
+                    mainForm.directionPathTemplate,
+                    "logs",
+                    date);
+
+                Directory.CreateDirectory(directoryPath);
+
+                // Mỗi phiên đo có một file riêng
+                string filepath = Path.Combine(
+                    directoryPath,
+                    $"{serial}_{date}_{sessionTime}.txt");
+
+                using (FileStream fs = new FileStream(
+                    filepath,
+                    FileMode.Append,
+                    FileAccess.Write,
+                    FileShare.Read))
+                using (StreamWriter sWriter =
+                    new StreamWriter(fs, Encoding.UTF8))
+                {
+                    await sWriter.WriteLineAsync(text);
+                }
+            }
+            finally
+            {
+                _logFileLock.Release();
+            }
+        }
+
         private Color GetLogLevelColor(LogLevel logLevel)
         {
             switch (logLevel)

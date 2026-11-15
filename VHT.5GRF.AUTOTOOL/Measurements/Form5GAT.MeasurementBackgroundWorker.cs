@@ -30,8 +30,9 @@ namespace _5GAutoTool
         {
             try {
                 // TODO: Tạo mới report manager khi bắt đầu đo - 07.06.2026
-                _reportManager.Clear();
 
+                _reportManager.Clear();
+                enRecordLog = true; //start writing log to file
                 ProgressLabel($"Staring Measurement Background Worker...");
                 // in put
                 string PassFail = fail;
@@ -115,7 +116,7 @@ namespace _5GAutoTool
 
                 //10.1.2024 - clear Chart
                 //chart1.Series.Clear(); //tam thoi comment lai
-                enRecordLog = true; //start writing log to file
+                
 
                 //TODO: bắt đầu report - 07.06.2026
                 _reportManager.BeginReport(RruSerial, RruType, freqMHz.ToString() + " MHz", setBandwidth + " MHz", txtPower.Text + " dBm", testCase);
@@ -2911,7 +2912,7 @@ namespace _5GAutoTool
 
                                     string strWSTrigDelay = ReadValueByHeader(testcaseInTesting.Parameters, "TriggerDelay(ms)");
                                     double.TryParse(strWSTrigDelay, out double wsTrigDelay);
-                                    VSG1.SetTriggerDelay(wsTrigDelay * 1e-3);
+                               //     VSG1.SetTriggerDelay(wsTrigDelay * 1e-3);
 
                                     string wsPower = strWSPwr;
                                     string isPower = strISPwr;
@@ -2955,8 +2956,8 @@ namespace _5GAutoTool
                                         string path = $@"{isCSVFilePathRX}\ISRX{testingPort}.csv";
                                         double.TryParse(setFrequency, out double freq);
                                         VSG2.AttenuatorLevel = VSG2.ReadATTfromCSVFile(path, VSG2.SetFrequencyValue * 1e6);
-                                        Log($"{VSG2.Alias}: Set ATT_Port{testingPort}={VSG2.AttenuatorLevel} dB at f={VSG2.SetFrequencyValue}MHz");
-                                        Log($"{VSG2.Alias}: CSV Path:{VSG2.AttenuatorCSVpath}");
+                             //           Log($"{VSG2.Alias}: Set ATT_Port{testingPort}={VSG2.AttenuatorLevel} dB at f={VSG2.SetFrequencyValue}MHz");
+                                  //      Log($"{VSG2.Alias}: CSV Path:{VSG2.AttenuatorCSVpath}");
 
                                     }
                                     Measurement.twoVSGMode(VSG1, VSG2, BBU, "INB2", wsRbOffset, isRbOffset, isFreqSweep, attSetVal.ToString(), testingPort, wsPower, setFrequency, isPower, isFreqStart.ToString(), isFreqLowerTo.ToString(), isFreqUpperFrom.ToString(), setBandwidth, wsTrigDelay, out tp);

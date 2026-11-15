@@ -122,6 +122,19 @@ namespace _5GAutoTool
         string setFrequency, setPower, setBandwidth;
         string instrBBU, ipBBU, userBBU, passBBU;
         public string RruSerial = ""; // thông tin RRU
+        public string LogSessionTime { get; private set; }
+            = DateTime.Now.ToString("HHmmssfff");
+
+        public string LogSessionSerial { get; private set; } = "NO_SERIAL";
+
+        private void StartNewLogSession()
+        {
+            LogSessionTime = DateTime.Now.ToString("HHmmssfff");
+
+            LogSessionSerial = string.IsNullOrWhiteSpace(RruSerial)
+                ? "NO_SERIAL"
+                : RruSerial.Trim();
+        }
         bool[] setPort = new bool[32];   //kiểm tra lại khai báo mảng này
         List<int> testingPortList;
         string fileReport = "";
@@ -287,8 +300,13 @@ namespace _5GAutoTool
             }
 
             //Reading device information
+            //Reading device information
+            RruSerial = txtRRUSerial.Text.Trim();
+
+            // Bắt đầu phiên log mới trước khi kết nối BBU
+            StartNewLogSession();
+
             ProgressLabel("Reading Measurement Parameter...");
-            RruSerial = txtRRUSerial.Text;
             // Đọc Operating Frequency từ giao diện (MHz)
             if (!double.TryParse(
                 txtFreqFrom.Text,
@@ -371,6 +389,7 @@ namespace _5GAutoTool
                             LogLevel.WARN);
                         return;
                     }
+                    LogSessionTime = DateTime.Now.ToString("HHmmss");
                     measurementBackgroundWorker.RunWorkerAsync();
                     timerProcess.Start();
                     btnStart.Enabled = false;

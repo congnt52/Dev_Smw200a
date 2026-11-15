@@ -73,7 +73,7 @@ namespace _5GAutoTool
                 {
                     if (mode == "SEN")
                     {
-                        vsg1.SetPsenWaveform(tmpPowerThreshold.ToString(), setFreq, RBOffset, Bandwidth, TriggerDelay);
+               //         vsg1.SetPsenWaveform(tmpPowerThreshold.ToString(), setFreq, RBOffset, Bandwidth, TriggerDelay);
                     }
                     else if (mode == "DR")
                     {
