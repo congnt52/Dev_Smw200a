@@ -106,7 +106,7 @@ namespace _5GAutoTool
                 //Generate wanted signal_Chung cho tất cả các bài
                 //vsg1.SetPsenWaveform(wsPower, wsFreq);
                 //if (vsg1.Model == "SMW200A" || vsg1.Model == "SMBV100B")
-                if ((INB2_MANUAL_VSG && (mode == "INB2" || mode == "OOB1" || mode == "OOB2")) || vsg1.Model == "SMW200A" || vsg1.Model == "SMBV100B")
+                if ((INB2_MANUAL_VSG && (mode == "INB2" || mode == "OOB1" || mode == "OOB2" )) || vsg1.Model == "SMW200A" || vsg1.Model == "SMBV100B")
                 {
                     switch (mode)
                     {
@@ -277,7 +277,7 @@ namespace _5GAutoTool
                                 break;
                             }
 
-                                case "INB":
+                        case "INB":
                             //vsg2.SetIBBWaveform(isPower, isFreq);
                                     vsg1.SetIBBWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
                                     vsg2.TypeOfSignal = "DFT-s-OFDM";
@@ -292,7 +292,7 @@ namespace _5GAutoTool
                         //measuring INB with TM run continuosly in xx (s)
                         // FILE: VHT.5GRF.AUTOTOOL/Measurements/Uplink/twoVSG.cs
                         // PATCH 1: Replace only case "INB2" in Measurement() with the following.
-                                 case "INB2":
+                        case "INB2":
                             // Keep the existing INB modulated waveform configuration.
                             //vsg1.SetIBBWaveform(isPowerStr, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
                             vsg2.TypeOfSignal = "DFT-s-OFDM";
@@ -302,7 +302,32 @@ namespace _5GAutoTool
                                 bbu, vsg2, mode, setPort, 1000000, 1000,
                                 wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset,
                                 "2240", "2295", "2405", "2460", Bandwidth, out TP);
-                            break;
+                         break;
+                        case "NBB":
+                            if (vsg2.Model != "SMW200A")
+                            {
+                                vsg2.SetNBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth);
+                            }
+                            else
+                            {
+                                if (double.Parse(wsFreq) < double.Parse(isFreq)) //Nhieu ben phai
+                                {
+                                    vsg2.SetNBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth);
+                                }
+                                else
+                                {
+                                    vsg2.SetNBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth); //nhieu ben trai
+                                }
+                            }
+                            //vsg2.SetNBBWaveform(isPower, isFreq, IsRBOffset);
+                            vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
+                            //System.Threading.Thread.Sleep(2000);
+                            vsg2.setParameter(2, isPower, isFreq, TriggerDelay);
+                            vsg2.TypeOfSignal = "DFT-s-OFDM_1RB";
+                            bbu.NEW_RXSENS(Bandwidth, WsRBOffset, out throughput);
+                            //26.2.2024 - sua code
+                            writeCSVThroughputValue(mode, setPort, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, throughput, out TP);
+                        break;
 
                             #region comment OOB old
                             //                        case "OOB2":

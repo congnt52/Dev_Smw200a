@@ -659,6 +659,7 @@ namespace _5GAutoTool
                 //N5182b.RFOnOff(0);
                 //System.Threading.Thread.Sleep(1000);                               
                 N5182b.LoadGFR1A15(freqSet, RBOffset, BW);
+                System.Threading.Thread.Sleep(1000);   
                 //N5182b.SetFreq(freqSet); 
                 N5182b.SetPower(powerSet);
 
