@@ -714,7 +714,7 @@ namespace _5GAutoTool
             }
         }
         // TST RXSENS: DUId=1, NumberSlot=8000, RBOffset=0, bandwidth=50;
-        public void NEW_RXSENS(string Bandwidth, string RBOffset, out string TP)
+        public void NEW_RXSENS(string Bandwidth, string RBOffset,int streamIndex, out string TP)
         {
             TP = "";
             try
@@ -765,12 +765,16 @@ namespace _5GAutoTool
                             string rx = item["RX"]?.ToString();
                             string rawTP = item["TP "]?.ToString();
 
-                            Log($"[RXSENS] RX={rx}, Raw TP={rawTP}");
+                            //Log($"[RXSENS] RX={rx}, Raw TP={rawTP}");
 
                             // Tạm thời lấy RX1
-                            if (rx != "1")
+                            //if (rx != "1")
+                            // continue;
+                            // Lấy đúng RX theo StreamIndex của port đang đo
+                            // Lấy đúng RX theo StreamIndex (1–8)
+                            if (rx != streamIndex.ToString(
+                                    System.Globalization.CultureInfo.InvariantCulture))
                                 continue;
-
                             string tpText = rawTP?.Replace("%", "").Trim();
 
                             if (double.TryParse(

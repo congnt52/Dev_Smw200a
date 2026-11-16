@@ -337,7 +337,7 @@ namespace _5GAutoTool
                 //Log($"SMW200A Set RB Offset at: {rbOffset}");
                 //====================
                 //string path = "/var/user/test3gpp/ICS_DFT-s-OFDM_50rb_30kHz_16QAM_lower_edge.savrcltxt";
-                string path = "/var/user/congnt52/50MHz/ICS_66.savrcltxt";
+                string path = "/var/user/VHT-32T-n40-QC128/ICS.savrcltxt";
                 string cmd = $":SYST:RCL '{path}'";
                 bool tmp = SendCmdStatus(cmd);
                 if (tmp)
@@ -361,7 +361,7 @@ namespace _5GAutoTool
                 ////smw.WriteString($":SOUR2:BB:NR5G:SCH:CELL0:SUBF0:USER0:BWP0:ALL0:RBOF {rbOffset}; *OPC?", true);
                 //Log($"SMW200A Set RB Offset at: {rbOffset}");
                 //====================
-                string path = "/var/user/congnt52/50MHz/ICS_16.savrcltxt";
+                string path = "/var/user/VHT-32T-n40-QC128/ICS.savrcltxt";
                 string cmd = $":SYST:RCL '{path}'";
                 bool tmp = SendCmdStatus(cmd);
                 if (tmp)
@@ -406,7 +406,7 @@ namespace _5GAutoTool
                 //smw.WriteString(":SYST:RCL '/var/user/test3gpp/ACS_DFT-s-OFDM_100rb_15kHz_QPSK.savrcltxt'");
                 //Log("SMW200A Recell File: :SYST:RCL '/var/user/test3gpp/ACS_DFT-s-OFDM_100rb_15kHz_QPSK.savrcltxt'");
                 //====================
-                string path = "/var/user/congnt52/50MHz/ACS_low.savrcltxt";
+                string path = "/var/user/VHT-32T-n40-QC128/ACS0.savrcltxt";
                 string cmd = $":SYST:RCL '{path}'";
                 bool tmp = SendCmdStatus(cmd);
                 if (tmp)
@@ -472,7 +472,7 @@ namespace _5GAutoTool
                 //smw.WriteString(":SYST:RCL '/var/user/test3gpp/ACS_DFT-s-OFDM_100rb_15kHz_QPSK.savrcltxt'");
                 //Log("SMW200A Recell File: :SYST:RCL '/var/user/test3gpp/ACS_DFT-s-OFDM_100rb_15kHz_QPSK.savrcltxt'");
                 //====================
-                string path = "/var/user/congnt52/50MHz/ACS_high.savrcltxt";
+                string path = "/var/user/VHT-32T-n40-QC128/ACS82.savrcltxt";
                 string cmd = $":SYST:RCL '{path}'";
                 bool tmp = SendCmdStatus(cmd);
                 if (tmp)

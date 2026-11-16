@@ -2983,10 +2983,29 @@ namespace _5GAutoTool
                                 #region NBB
                                 else if (testcaseInTesting.Text == "Narrow band blocking")
                                 {
+                                    //VSG1.SetFrequencyValue = double.Parse(setFrequency);
+                                   // GeneralDataSetupRX(testcaseInTesting.Text, testingPort, out attSetVal);
+                                   // VSG1.AttenuatorLevel = attSetVal;
                                     VSG1.SetFrequencyValue = double.Parse(setFrequency);
-                                    GeneralDataSetupRX(testcaseInTesting.Text, testingPort, out attSetVal);
-                                    VSG1.AttenuatorLevel = attSetVal;
 
+                                    try
+                                    {
+                                        GeneralDataSetupRX(
+                                            testcaseInTesting.Text,
+                                            testingPort,
+                                            out attSetVal);
+
+                                        VSG1.AttenuatorLevel = attSetVal;
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        if (!twoVSG.INB2_MANUAL_VSG)
+                                            throw;
+
+                                        attSetVal = 0;
+                                        Log("[NBB] Instrument setup unavailable: " +
+                                            ex.Message, LogLevel.WARN);
+                                    }
                                     string strLimMax = ReadValueByHeader(testcaseInTesting.Parameters, "Max");
                                     string strLimMin = ReadValueByHeader(testcaseInTesting.Parameters, "Min");
                                     string strWSPwr = ReadValueByHeader(testcaseInTesting.Parameters, "WS");
@@ -3003,7 +3022,7 @@ namespace _5GAutoTool
 
                                     string strWSTrigDelay = ReadValueByHeader(testcaseInTesting.Parameters, "TriggerDelay(ms)");
                                     double.TryParse(strWSTrigDelay, out double wsTrigDelay);
-                                    VSG1.SetTriggerDelay(wsTrigDelay * 1e-3);
+                                    //VSG1.SetTriggerDelay(wsTrigDelay * 1e-3);
 
                                     double.TryParse(strLimMax, out limitMax);
                                     double.TryParse(strLimMin, out limitMin);

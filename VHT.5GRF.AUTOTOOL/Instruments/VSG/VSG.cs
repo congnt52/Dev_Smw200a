@@ -443,6 +443,17 @@ namespace _5GAutoTool
                 N5182b.MODOnOff(1);
                 N5182b.RFOnOff(1);
             }
+            if (instrumentVSG == "N5172B")
+            {
+                //N5182b.MODOnOff(0);
+                //N5182b.RFOnOff(0);
+                //System.Threading.Thread.Sleep(500);
+                N5182b.SetFreq(freqSet);
+                //N5182b.SetPower(powerSet);
+                System.Threading.Thread.Sleep(500);
+                N5172b.MODOnOff(1);
+                N5172b.RFOnOff(1);
+            }
             else if (instrumentVSG == "CMW100")
             {
                 //cmw100.RFOnOff("OFF");
@@ -689,8 +700,8 @@ namespace _5GAutoTool
             }
             else if (instrumentVSG == "SMBV100B")
             {
-               // smbv100b.LoadGFR1A15(freqSet);
-               // System.Threading.Thread.Sleep(2000);
+                smbv100b.LoadGFR1A15(freqSet);
+                System.Threading.Thread.Sleep(2000);
                 smbv100b.SetFreq(1, freqSet);
                 System.Threading.Thread.Sleep(2000);
                // smbv100b.SetRFTrigger(1, 1, TriggerDelay);
@@ -871,6 +882,73 @@ namespace _5GAutoTool
                 //System.Threading.Thread.Sleep(500);
                 N5182b.SetICSInterferenceSignal(freqSet, RBOffset, BW);
                 N5182b.SetFreq(freqSet);
+                //N5182b.SetPower(powerSet);
+                System.Threading.Thread.Sleep(500);
+                N5182b.MODOnOff(1);
+                N5182b.RFOnOff(1);
+            }
+            if (instrumentVSG == "N5172B")
+            {
+                //N5182b.MODOnOff(0);
+                //N5182b.RFOnOff(0);
+                //System.Threading.Thread.Sleep(500);
+                N5172b.SetICSInterferenceSignal(freqSet, RBOffset, BW);
+                N5172b.SetFreq(freqSet);
+                //N5182b.SetPower(powerSet);
+                System.Threading.Thread.Sleep(500);
+                N5172b.MODOnOff(1);
+                N5172b.RFOnOff(1);
+            }
+            else if (instrumentVSG == "SMW200A")
+            {
+                int.TryParse(RBOffset, out int intRBOffset);
+                if (intRBOffset < 66)
+                {
+                    //smw200a.SetRFTrigger(1, 1, TriggerDelay);
+                    smw200a.SetICSInterferenceSignalLower(RBOffset);
+                    
+                }
+                else
+                {
+                  //  smw200a.SetRFTrigger(1, 1, TriggerDelay);
+                    smw200a.SetICSInterferenceSignalUpper(RBOffset);
+                }
+            }
+            else if (instrumentVSG == "SMBV100B")
+            {
+                int.TryParse(RBOffset, out int intRBOffset);
+                if (intRBOffset < 66)
+                {
+                   // smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+                    smbv100b.SetICSInterferenceSignalLower(RBOffset);
+                    //smbv100b.SetRbOffset("1",RBOffset);
+                }
+                else
+                {
+                   // smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+                    smbv100b.SetICSInterferenceSignalUpper(RBOffset);
+                   // smbv100b.SetRbOffset("1", RBOffset);
+                }
+            }
+            else if (instrumentVSG == "M9410A")
+            {
+                m9410a.SetICSInterferenceSignal(freqSet, RBOffset, BW);
+                m9410a.SetFreq(freqSet);
+                m9410a.SetPower(powerSet);
+                System.Threading.Thread.Sleep(500);
+                m9410a.MODOnOff(1);
+                m9410a.RFOnOff(1);
+            }
+        }
+        public void SetWSICSWaveform(string powerSet, string freqSet, string RBOffset, string BW, double TriggerDelay)
+        {
+            if (instrumentVSG == "N5182B")
+            {
+                //N5182b.MODOnOff(0);
+                //N5182b.RFOnOff(0);
+                //System.Threading.Thread.Sleep(500);
+                N5182b.SetICSInterferenceSignal(freqSet, RBOffset, BW);
+                N5182b.SetFreq(freqSet);
                 N5182b.SetPower(powerSet);
                 System.Threading.Thread.Sleep(500);
                 N5182b.MODOnOff(1);
@@ -881,12 +959,13 @@ namespace _5GAutoTool
                 int.TryParse(RBOffset, out int intRBOffset);
                 if (intRBOffset < 66)
                 {
-                    smw200a.SetRFTrigger(1, 1, TriggerDelay);
+                    //smw200a.SetRFTrigger(1, 1, TriggerDelay);
                     smw200a.SetICSInterferenceSignalLower(RBOffset);
+
                 }
                 else
                 {
-                    smw200a.SetRFTrigger(1, 1, TriggerDelay);
+                    //  smw200a.SetRFTrigger(1, 1, TriggerDelay);
                     smw200a.SetICSInterferenceSignalUpper(RBOffset);
                 }
             }
@@ -895,13 +974,15 @@ namespace _5GAutoTool
                 int.TryParse(RBOffset, out int intRBOffset);
                 if (intRBOffset < 66)
                 {
-                    smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+                    // smbv100b.SetRFTrigger(1, 1, TriggerDelay);
                     smbv100b.SetICSInterferenceSignalLower(RBOffset);
+                    //smbv100b.SetRbOffset("1",RBOffset);
                 }
                 else
                 {
-                    smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+                    // smbv100b.SetRFTrigger(1, 1, TriggerDelay);
                     smbv100b.SetICSInterferenceSignalUpper(RBOffset);
+                    // smbv100b.SetRbOffset("1", RBOffset);
                 }
             }
             else if (instrumentVSG == "M9410A")
@@ -986,7 +1067,7 @@ namespace _5GAutoTool
             }
         }
         // Load test vector Adjacent Channel Selectivity
-        public void SetACSWaveform(string powerSet, string freqSet, string RBOffset, string BW,double TriggerDelay)
+        public void SetWSACSWaveform(string powerSet, string freqSet, string RBOffset, string BW,double TriggerDelay)
         {
             if (instrumentVSG == "N5182B")
             {
@@ -1004,12 +1085,12 @@ namespace _5GAutoTool
                 int.TryParse(RBOffset, out int intRBOffset);
                 if (intRBOffset < 82)
                 {
-                    smw200a.SetRFTrigger(1, 1, TriggerDelay);
+                    //smw200a.SetRFTrigger(1, 1, TriggerDelay);
                     smw200a.SetACSInterferenceSignalLower(RBOffset);
                 }
                 else
                 {
-                    smw200a.SetRFTrigger(1, 1, TriggerDelay);
+                    //smw200a.SetRFTrigger(1, 1, TriggerDelay);
                     smw200a.SetACSInterferenceSignalUpper(RBOffset);
                 }
                 //smw200a.SetACSInterferenceSignal();
@@ -1025,12 +1106,87 @@ namespace _5GAutoTool
                 int.TryParse(RBOffset, out int intRBOffset);
                 if (intRBOffset < 82)
                 {
-                    smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+                    //smbv100b.SetRFTrigger(1, 1, TriggerDelay);
                     smbv100b.SetACSInterferenceSignalLower(RBOffset);
                 }
                 else
                 {
-                    smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+                    //smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+                    smbv100b.SetACSInterferenceSignalUpper(RBOffset);
+                }
+                //smw200a.SetACSInterferenceSignal();
+                //System.Threading.Thread.Sleep(2000);
+                //smw200a.SetFreq(2, freqSet);
+                //System.Threading.Thread.Sleep(2000);
+                //smw200a.SetPower(2, powerSet);
+                //System.Threading.Thread.Sleep(500);
+                //smw200a.RFOnOff(2, 1);
+            }
+            else if (instrumentVSG == "M9410A")
+            {
+                m9410a.SetACSInterferenceSignal(freqSet, BW);
+                m9410a.SetPower(powerSet);
+                System.Threading.Thread.Sleep(500);
+                m9410a.MODOnOff(1);
+                m9410a.RFOnOff(1);
+            }
+        }
+        public void SetACSWaveform(string powerSet, string freqSet, string RBOffset, string BW, double TriggerDelay)
+        {
+            if (instrumentVSG == "N5182B")
+            {
+                //N5182b.MODOnOff(0);
+                //N5182b.RFOnOff(0);
+                //System.Threading.Thread.Sleep(500);
+                N5182b.SetACSInterferenceSignal(freqSet, BW);
+                N5182b.SetPower(powerSet);
+                System.Threading.Thread.Sleep(4000);
+                N5182b.MODOnOff(1);
+                N5182b.RFOnOff(1);
+            }
+            if (instrumentVSG == "N5172B")
+            {
+                //N5182b.MODOnOff(0);
+                //N5182b.RFOnOff(0);
+                //System.Threading.Thread.Sleep(500);
+                N5172b.SetACSInterferenceSignal(freqSet, BW);
+                //N5172b.SetPower(powerSet);
+                System.Threading.Thread.Sleep(2000);
+                N5172b.MODOnOff(1);
+                N5172b.RFOnOff(1);
+            }
+            else if (instrumentVSG == "SMW200A")
+            {
+                int.TryParse(RBOffset, out int intRBOffset);
+                if (intRBOffset < 82)
+                {
+                    //smw200a.SetRFTrigger(1, 1, TriggerDelay);
+                    smw200a.SetACSInterferenceSignalLower(RBOffset);
+                }
+                else
+                {
+                    //smw200a.SetRFTrigger(1, 1, TriggerDelay);
+                    smw200a.SetACSInterferenceSignalUpper(RBOffset);
+                }
+                //smw200a.SetACSInterferenceSignal();
+                //System.Threading.Thread.Sleep(2000);
+                //smw200a.SetFreq(2, freqSet);
+                //System.Threading.Thread.Sleep(2000);
+                //smw200a.SetPower(2, powerSet);
+                //System.Threading.Thread.Sleep(500);
+                //smw200a.RFOnOff(2, 1);
+            }
+            else if (instrumentVSG == "SMBV100B")
+            {
+                int.TryParse(RBOffset, out int intRBOffset);
+                if (intRBOffset < 82)
+                {
+                    //smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+                    smbv100b.SetACSInterferenceSignalLower(RBOffset);
+                }
+                else
+                {
+                    //smbv100b.SetRFTrigger(1, 1, TriggerDelay);
                     smbv100b.SetACSInterferenceSignalUpper(RBOffset);
                 }
                 //smw200a.SetACSInterferenceSignal();
@@ -1146,6 +1302,17 @@ namespace _5GAutoTool
                 N5182b.MODOnOff(1);
                 N5182b.RFOnOff(1);
             }
+            if (instrumentVSG == "N5172B")
+            {
+                //N5182b.MODOnOff(0);
+                //N5182b.RFOnOff(0);
+                //System.Threading.Thread.Sleep(500);
+                N5172b.InbandBlockingSignal(freqSet, BW);
+              //  N5172b.SetPower(powerSet);
+                System.Threading.Thread.Sleep(500);
+                N5172b.MODOnOff(1);
+                N5172b.RFOnOff(1);
+            }
             else if (instrumentVSG == "SMW200A")
             {
                 int.TryParse(RBOffset, out int intRBOffset);
@@ -1210,6 +1377,20 @@ namespace _5GAutoTool
                     //smw200a.SetPower(2, powerSet);
                     //System.Threading.Thread.Sleep(500);
                     //smw200a.RFOnOff(2, 1);
+                }
+            }
+            else if (instrumentVSG == "SMBV100A")
+            {
+                int.TryParse(RBOffset, out int intRBOffset);
+                if (intRBOffset < 82)
+                {
+                    //smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+                    smbv100b.SetACSInterferenceSignalLower(RBOffset);
+                }
+                else
+                {
+                    //smbv100b.SetRFTrigger(1, 1, TriggerDelay);
+                    smbv100b.SetACSInterferenceSignalUpper(RBOffset);
                 }
             }
 
@@ -1285,6 +1466,18 @@ namespace _5GAutoTool
                 N5182b.NarrowbandBlockingSignal(freqSet, RBOffset, BW);
                 N5182b.SetFreq(freqSet);
                 N5182b.SetPower(powerSet);
+                System.Threading.Thread.Sleep(500);
+                //N5182b.MODOnOff(1);
+                //N5182b.RFOnOff(1);
+            }
+            if (instrumentVSG == "N5172B")
+            {
+                //N5182b.MODOnOff(0);
+                //N5182b.RFOnOff(0);
+                //System.Threading.Thread.Sleep(500);
+                N5172b.NarrowbandBlockingSignal(freqSet, RBOffset, BW);
+               // N5182b.SetFreq(freqSet);
+               // N5182b.SetPower(powerSet);
                 System.Threading.Thread.Sleep(500);
                 //N5182b.MODOnOff(1);
                 //N5182b.RFOnOff(1);

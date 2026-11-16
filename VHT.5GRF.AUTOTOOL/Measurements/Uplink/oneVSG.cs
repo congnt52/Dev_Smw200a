@@ -113,6 +113,7 @@ namespace _5GAutoTool
         {
             throughput = "";
             double tmpThroughput = -1;
+
             double threshold = 0;
             bool firstStep = true;
             bool currentTestPass;
@@ -284,7 +285,7 @@ namespace _5GAutoTool
             {
                 if (mode == "SEN")
                 {
-                    bbu.NEW_RXSENS(Bandwidth, RBoffset, out throughput);
+                    bbu.NEW_RXSENS(Bandwidth, RBoffset,setPort, out throughput);
                 }
                 else if (mode == "DR")
                 {

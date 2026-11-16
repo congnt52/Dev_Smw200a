@@ -595,7 +595,7 @@
             this.cboVSGList2.Name = "cboVSGList2";
             this.cboVSGList2.Size = new System.Drawing.Size(93, 24);
             this.cboVSGList2.TabIndex = 33;
-            this.cboVSGList2.Text = "SMB100A";
+            this.cboVSGList2.Text = "N5172B";
             this.cboVSGList2.TextChanged += new System.EventHandler(this.cboInstrument_TextChanged);
             // 
             // lblAddress2
@@ -623,7 +623,7 @@
             this.cboIP2.Name = "cboIP2";
             this.cboIP2.Size = new System.Drawing.Size(178, 24);
             this.cboIP2.TabIndex = 41;
-            this.cboIP2.Text = "192.168.1.21";
+            this.cboIP2.Text = "192.168.1.101";
             this.cboIP2.SelectedIndexChanged += new System.EventHandler(this.cboIP2_SelectedIndexChanged);
             // 
             // lblVSGName3

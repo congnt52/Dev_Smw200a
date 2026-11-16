@@ -154,13 +154,16 @@
         {
             oam.NEW_RXSENS(RbOffset, out TP);
         }
-
-        public void NEW_RXSENS(string Bandwidth, string RbOffset, out string TP)
+        // Giữ tương thích với các bài đo cũ: mặc định RX1
+        public void NEW_RXSENS(string Bandwidth, string RBOffset, out string TP)
         {
-            oam.NEW_RXSENS(Bandwidth, RbOffset, out TP);
-            //System.Threading.Thread.Sleep(10000);
+            NEW_RXSENS(Bandwidth, RBOffset, 1, out TP);
         }
-
+      
+        public void NEW_RXSENS(string Bandwidth, string RbOffset, int streamIndex, out string TP)
+        {
+            oam.NEW_RXSENS(Bandwidth, RbOffset, streamIndex, out TP);
+        }
         public void RXDYN(int port, out string TP)
         {
             oam.RXDYN(port, out TP);

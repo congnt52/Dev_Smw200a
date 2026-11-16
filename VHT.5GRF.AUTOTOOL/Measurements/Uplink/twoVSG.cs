@@ -97,8 +97,16 @@ namespace _5GAutoTool
             double _isFreqLimitLeft = mainForm.txtOperatingFreqFrom - mainForm.deltaFoobValue/1000000;
             double _isFreqLimitRight = mainForm.txtOperatingFreqTo + mainForm.deltaFoobValue/1000000;
 
-            double _isFreqFrom = double.Parse(isLowerFreqRange);
-            double _isFreqTo = double.Parse(isUpperFreqRange);
+            // double _isFreqFrom = double.Parse(isLowerFreqRange);
+            // double _isFreqTo = double.Parse(isUpperFreqRange);
+            double _isFreqFrom = 0;
+            double _isFreqTo = 0;
+
+            if (!string.IsNullOrWhiteSpace(isLowerFreqRange))
+                double.TryParse(isLowerFreqRange, out _isFreqFrom);
+
+            if (!string.IsNullOrWhiteSpace(isUpperFreqRange))
+                double.TryParse(isUpperFreqRange, out _isFreqTo);
             try
             {
                 if (mainForm.measurementBackgroundWorker.CancellationPending) return;
@@ -106,25 +114,27 @@ namespace _5GAutoTool
                 //Generate wanted signal_Chung cho tất cả các bài
                 //vsg1.SetPsenWaveform(wsPower, wsFreq);
                 //if (vsg1.Model == "SMW200A" || vsg1.Model == "SMBV100B")
-                if ((INB2_MANUAL_VSG && (mode == "INB2" || mode == "OOB1" || mode == "OOB2" )) || vsg1.Model == "SMW200A" || vsg1.Model == "SMBV100B")
+                if ((INB2_MANUAL_VSG && (mode == "INB2" || mode == "OOB1" || mode == "OOB2" || mode == "NBB" || mode == "ICS" || mode == "ACS" || mode == "IBB")) || vsg1.Model == "SMW200A" || vsg1.Model == "SMBV100B")
                 {
                     switch (mode)
                     {
                         case "ICS":
-                         //   vsg1.SetICSWaveform(isPower, isFreq, IsRBOffset, Bandwidth,TriggerDelay);
+                            vsg2.SetICSWaveform(isPower, isFreq, IsRBOffset, Bandwidth, TriggerDelay);
                             vsg1.TypeOfSignal = "DFT-s-OFDM";
-                       //     vsg1.setParameter(1, wsPower, wsFreq,TriggerDelay); //smw200a 
-                          //  vsg1.setParameter(2, isPower, isFreq,TriggerDelay); //smw200a
-                            bbu.NEW_RXSENS(Bandwidth, WsRBOffset, out throughput);
+                            vsg1.SetICSWaveform(isPower, isFreq, IsRBOffset, Bandwidth, TriggerDelay);
+                            //     vsg1.setParameter(1, wsPower, wsFreq,TriggerDelay); //smw200a 
+                            //  vsg1.setParameter(2, isPower, isFreq,TriggerDelay); //smw200a
+                            bbu.NEW_RXSENS(Bandwidth, WsRBOffset, currPort.StreamIndex, out throughput);
                             //26.2.2024 - sua code
                             writeCSVThroughputValue(mode, setPort, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, throughput, out TP);
                             break;
                         case "ACS":
-                        //    vsg1.SetACSWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
+                            vsg1.SetWSACSWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
+                            vsg2.SetACSWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
                             vsg1.TypeOfSignal = "DFT-s-OFDM";
                          //   vsg1.setParameter(1, wsPower, wsFreq,TriggerDelay);
                          //   vsg1.setParameter(2, isPower, isFreq, TriggerDelay);
-                            bbu.NEW_RXSENS(Bandwidth, WsRBOffset, out throughput);
+                            bbu.NEW_RXSENS(Bandwidth, WsRBOffset, currPort.StreamIndex, out throughput);
                             //26.2.2024 - sua code
                             writeCSVThroughputValue(mode, setPort, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, throughput, out TP);
                             break;
@@ -294,40 +304,84 @@ namespace _5GAutoTool
                         // PATCH 1: Replace only case "INB2" in Measurement() with the following.
                         case "INB2":
                             // Keep the existing INB modulated waveform configuration.
-                            //vsg1.SetIBBWaveform(isPowerStr, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
+                            vsg1.SetIBBWaveform(isPowerStr, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
                             vsg2.TypeOfSignal = "DFT-s-OFDM";
-                            //vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
+                            vsg2.SetIBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth);
+                            //vsg2.setParameter(1, wsPower, wsFreq, TriggerDelay);
                             // Source 2 is set by the sequence at each sweep frequency, with correction.
                             inbMeasurementInSequence(
                                 bbu, vsg2, mode, setPort, 1000000, 1000,
                                 wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset,
                                 "2240", "2295", "2405", "2460", Bandwidth, out TP);
                          break;
+
                         case "NBB":
-                            if (vsg2.Model != "SMW200A")
                             {
-                                vsg2.SetNBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth);
-                            }
-                            else
-                            {
-                                if (double.Parse(wsFreq) < double.Parse(isFreq)) //Nhieu ben phai
+                                bool manualVSG = INB2_MANUAL_VSG;
+
+                                Log("[NBB] Starting Narrowband Blocking");
+                                Log($"[NBB] IS Frequency = {isFreq}");
+                                Log($"[NBB] IS RBOffset = {IsRBOffset}");
+
+                                vsg2.TypeOfSignal = "DFT-s-OFDM_1RB";
+
+                                // Try sending instrument commands.
+                                // Continue DU measurement if VSG is unavailable.
+                                try
                                 {
-                                    vsg2.SetNBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth);
+                                    vsg2.Model = "N5172B";
+                                    vsg2.SetNBBWaveform(isPowerStr,isFreq,IsRBOffset,Bandwidth);
+
+                                    vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
+
+                                    vsg2.setParameter(2, isPowerStr, isFreq, TriggerDelay);
+
+                                    Log("[NBB] Instrument commands completed");
                                 }
-                                else
+                                catch (Exception ex)
                                 {
-                                    vsg2.SetNBBWaveform(isPower, isFreq, IsRBOffset, Bandwidth); //nhieu ben trai
+                                    if (!manualVSG)
+                                        throw;
+
+                                    Log("[NBB] Instrument unavailable: " +
+                                        ex.Message, LogLevel.WARN);
+
+                                    Log("[NBB] Continuing with DU throughput measurement");
                                 }
+
+                                if (mainForm.measurementBackgroundWorker.CancellationPending)
+                                    return;
+
+                                // Keep the original DU measurement flow.
+                                try
+                                {
+                                    Log("[NBB] Starting RXSENS measurement");
+
+                                    bbu.NEW_RXSENS(
+                                        Bandwidth,
+                                        WsRBOffset,
+                                        currPort.StreamIndex,
+                                        out throughput);
+                                    System.Threading.Thread.Sleep(5000);
+                                    writeCSVThroughputValue(
+                                        mode, setPort, wsFreq, wsPowerStr, WsRBOffset,
+                                        isFreq, isPowerStr, IsRBOffset,
+                                        throughput, out TP);
+                                }
+                                finally
+                                {
+                                    Log("[NBB] Stopping TRXTEST");
+
+                                    bbu.StopProcess();
+
+                                    Log("[NBB] TRXTEST cleanup requested");
+                                }
+
+                                Log($"[NBB] Throughput = {TP}");
+
+                                break;
                             }
-                            //vsg2.SetNBBWaveform(isPower, isFreq, IsRBOffset);
-                            vsg1.setParameter(1, wsPower, wsFreq, TriggerDelay);
-                            //System.Threading.Thread.Sleep(2000);
-                            vsg2.setParameter(2, isPower, isFreq, TriggerDelay);
-                            vsg2.TypeOfSignal = "DFT-s-OFDM_1RB";
-                            bbu.NEW_RXSENS(Bandwidth, WsRBOffset, out throughput);
-                            //26.2.2024 - sua code
-                            writeCSVThroughputValue(mode, setPort, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, throughput, out TP);
-                        break;
+
 
                             #region comment OOB old
                             //                        case "OOB2":
@@ -436,7 +490,7 @@ namespace _5GAutoTool
                             //                            vsg2.SetACSWaveform(isPower, isFreq, IsRBOffset, Bandwidth,TriggerDelay);
                             //                            vsg2.TypeOfSignal = "DFT-s-OFDM";
                             //                            vsg1.setParameter(1, wsPower, isFreq, TriggerDelay);
-                            //                            vsg2.setParameter(2, isPower, isFreq, TriggerDelay);
+                                                        //vsg2.setParameter(2, isPower, isFreq, TriggerDelay);
                             //                            bbu.NEW_RXSENS(Bandwidth, WsRBOffset, out throughput);
                             //                            //26.2.2024 - sua code
                             //                            writeCSVThroughputValue(mode, setPort, wsFreq, wsPowerStr, WsRBOffset, isFreq, isPowerStr, IsRBOffset, throughput, out TP);
@@ -545,6 +599,7 @@ namespace _5GAutoTool
                             #endregion
                     }
                     vsg2.OnOffSignal(0);
+                  
                 }
             }
             catch (Exception ex)
