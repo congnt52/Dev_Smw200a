@@ -323,7 +323,7 @@ namespace _5GAutoTool
                 //========================
                 //string path = "/var/user/test3gpp/FRC-A1-5-51rb_7d1s2u_oran.savrcltxt";
                 //string path= "/var/user/congnt52/SENS_50M.savrcltxt";
-                string path = "/var/user/VHT-32T-n40-QC128/Rx-SEN.savrcltxt";
+                string path = "/var/user/VHT-32T-n40-QC128/SEN.savrcltxt";
                 //ring path = "/var/user/congnt52/GeneralIMD_low.savrcltxt";
                 string cmd = $":SYST:RCL '{path}'";
                 bool tmp = SendCmdStatus(cmd);

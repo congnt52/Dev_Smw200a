@@ -165,22 +165,20 @@ namespace _5GAutoTool
                         }
                         //change node to Run Status
 
-                        DialogResult confirm = (DialogResult)this.Invoke(
-        new Func<DialogResult>(() =>
-            MessageBox.Show(
-                this,
-                "Bạn đã LOAD state máy đo và ON tín hiệu chưa:\n\n"
-                    + testcaseInTesting.Text
-                    + "\n\nNhấn YES để tiếp tục đo."
-                    + "\nNhấn NO để dừng.",
-                "XÁC NHẬN TRƯỚC KHI ĐO",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question,
-                MessageBoxDefaultButton.Button2
-            )
-        )
-    );
+                        //        DialogResult confirm = (DialogResult)this.Invoke( new Func<DialogResult>(() =>MessageBox.Show(this,"Bạn đã LOAD state máy đo và ON tín hiệu chưa:\n\n"
+                        //    + testcaseInTesting.Text
+                        //    + "\n\nNhấn YES để tiếp tục đo."
+                        //    + "\nNhấn NO để dừng.",
+                        //"XÁC NHẬN TRƯỚC KHI ĐO",
+                        //MessageBoxButtons.YesNo,
+                        //MessageBoxIcon.Question,
+                        //MessageBoxDefaultButton.Button2
 
+                        //    )
+                        //    )
+                        //    );
+
+                        DialogResult confirm = DialogResult.Yes;
                         if (confirm != DialogResult.Yes)
                         {
                             Log("Người dùng chọn NO. Dừng Measurement.", LogLevel.WARN);
@@ -3746,6 +3744,26 @@ namespace _5GAutoTool
                             {
                                 ListViewShow("PORT" + testingPort, testcaseInTesting.Text, strSpec, strMin, result, strMax, mode, PassFail, tactTime.ToString(@"hh\:mm\:ss"));
                             }
+                            // Export CSV: ICS, ACS, INB
+                            if (testcaseInTesting.Text == "In-Channel Selectivity (ICS)" ||
+                                testcaseInTesting.Text == "Adjacent Channel Selectivity (ACS)" ||
+                                testcaseInTesting.Text == "Inband Blocking")
+                            {
+                                portResult.Values["PORT"] = "PORT" + testingPort;
+                                portResult.Values["CLAUSE"] = testcaseInTesting.Text;
+                                portResult.Values["UNIT"] = "%";
+                                portResult.Values["CONFIG"] = "NR5G";
+                                portResult.Values["PARAM"] = "RX Throughput";
+                                portResult.Values["SPECS"] = ">= 95%";
+
+                                portResult.Values["RESULT"] = tp.ToString(
+                                    System.Globalization.CultureInfo.InvariantCulture);
+
+                                portResult.Values["TEST TIME"] =
+                                    DateTime.Now.ToString("HH:mm:ss");
+
+                                portResult.Values["PASS/FAIL"] = PassFail;
+                            }
                             if (testcaseInTesting.Text == "Out-of-band Blocking" ||
                                 testcaseInTesting.Text == "Out-of-band Blocking Co-location")
                             {
@@ -3760,28 +3778,28 @@ namespace _5GAutoTool
                                 portResult.Values["TEST TIME"] = DateTime.Now.ToString("HH:mm:ss");
                                 portResult.Values["PASS/FAIL"] = PassFail;
                             }
-                            if (testcaseInTesting.Text == "Reference Sensitivity Level")
-                            {
-                                portResult.Values["PORT"] = "PORT" + testingPort;
-                                portResult.Values["CLAUSE"] = testcaseInTesting.Text;
-                                portResult.Values["UNIT"] = "dBm";
-                                portResult.Values["CONFIG"] = "NR5G";
-                                portResult.Values["PARAM"] = "Reference Sensitivity";
+                            //if (testcaseInTesting.Text == "Reference Sensitivity Level")
+                            //{
+                            //    portResult.Values["PORT"] = "PORT" + testingPort;
+                            //    portResult.Values["CLAUSE"] = testcaseInTesting.Text;
+                            //    portResult.Values["UNIT"] = "dBm";
+                            //    portResult.Values["CONFIG"] = "NR5G";
+                            //    portResult.Values["PARAM"] = "Reference Sensitivity";
 
-                                string sensitivitySpec = ReadValueByHeader(
-                                    testcaseInTesting.Parameters, "Spec");
+                            //    string sensitivitySpec = ReadValueByHeader(
+                            //        testcaseInTesting.Parameters, "Spec");
 
-                                portResult.Values["SPECS"] =
-                                    "Sensitivity <= " + sensitivitySpec +
-                                    " dBm; TP >= 95%";
+                            //    portResult.Values["SPECS"] =
+                            //        "Sensitivity <= " + sensitivitySpec +
+                            //        " dBm; TP >= 95%";
 
-                                portResult.Values["RESULT"] = result;
+                            //    portResult.Values["RESULT"] = result;
 
-                                portResult.Values["TEST TIME"] =
-                                    DateTime.Now.ToString("HH:mm:ss");
+                            //    portResult.Values["TEST TIME"] =
+                            //        DateTime.Now.ToString("HH:mm:ss");
 
-                                portResult.Values["PASS/FAIL"] = PassFail;
-                            }
+                            //    portResult.Values["PASS/FAIL"] = PassFail;
+                            //}
                             //add to report                        
                             portResult.Values.Add("TACT TIME", tactTime.ToString(@"hh\:mm\:ss"));
                             _reportManager.AddResult(portResult);
@@ -3798,6 +3816,38 @@ namespace _5GAutoTool
                         else
                         {
                             ChangeTestcaseNodeStatus(testcaseInTesting.Text, TestcaseStatus.Passed);
+                        }
+                        // OFF RF sau khi hoàn thành một testcase
+                        Log("[RF OFF] Testcase completed: " + testcaseInTesting.Text);
+
+                        try
+                        {
+                            if (VSG1 != null)
+                                VSG1.OnOffSignal(0);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log("[RF OFF] VSG1: " + ex.Message, LogLevel.ERROR);
+                        }
+
+                        try
+                        {
+                            if (VSG2 != null)
+                                VSG2.OnOffSignal(0);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log("[RF OFF] VSG2: " + ex.Message, LogLevel.ERROR);
+                        }
+
+                        try
+                        {
+                            if (VSG3 != null)
+                                VSG3.OnOffSignal(0);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log("[RF OFF] VSG3: " + ex.Message, LogLevel.ERROR);
                         }
                         //refreshing TestcasePending List for 
                         TestcasePending = GetTestcasesByStatus(TestcaseNodes, TestcaseStatus.Pending);
