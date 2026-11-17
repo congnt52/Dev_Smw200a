@@ -646,13 +646,14 @@
             this.cboVSGList3.Items.AddRange(new object[] {
             "N5182B",
             "SMW200A",
-            "SGS100A"});
+            "SGS100A",
+            "N5173B"});
             this.cboVSGList3.Location = new System.Drawing.Point(200, 144);
             this.cboVSGList3.Margin = new System.Windows.Forms.Padding(4);
             this.cboVSGList3.Name = "cboVSGList3";
             this.cboVSGList3.Size = new System.Drawing.Size(93, 24);
             this.cboVSGList3.TabIndex = 33;
-            this.cboVSGList3.Text = "N5182B";
+            this.cboVSGList3.Text = "N5173B";
             this.cboVSGList3.TextChanged += new System.EventHandler(this.cboInstrument_TextChanged);
             // 
             // lblAddress3

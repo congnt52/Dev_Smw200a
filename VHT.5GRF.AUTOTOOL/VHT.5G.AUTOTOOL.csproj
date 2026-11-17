@@ -263,6 +263,7 @@
     <Compile Include="Instruments\VSA\VSA_Instruments\M941x.cs" />
     <Compile Include="Instruments\VSA\N9020B.cs" />
     <Compile Include="Instruments\VSG\VSG_Instruments\M9140a.cs" />
+    <Compile Include="Instruments\VSG\VSG_Instruments\N5173B.cs" />
     <Compile Include="Instruments\VSG\VSG_Instruments\N5172B.cs" />
     <Compile Include="Instruments\VSG\VSG_Instruments\SMB100A.cs" />
     <Compile Include="Instruments\VSG\VSG_Instruments\SGS100A.cs" />

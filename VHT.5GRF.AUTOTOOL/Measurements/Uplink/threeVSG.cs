@@ -53,9 +53,9 @@ namespace _5GAutoTool
             double _isATT = vsg2.AttenuatorLevel;
             double _cwATT = vsg3.AttenuatorLevel;
 
-            Log($"{vsg1.Name}: Expected Power Level={_wsPower} dBm\tATT Level={_wsATT} dB");
-            Log($"{vsg2.Name}: Expected Power Level={_isPower} dBm\tATT Level={_isATT} dB");
-            Log($"{vsg3.Name}: Expected Power Level={_cwPower} dBm\tATT Level={_cwATT} dB");
+           // Log($"{vsg1.Name}: Expected Power Level={_wsPower} dBm\tATT Level={_wsATT} dB");
+          //  Log($"{vsg2.Name}: Expected Power Level={_isPower} dBm\tATT Level={_isATT} dB");
+            //Log($"{vsg3.Name}: Expected Power Level={_cwPower} dBm\tATT Level={_cwATT} dB");
 
             string wsPower = (_wsPower + _wsATT).ToString(); //công suất tai cong output cua VSG1 WS
             string isPower = (_isPower + _isATT).ToString(); //công suất tai cong output cua VSG2 IS
@@ -88,7 +88,7 @@ namespace _5GAutoTool
                 }
                 //vsg1.setParameter(1, wsPower, wsFreq);
                // vsg2.setParameter(2, isPower, isFreq,TriggerDelay);
-               // vsg3.SetCWWaveform(cwPower, cwFreq);
+                vsg3.SetCWWaveform(cwPower, cwFreq);
                 //bbu.NEW_RXSENS(out throughput);
                 bbu.NEW_RXSENS(Bandwidth, WsRBOffset, out throughput);
                 writeCSVThroughputValue(mode, setPort, wsFreq, wsPowerStr, isFreq, isPowerStr, cwFreq, isPowerStr, throughput, out TP);

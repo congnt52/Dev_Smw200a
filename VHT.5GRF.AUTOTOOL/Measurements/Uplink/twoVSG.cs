@@ -329,6 +329,7 @@ namespace _5GAutoTool
                                 // Continue DU measurement if VSG is unavailable.
                                 try
                                 {
+                                    vsg1.SetWSACSWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
                                     vsg2.Model = "N5172B";
                                     vsg2.SetNBBWaveform(isPowerStr,isFreq,IsRBOffset,Bandwidth);
 
