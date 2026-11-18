@@ -3463,7 +3463,7 @@ namespace _5GAutoTool
                                         VSG3.SetFrequencyValue = double.Parse(cwFreqUpper);
                                         string pathCW = $@"{isCSVFilePathRX}\CWRX{testingPort}.csv";
                                         double.TryParse(setFrequency, out double cwfreq);
-                                        double cwAttSetVal = VSG3.ReadATTfromCSVFile(path, VSG3.SetFrequencyValue);
+                                        double cwAttSetVal = VSG3.ReadATTfromCSVFile(pathCW, VSG3.SetFrequencyValue);
                                         VSG3.AttenuatorLevel = cwAttSetVal;
                                        // Log($"{VSG3.Alias}: Set ATT_Port{testingPort}={cwAttSetVal} dB at f={VSG3.SetFrequencyValue / 1e6}MHz");
                                         //Log($"{VSG3.Alias}: CSV Path:{VSG3.AttenuatorCSVpath}");
@@ -3555,7 +3555,7 @@ namespace _5GAutoTool
 
                                     string strWSTrigDelay = ReadValueByHeader(testcaseInTesting.Parameters, "TriggerDelay(ms)");
                                     double.TryParse(strWSTrigDelay, out double wsTrigDelay);
-                                    VSG1.SetTriggerDelay(wsTrigDelay * 1e-3);
+                                   // VSG1.SetTriggerDelay(wsTrigDelay * 1e-3);
 
                                     double.TryParse(strLimMax, out limitMax);
                                     double.TryParse(strLimMin, out limitMin);
@@ -3591,17 +3591,17 @@ namespace _5GAutoTool
                                         double.TryParse(setFrequency, out double freq);
                                         double isAttSetVal = VSG2.ReadATTfromCSVFile(path, VSG2.SetFrequencyValue);
                                         VSG2.AttenuatorLevel = isAttSetVal;
-                                        Log($"{VSG2.Alias}: Set ATT_Port{testingPort}={isAttSetVal} dB at f={VSG2.SetFrequencyValue / 1e6}MHz");
-                                        Log($"{VSG2.Alias}: CSV Path:{VSG2.AttenuatorCSVpath}");
+                                      //  Log($"{VSG2.Alias}: Set ATT_Port{testingPort}={isAttSetVal} dB at f={VSG2.SetFrequencyValue / 1e6}MHz");
+                                     //   Log($"{VSG2.Alias}: CSV Path:{VSG2.AttenuatorCSVpath}");
 
                                         VSG3.Alias = "CW";
                                         VSG3.SetFrequencyValue = double.Parse(cwFreqUpper);
                                         string pathCW = $@"{isCSVFilePathRX}\CWRX{testingPort}.csv";
                                         double.TryParse(setFrequency, out double cwfreq);
                                         double cwAttSetVal = VSG3.ReadATTfromCSVFile(path, VSG3.SetFrequencyValue);
-                                        Log($"{VSG3.Alias}: Set ATT_Port{testingPort}={cwAttSetVal} dB at f={VSG3.SetFrequencyValue / 1e6}MHz");
-                                        Log($"{VSG3.Alias}: CSV Path:{VSG3.AttenuatorCSVpath}");
-
+                                        //Log($"{VSG3.Alias}: Set ATT_Port{testingPort}={cwAttSetVal} dB at f={VSG3.SetFrequencyValue / 1e6}MHz");
+                                   //     Log($"{VSG3.Alias}: CSV Path:{VSG3.AttenuatorCSVpath}");
+//
                                     }
 
                                     if (measurementBackgroundWorker.CancellationPending) return;
@@ -3620,8 +3620,8 @@ namespace _5GAutoTool
                                         double.TryParse(setFrequency, out double freq);
                                         double isAttSetVal = VSG2.ReadATTfromCSVFile(path, VSG2.SetFrequencyValue);
                                         VSG2.AttenuatorLevel = isAttSetVal;
-                                        Log($"{VSG2.Alias}: Set ATT_Port{testingPort}={isAttSetVal} dB at f={VSG2.SetFrequencyValue / 1e6}MHz");
-                                        Log($"{VSG2.Alias}: CSV Path:{VSG2.AttenuatorCSVpath}");
+                                    //    Log($"{VSG2.Alias}: Set ATT_Port{testingPort}={isAttSetVal} dB at f={VSG2.SetFrequencyValue / 1e6}MHz");
+                                     //   Log($"{VSG2.Alias}: CSV Path:{VSG2.AttenuatorCSVpath}");
 
                                         VSG3.Alias = "CW";
                                         VSG3.SetFrequencyValue = double.Parse(cwFreqUpper);
@@ -3629,8 +3629,8 @@ namespace _5GAutoTool
                                         double.TryParse(setFrequency, out double cwfreq);
                                         double cwAttSetVal = VSG3.ReadATTfromCSVFile(path, VSG3.SetFrequencyValue);
                                         VSG3.AttenuatorLevel = cwAttSetVal;
-                                        Log($"{VSG3.Alias}: Set ATT_Port{testingPort}={cwAttSetVal} dB at f={VSG3.SetFrequencyValue / 1e6}MHz");
-                                        Log($"{VSG3.Alias}: CSV Path:{VSG3.AttenuatorCSVpath}");
+                                   //     Log($"{VSG3.Alias}: Set ATT_Port{testingPort}={cwAttSetVal} dB at f={VSG3.SetFrequencyValue / 1e6}MHz");
+                                   //     Log($"{VSG3.Alias}: CSV Path:{VSG3.AttenuatorCSVpath}");
 
                                     }
 

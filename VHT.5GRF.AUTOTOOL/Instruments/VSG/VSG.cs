@@ -44,6 +44,7 @@ namespace _5GAutoTool
 
         public N5182B N5182b;
         public N5172B N5172b;
+        public N5173B N5173b;
         public CMW100 cmw100;
         private SMW200A smw200a;
         private SMBV100B smbv100b;
@@ -57,6 +58,7 @@ namespace _5GAutoTool
             mainForm = mMainForm;
             N5182b = new N5182B(mainForm);
             N5172b = new N5172B(mainForm);
+            N5173b = new N5173B(mainForm);
             cmw100 = new CMW100(mainForm);
             sgs100a = new SGS100A(mainForm);
             smb100a = new SMB100A(mainForm);
@@ -106,6 +108,11 @@ namespace _5GAutoTool
             {
                 N5172b.Connection(ip, cmd, out manufacturer, out model, out serial);
                 Model = "N5172B";
+            }
+            if (instrumentVSG == "N5173B")
+            {
+                N5173b.Connection(ip, cmd, out manufacturer, out model, out serial);
+                Model = "N5173B";
             }
             else if (instrumentVSG == "CMW100")
             {
@@ -158,6 +165,10 @@ namespace _5GAutoTool
             {
                 N5172b.SendCmd("*IDN?", out tmp);
             }
+            if (instrumentVSG == "N5173B")
+            {
+                N5173b.SendCmd("*IDN?", out tmp);
+            }
             else if (instrumentVSG == "CMW100")
             {
                 cmw100.SendCmd("*IDN?", out tmp);
@@ -194,6 +205,10 @@ namespace _5GAutoTool
             if (instrumentVSG == "N5172B")
             {
                 N5172b.Disconnect();
+            }
+            if (instrumentVSG == "N5173B")
+            {
+                N5173b.Disconnect();
             }
             else if (instrumentVSG == "CMW100")
             {
@@ -240,6 +255,10 @@ namespace _5GAutoTool
             {
                 N5172b.SendCmd(Cmd, out respond);
             }
+            if (instrumentVSG == "N5173B")
+            {
+                N5173b.SendCmd(Cmd, out respond);
+            }
             else if (instrumentVSG == "CMW100")
             {
                 cmw100.SendCmd(Cmd, out respond);
@@ -274,6 +293,10 @@ namespace _5GAutoTool
             if (instrumentVSG == "N5172B")
             {
                 N5172b.SetFreq(freqSet);
+            }
+            if (instrumentVSG == "N5173B")
+            {
+                N5173b.SetFreq(freqSet);
             }
             else if (instrumentVSG == "CMW100")
             {
@@ -453,6 +476,17 @@ namespace _5GAutoTool
                 System.Threading.Thread.Sleep(500);
                 N5172b.MODOnOff(1);
                 N5172b.RFOnOff(1);
+            }
+            if (instrumentVSG == "N5173B")
+            {
+                //N5182b.MODOnOff(0);
+                //N5182b.RFOnOff(0);
+                //System.Threading.Thread.Sleep(500);
+                N5173b.SetFreq(freqSet);
+                //N5182b.SetPower(powerSet);
+                System.Threading.Thread.Sleep(500);
+                N5173b.MODOnOff(1);
+                N5173b.RFOnOff(1);
             }
             else if (instrumentVSG == "CMW100")
             {

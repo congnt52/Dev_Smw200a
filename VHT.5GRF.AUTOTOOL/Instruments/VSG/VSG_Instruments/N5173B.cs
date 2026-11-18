@@ -23,7 +23,7 @@ namespace _5GAutoTool
             mainForm = mMainForm;
         }
         Ivi.Visa.Interop.ResourceManager rm = new Ivi.Visa.Interop.ResourceManager();
-        Ivi.Visa.Interop.FormattedIO488 N5182b = new Ivi.Visa.Interop.FormattedIO488();
+        Ivi.Visa.Interop.FormattedIO488 N5173b = new Ivi.Visa.Interop.FormattedIO488();
 
         LogAdapter log = LogAdapter.Instance;
         public void Log(string text, LogLevel logLevel = LogLevel.INFO)
@@ -48,8 +48,8 @@ namespace _5GAutoTool
             api.New();
             try
             {
-                N5182b.IO = (Ivi.Visa.Interop.IMessage)rm.Open("TCPIP::" + IP + "::INSTR", Ivi.Visa.Interop.AccessMode.NO_LOCK, 5, " ");
-                N5182b.WriteString(Cmd, true);
+                N5173b.IO = (Ivi.Visa.Interop.IMessage)rm.Open("TCPIP::" + IP + "::INSTR", Ivi.Visa.Interop.AccessMode.NO_LOCK, 5, " ");
+                N5173b.WriteString(Cmd, true);
                 System.Threading.Thread.Sleep(100);
 
                 if (api.ConnectInstrument(ConnectCmd))
@@ -78,7 +78,7 @@ namespace _5GAutoTool
                 //api.Close();
                 Log("Connection => CLOSE! (Preset)", LogLevel.WARN);
                 api.Preset();
-                //N5182b.IO.Close();
+                //N5173b.IO.Close();
             }
             catch (Exception e)
             {
@@ -91,9 +91,9 @@ namespace _5GAutoTool
             respond = null;
             try
             {
-                N5182b.WriteString(Cmd, true);
+                N5173b.WriteString(Cmd, true);
                 object[] tmp;
-                tmp = (object[])N5182b.ReadList(Ivi.Visa.Interop.IEEEASCIIType.ASCIIType_Any, ",");
+                tmp = (object[])N5173b.ReadList(Ivi.Visa.Interop.IEEEASCIIType.ASCIIType_Any, ",");
                 for (int i = 0; i < tmp.GetLength(0); i++)
                 {
                     respond += tmp[i].ToString();
@@ -109,7 +109,7 @@ namespace _5GAutoTool
             try
             {
                 //if (mainForm.measurementBackgroundWorker.CancellationPending) return;
-                //N5182b.WriteString("FREQ " + freqSet + "Hz", true);
+                //N5173b.WriteString("FREQ " + freqSet + "Hz", true);
                 //Log("N5173B frequency: " + freqSet);
                 if (mainForm.measurementBackgroundWorker.CancellationPending) return;
                 Log($"Set frequency: {double.Parse(freqSet) / 1e6} MHz");
@@ -127,7 +127,7 @@ namespace _5GAutoTool
             try
             {
                 //if (mainForm.measurementBackgroundWorker.CancellationPending) return;
-                //N5182b.WriteString(":POW " + setPower + "DBM", true);
+                //N5173b.WriteString(":POW " + setPower + "DBM", true);
                 //Log("N5173B setup power: " + setPower + "dBm");
                 if (mainForm.measurementBackgroundWorker.CancellationPending) return;
                 Log($"Set power: {setPower} dBm");
@@ -262,9 +262,9 @@ namespace _5GAutoTool
             {
                 if (mainForm.measurementBackgroundWorker.CancellationPending) return;
                 System.Threading.Thread.Sleep(100);
-                N5182b.WriteString(":RAD:ARB:WAV " + "\"" + "FRC-A2-5-51rb_DDDSU.wfm" + "\"");
+                N5173b.WriteString(":RAD:ARB:WAV " + "\"" + "FRC-A2-5-51rb_DDDSU.wfm" + "\"");
                 Log("lOG:[IS] N5173B: Load file: FRC-A2-5-51rb_DDDSU.wfm");
-                N5182b.WriteString(":SOUR:RAD:ARB:STAT ON");
+                N5173b.WriteString(":SOUR:RAD:ARB:STAT ON");
             }
             catch (Exception)
             {
@@ -777,7 +777,7 @@ namespace _5GAutoTool
             try
             {
                 if (mainForm.measurementBackgroundWorker.CancellationPending) return;
-                N5182b.WriteString(":OUTP " + ON_OFF);
+                N5173b.WriteString(":OUTP " + ON_OFF);
                 if (ON_OFF == 1)
                 {
                     api.SignalGenerator.RFOutputEnabled = true;
@@ -799,7 +799,7 @@ namespace _5GAutoTool
             try
             {
                 if (mainForm.measurementBackgroundWorker.CancellationPending) return;
-                N5182b.WriteString(":OUTP " + ON_OFF);
+                N5173b.WriteString(":OUTP " + ON_OFF);
                 if (ON_OFF == 1)
                 {
                     api.SignalGenerator.RFOutputEnabled = true;

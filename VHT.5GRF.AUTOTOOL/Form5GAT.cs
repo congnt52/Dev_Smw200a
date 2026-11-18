@@ -255,6 +255,8 @@ namespace _5GAutoTool
         string ruUser = "root";
         string ruPW = "root";
         bool ruConflag = false;
+        //private const bool ALLOW_IMD_NO_DEVICE = true;
+        public bool AllowImdNoDevice { get; } = true;
         private void btnStart_Click(object sender, EventArgs e)
         {
             //DialogResult confirm = MessageBox.Show(
@@ -334,12 +336,32 @@ namespace _5GAutoTool
 
             //Step 1 Login BBU
             ProgressLabel($"Logging in to OAM: {ipBBU}");
+            /* Old login
             BBU.loginOAM(ipBBU, port, out flagConnectedtoOAM);
             if (flagConnectedtoOAM)
             {
                 Log($@"Socket connected to {ipBBU}", LogLevel.SUCCESS);
             }
+            */
 
+            //Test connection no devices
+            try
+            {
+                BBU.loginOAM(ipBBU, port, out flagConnectedtoOAM);
+
+                if (flagConnectedtoOAM)
+                    Log($"Socket connected to {ipBBU}", LogLevel.SUCCESS);
+                else
+                    Log("[CONNECT] BBU connection failed.", LogLevel.WARN);
+            }
+            catch (Exception ex)
+            {
+                if (!AllowImdNoDevice)
+                    throw;
+
+                flagConnectedtoOAM = false;
+                Log("[NO DEVICE] BBU: " + ex.Message, LogLevel.WARN);
+            }
             //Checking input validation
             ProgressLabel($"Validating RRU Serial in combobox...");
            // if (RruSerial.Contains("RU") || RruSerial.Contains("AIO")) //&& rruSerial.Length == 10

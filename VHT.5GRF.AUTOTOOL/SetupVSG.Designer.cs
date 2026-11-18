@@ -654,6 +654,7 @@
             this.cboVSGList3.Size = new System.Drawing.Size(93, 24);
             this.cboVSGList3.TabIndex = 33;
             this.cboVSGList3.Text = "N5173B";
+            this.cboVSGList3.SelectedIndexChanged += new System.EventHandler(this.cboVSGList3_SelectedIndexChanged);
             this.cboVSGList3.TextChanged += new System.EventHandler(this.cboInstrument_TextChanged);
             // 
             // lblAddress3
@@ -682,6 +683,7 @@
             this.cboIP3.Name = "cboIP3";
             this.cboIP3.Size = new System.Drawing.Size(180, 24);
             this.cboIP3.TabIndex = 41;
+            this.cboIP3.Text = "192.168.1.102";
             this.cboIP3.SelectedIndexChanged += new System.EventHandler(this.cboIP3_SelectedIndexChanged);
             // 
             // label1

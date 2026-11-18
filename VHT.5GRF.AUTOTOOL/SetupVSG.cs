@@ -166,7 +166,7 @@ namespace _5GAutoTool
                     }
                     System.Threading.Thread.Sleep(300);
                     this.mainForm.VSG2Connection(IP2, Cmd2, instrument2, out manufacturer2, out model2, out serial2);
-                    if (model2 == "CMW" || model2 == "SGS" || model2 == "N5182B" || manufacturer2 == "Agilent Technologies" || manufacturer2 == "Rohde&Schwarz" || model2 == "M9410A")
+                    if (model2 == "CMW" || model2 == "SGS" || model2 == "N5172B" || model2 == "N5182B" || manufacturer2 == "Agilent Technologies" || manufacturer2 == "Rohde&Schwarz" || model2 == "M9410A")
                     {
                         connectionSTT2 = "VSG2_Connected";
                         lblMfrName2.Text = manufacturer2;
@@ -183,7 +183,7 @@ namespace _5GAutoTool
                     }
                     System.Threading.Thread.Sleep(300);
                     this.mainForm.VSG3Connection(IP3, Cmd3, instrument3, out manufacturer3, out model3, out serial3);
-                    if (model3 == "CMW" || model3 == "SGS" || model3 == "N5182B" || manufacturer3 == "Agilent Technologies" || manufacturer3 == "Rohde&Schwarz" || model3 == "M9410A")
+                    if (model3 == "CMW" || model3 == "N5173B" || model3 == "SGS" || model3 == "N5182B" || manufacturer3 == "Agilent Technologies" || manufacturer3 == "Rohde&Schwarz" || model3 == "M9410A")
                     {
                         connectionSTT3 = "VSG3_Connected";
                         lblMfrName3.Text = manufacturer3;
@@ -357,6 +357,18 @@ namespace _5GAutoTool
                 }
 
             }
+            if (cboVSGList3.Text == "N5173B")
+            {
+                if (File.Exists(@"..\..\..\images\" + "N5173B" + ".png"))
+                {
+                    picVSG3.Image = Image.FromFile(@"..\..\..\images\" + "N5173B" + ".png");
+                }
+                if (File.Exists(@"\images\" + "N5173B" + ".png"))
+                {
+                    picVSG3.Image = Image.FromFile(@"\images\" + "N5173B" + ".png");
+                }
+
+            }
         }
         private void btnSend_Click(object sender, EventArgs e)
         {
@@ -434,6 +446,11 @@ namespace _5GAutoTool
                 lblStatus3.Text = "Disconnected";
                 lblStatus3.ForeColor = System.Drawing.Color.Red;
             }          
+        }
+
+        private void cboVSGList3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
 
         private void cboIP1_SelectedIndexChanged(object sender, EventArgs e)

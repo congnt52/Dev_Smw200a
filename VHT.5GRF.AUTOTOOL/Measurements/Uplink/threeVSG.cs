@@ -42,7 +42,26 @@ namespace _5GAutoTool
 
             //ServerRedhat - finding PortMapping
             currPort = mainForm.PortMappings.FirstOrDefault(item => item.Port == setPort);
-            bbu.SwitchGroup(currPort.XRanIndex.ToString());
+            //old Switch Group
+            //bbu.SwitchGroup(currPort.XRanIndex.ToString());
+            //
+
+            //Test conection no devices
+            if (currPort == null)
+                throw new InvalidOperationException(
+                    "Port mapping not found: " + setPort);
+
+            try
+            {
+                bbu.SwitchGroup(currPort.XRanIndex.ToString());
+            }
+            catch (Exception ex)
+            {
+                if (!mainForm.AllowImdNoDevice)
+                    throw;
+
+                Log("[NO DEVICE] SwitchGroup: " + ex.Message, LogLevel.WARN);
+            }
 
             //double _setAtt = double.Parse(setAtt);
             double _wsPower = double.Parse(wsPowerStr);
@@ -90,7 +109,7 @@ namespace _5GAutoTool
                // vsg2.setParameter(2, isPower, isFreq,TriggerDelay);
                 vsg3.SetCWWaveform(cwPower, cwFreq);
                 //bbu.NEW_RXSENS(out throughput);
-                bbu.NEW_RXSENS(Bandwidth, WsRBOffset, out throughput);
+                bbu.NEW_RXSENS(Bandwidth, WsRBOffset,currPort.StreamIndex, out throughput);
                 writeCSVThroughputValue(mode, setPort, wsFreq, wsPowerStr, isFreq, isPowerStr, cwFreq, isPowerStr, throughput, out TP);
                 //tmpArr = throughput.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 //int index = (setPort-1) % tmpArr.Length;

@@ -23,7 +23,7 @@ namespace _5GAutoTool
             mainForm = mMainForm;
         }
         Ivi.Visa.Interop.ResourceManager rm = new Ivi.Visa.Interop.ResourceManager();
-        Ivi.Visa.Interop.FormattedIO488 N5182b = new Ivi.Visa.Interop.FormattedIO488();
+        Ivi.Visa.Interop.FormattedIO488 N5172b = new Ivi.Visa.Interop.FormattedIO488();
 
         LogAdapter log = LogAdapter.Instance;
         public void Log(string text, LogLevel logLevel = LogLevel.INFO)
@@ -48,8 +48,8 @@ namespace _5GAutoTool
             api.New();
             try
             {
-                N5182b.IO = (Ivi.Visa.Interop.IMessage)rm.Open("TCPIP::" + IP + "::INSTR", Ivi.Visa.Interop.AccessMode.NO_LOCK, 5, " ");
-                N5182b.WriteString(Cmd, true);
+                N5172b.IO = (Ivi.Visa.Interop.IMessage)rm.Open("TCPIP::" + IP + "::INSTR", Ivi.Visa.Interop.AccessMode.NO_LOCK, 5, " ");
+                N5172b.WriteString(Cmd, true);
                 System.Threading.Thread.Sleep(100);
 
                 if (api.ConnectInstrument(ConnectCmd))
@@ -91,9 +91,9 @@ namespace _5GAutoTool
             respond = null;
             try
             {
-                N5182b.WriteString(Cmd, true);
+                N5172b.WriteString(Cmd, true);
                 object[] tmp;
-                tmp = (object[])N5182b.ReadList(Ivi.Visa.Interop.IEEEASCIIType.ASCIIType_Any, ",");
+                tmp = (object[])N5172b.ReadList(Ivi.Visa.Interop.IEEEASCIIType.ASCIIType_Any, ",");
                 for (int i = 0; i < tmp.GetLength(0); i++)
                 {
                     respond += tmp[i].ToString();
@@ -262,9 +262,9 @@ namespace _5GAutoTool
             {
                 if (mainForm.measurementBackgroundWorker.CancellationPending) return;
                 System.Threading.Thread.Sleep(100);
-                N5182b.WriteString(":RAD:ARB:WAV " + "\"" + "FRC-A2-5-51rb_DDDSU.wfm" + "\"");
+                N5172b.WriteString(":RAD:ARB:WAV " + "\"" + "FRC-A2-5-51rb_DDDSU.wfm" + "\"");
                 Log("lOG:[IS] N5172B: Load file: FRC-A2-5-51rb_DDDSU.wfm");
-                N5182b.WriteString(":SOUR:RAD:ARB:STAT ON");
+                N5172b.WriteString(":SOUR:RAD:ARB:STAT ON");
             }
             catch (Exception)
             {
@@ -777,7 +777,7 @@ namespace _5GAutoTool
             try
             {
                 if (mainForm.measurementBackgroundWorker.CancellationPending) return;
-                N5182b.WriteString(":OUTP " + ON_OFF);
+                N5172b.WriteString(":OUTP " + ON_OFF);
                 if (ON_OFF == 1)
                 {
                     api.SignalGenerator.RFOutputEnabled = true;
@@ -799,7 +799,7 @@ namespace _5GAutoTool
             try
             {
                 if (mainForm.measurementBackgroundWorker.CancellationPending) return;
-                N5182b.WriteString(":OUTP " + ON_OFF);
+                N5172b.WriteString(":OUTP " + ON_OFF);
                 if (ON_OFF == 1)
                 {
                     api.SignalGenerator.RFOutputEnabled = true;
