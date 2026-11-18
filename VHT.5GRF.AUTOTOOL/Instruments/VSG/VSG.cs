@@ -149,8 +149,12 @@ namespace _5GAutoTool
             Manufacturer = manufacturer;
             Model = model;
             Serial = serial;
-            Status = "Connected";
-            IsConnected = true;
+            bool connected =
+    manufacturer != "ERROR" &&
+    model != "ERROR";
+
+            Status = connected ? "Connected" : "Disconnected";
+            IsConnected = connected;
             Name += $"-IP:{IpAddress}";
 
         }
@@ -1549,12 +1553,12 @@ namespace _5GAutoTool
                 //N5182b.MODOnOff(0);
                 //N5182b.RFOnOff(0);
                 //System.Threading.Thread.Sleep(500);
-                N5173b.CWSignal();
-                N5173b.SetFreq(freqSet);
-                //N5182b.SetPower(powerSet);
+                //N5173b.CWSignal();
+                N5173b.SetCWFreq(freqSet);
+                N5173b.SetCWPow(-22);
                 //System.Threading.Thread.Sleep(500);
-                N5173b.MODOnOff(0);
-                N5173b.RFOnOff(1);
+                //N5173b.MODOnOff(0);
+                //N5173b.RFOnOff(1);
             }
             else if (instrumentVSG == "SGS100A")
             {
@@ -1568,6 +1572,7 @@ namespace _5GAutoTool
             {
                 //sgs100a.RFOnOff(0);
                 System.Threading.Thread.Sleep(1); //08.01.2024 -test chu ky 100ms
+                //smb100a.SetCWSignal();
                 smb100a.SetFreq(freqSet);
                 // sgs100a.SetPower(powerSet);
                 //sgs100a.RFOnOff(1);
@@ -2005,6 +2010,12 @@ namespace _5GAutoTool
             {
                 case "N5182B":
                     N5182b.Alias = name;
+                    break;
+                case "N5172B":
+                    N5172b.Alias = name;
+                    break;
+                case "N5173B":
+                    N5173b.Alias = name;
                     break;
                 case "CMW100A":
                     cmw100.Alias = name;

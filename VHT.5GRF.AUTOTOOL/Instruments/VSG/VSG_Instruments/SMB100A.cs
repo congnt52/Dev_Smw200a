@@ -132,6 +132,55 @@ namespace _5GAutoTool
                 Console.WriteLine("ERROR:<SMB100A> cannot set frequency! " + e.Message);
             }
         }
+        public bool SendCmdStatus(string Cmd)
+        {
+            bool isDone = true;
+            try
+            {
+                smb100a.WriteString(Cmd, true);
+                System.Threading.Thread.Sleep(10);
+                smb100a.WriteString("*OPC?", true);
+                string tmp = smb100a.ReadString();
+                if (tmp == "1")
+                {
+                    Log($"{Alias}: SMW send command: {Cmd}");
+                    isDone = false;
+                }
+                else
+                {
+                    Log($"{Alias}: SMW is still busy!", LogLevel.WARN);
+                }
+            }
+            catch (Exception e)
+            {
+                Log($"[SMW200A] {Alias} send command Fail! {e.Message}", LogLevel.ERROR);
+            }
+
+            return isDone;
+        }
+        public void SetCWSignal()
+        {
+            try
+            {
+                //if (mainForm.measurementBackgroundWorker.CancellationPending) return;
+                //System.Threading.Thread.Sleep(100);
+                //smw.WriteString(":SYST:RCL '/var/user/test3gpp/ACS_DFT-s-OFDM_100rb_15kHz_QPSK.savrcltxt'");
+                //Log("SMW200A Recell File: :SYST:RCL '/var/user/test3gpp/ACS_DFT-s-OFDM_100rb_15kHz_QPSK.savrcltxt'");
+                //====================
+                string path = "/var/user/VHT-32T-n40-QC128/CW.savrcltxt";
+                string cmd = $":SYST:RCL '{path}'";
+                bool tmp = SendCmdStatus(cmd);
+                if (tmp)
+                {
+                    Log($"{Alias} SMW Recall File: {path}");
+                }
+            }
+            catch (Exception)
+            {
+                Log($"ERROR: {Alias} SMW load file fail", LogLevel.ERROR);
+            }
+        }
+
         public void SetPower(string setPower)
         {
             try

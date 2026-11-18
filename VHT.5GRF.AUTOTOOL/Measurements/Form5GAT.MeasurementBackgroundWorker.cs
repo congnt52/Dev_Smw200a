@@ -3461,7 +3461,7 @@ namespace _5GAutoTool
 
                                         VSG3.Alias = "CW";
                                         VSG3.SetFrequencyValue = double.Parse(cwFreqUpper);
-                                        string pathCW = $@"{isCSVFilePathRX}\CWRX{testingPort}.csv";
+                                        string pathCW = $@"{cwCSVFilePathRX}\CWRX{testingPort}.csv";
                                         double.TryParse(setFrequency, out double cwfreq);
                                         double cwAttSetVal = VSG3.ReadATTfromCSVFile(pathCW, VSG3.SetFrequencyValue);
                                         VSG3.AttenuatorLevel = cwAttSetVal;

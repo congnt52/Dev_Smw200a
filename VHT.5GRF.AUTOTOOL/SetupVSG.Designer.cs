@@ -647,7 +647,8 @@
             "N5182B",
             "SMW200A",
             "SGS100A",
-            "N5173B"});
+            "N5173B",
+            "SMB100A"});
             this.cboVSGList3.Location = new System.Drawing.Point(200, 144);
             this.cboVSGList3.Margin = new System.Windows.Forms.Padding(4);
             this.cboVSGList3.Name = "cboVSGList3";

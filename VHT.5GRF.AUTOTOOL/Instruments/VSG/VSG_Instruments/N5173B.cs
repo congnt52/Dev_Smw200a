@@ -37,38 +37,84 @@ namespace _5GAutoTool
 
         //// TODO: Define a new api() using for N7631C.
         private Keysight.SignalStudio.N7631.Api api;
-        public void Connection(string IP, string Cmd, out string Manufacturer, out string Model, out string Serial)
+        //public void Connection(string IP, string Cmd, out string Manufacturer, out string Model, out string Serial)
+        //{
+        //    api = new Api();
+        //    Manufacturer = "ERROR";
+        //    Model = "ERROR";
+        //    Serial = "ERROR";
+        //    string ConnectCmd = "TCPIP0::" + IP + "::INSTR";
+        //    api = new Api();
+        //    api.New();
+        //    try
+        //    {
+        //        N5173b.IO = (Ivi.Visa.Interop.IMessage)rm.Open("TCPIP::" + IP + "::INSTR", Ivi.Visa.Interop.AccessMode.NO_LOCK, 5, " ");
+        //        N5173b.WriteString(Cmd, true);
+        //        System.Threading.Thread.Sleep(100);
+
+        //        if (api.ConnectInstrument(ConnectCmd))
+        //        {
+        //            Model = api.SignalGenerator.InstrumentModelNumber.ToString();
+                    
+        //            Manufacturer = "Keysight";
+        //            //Serial = api.SignalGenerator;
+        //            Log("Connection: SUCCESS!(N7631C API)", LogLevel.SUCCESS);
+        //            Name = $"N5173B";
+        //        }
+        //        else
+        //        {
+        //            Log("Connection => FAIL!", LogLevel.ERROR);
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        Log("Connection => FAIL!", LogLevel.ERROR);
+        //    }
+        //}
+        public void Connection(
+    string IP,
+    string Cmd,
+    out string Manufacturer,
+    out string Model,
+    out string Serial)
         {
-            api = new Api();
             Manufacturer = "ERROR";
             Model = "ERROR";
             Serial = "ERROR";
-            string ConnectCmd = "TCPIP0::" + IP + "::INSTR";
-            api = new Api();
-            api.New();
+
             try
             {
-                N5173b.IO = (Ivi.Visa.Interop.IMessage)rm.Open("TCPIP::" + IP + "::INSTR", Ivi.Visa.Interop.AccessMode.NO_LOCK, 5, " ");
-                N5173b.WriteString(Cmd, true);
-                System.Threading.Thread.Sleep(100);
+                N5173b.IO = (Ivi.Visa.Interop.IMessage)rm.Open(
+                    "TCPIP0::" + IP + "::inst0::INSTR",
+                    Ivi.Visa.Interop.AccessMode.NO_LOCK,
+                    1000,
+                    "");
 
-                if (api.ConnectInstrument(ConnectCmd))
+                N5173b.IO.Timeout = 3000;
+
+                N5173b.WriteString("*IDN?", true);
+                string idn = N5173b.ReadString();
+
+                string[] parts = idn.Split(',');
+
+                if (parts.Length < 3 ||
+                    !parts[1].Trim().Equals(
+                        "N5173B",
+                        StringComparison.OrdinalIgnoreCase))
                 {
-                    Model = api.SignalGenerator.InstrumentModelNumber.ToString();
-                    
-                    Manufacturer = "Keysight";
-                    //Serial = api.SignalGenerator;
-                    Log("Connection: SUCCESS!(N7631C API)", LogLevel.SUCCESS);
-                    Name = $"N5173B";
+                    throw new Exception("Unexpected IDN: " + idn);
                 }
-                else
-                {
-                    Log("Connection => FAIL!", LogLevel.ERROR);
-                }
+
+                Manufacturer = parts[0].Trim();
+                Model = parts[1].Trim();
+                Serial = parts[2].Trim();
+
+                Log("N5173B Connected: " + idn, LogLevel.SUCCESS);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Log("Connection => FAIL!", LogLevel.ERROR);
+                Log("N5173B Connection FAIL: " + ex.Message,
+                    LogLevel.ERROR);
             }
         }
         public void Disconnect()
@@ -78,7 +124,7 @@ namespace _5GAutoTool
                 //api.Close();
                 Log("Connection => CLOSE! (Preset)", LogLevel.WARN);
                 api.Preset();
-                //N5173b.IO.Close();
+                //N5182b.IO.Close();
             }
             catch (Exception e)
             {
@@ -109,7 +155,7 @@ namespace _5GAutoTool
             try
             {
                 //if (mainForm.measurementBackgroundWorker.CancellationPending) return;
-                //N5173b.WriteString("FREQ " + freqSet + "Hz", true);
+                //N5182b.WriteString("FREQ " + freqSet + "Hz", true);
                 //Log("N5173B frequency: " + freqSet);
                 if (mainForm.measurementBackgroundWorker.CancellationPending) return;
                 Log($"Set frequency: {double.Parse(freqSet) / 1e6} MHz");
@@ -122,12 +168,13 @@ namespace _5GAutoTool
                 Log("Set frequency => FAIL!", LogLevel.ERROR);
             }
         }
+  
         public void SetPower(string setPower)
         {
             try
             {
                 //if (mainForm.measurementBackgroundWorker.CancellationPending) return;
-                //N5173b.WriteString(":POW " + setPower + "DBM", true);
+                //N5182b.WriteString(":POW " + setPower + "DBM", true);
                 //Log("N5173B setup power: " + setPower + "dBm");
                 if (mainForm.measurementBackgroundWorker.CancellationPending) return;
                 Log($"Set power: {setPower} dBm");
@@ -271,7 +318,37 @@ namespace _5GAutoTool
                 Log("ERROR: N5173B load file fail", LogLevel.ERROR);
             }
         }
-        
+        public void SetCWFreq(string freqSet)
+        {
+            try
+            {
+                if (mainForm.measurementBackgroundWorker.CancellationPending) return;
+                System.Threading.Thread.Sleep(100);
+                N5173b.WriteString($":FREQ: {double.Parse(freqSet)/1e6}MHz");
+                //Log("lOG:[IS] N5173B: Load file: FRC-A2-5-51rb_DDDSU.wfm");
+                //N5173b.WriteString(":SOUR:RAD:ARB:STAT ON");
+            }
+            catch (Exception)
+            {
+                Log("ERROR: N5173B set frequency fail", LogLevel.ERROR);
+            }
+        }
+        public void SetCWPow(int powerSet)
+        {
+            try
+            {
+                if (mainForm.measurementBackgroundWorker.CancellationPending) return;
+                System.Threading.Thread.Sleep(100);
+                N5173b.WriteString($":POW: {powerSet}");
+                //Log("lOG:[IS] N5173B: Load file: FRC-A2-5-51rb_DDDSU.wfm");
+                //N5173b.WriteString(":SOUR:RAD:ARB:STAT ON");
+            }
+            catch (Exception)
+            {
+                Log("ERROR: N5173B set frequency fail", LogLevel.ERROR);
+            }
+        }
+
         //public void LoadGRFA25(string freqSet)
         //{
         //    string positionCmd = "C:\\test3gpp\\waveforms\\G-FRC-A2-5.scp";
