@@ -49,7 +49,24 @@ namespace _5GAutoTool
             try
             {
                 N5172b.IO = (Ivi.Visa.Interop.IMessage)rm.Open("TCPIP::" + IP + "::INSTR", Ivi.Visa.Interop.AccessMode.NO_LOCK, 5, " ");
-                N5172b.WriteString(Cmd, true);
+                //N5172b.WriteString(Cmd, true);
+                //System.Threading.Thread.Sleep(100);
+                if (!string.IsNullOrWhiteSpace(Cmd))
+                {
+                    string command = Cmd.Trim();
+
+                    N5172b.WriteString(command, true);
+
+                    if (command.Contains("?"))
+                    {
+                        string response = N5172b.ReadString();
+
+                        Log("[N5172B] Connect Query: " +
+                            command + " => " + response,
+                            LogLevel.INFO);
+                    }
+                }
+
                 System.Threading.Thread.Sleep(100);
 
                 if (api.ConnectInstrument(ConnectCmd))
@@ -66,9 +83,10 @@ namespace _5GAutoTool
                     Log("Connection => FAIL!", LogLevel.ERROR);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Log("Connection => FAIL!", LogLevel.ERROR);
+                Log("[N5172B] Connection FAIL: " +
+        ex.Message, LogLevel.ERROR);
             }
         }
         public void Disconnect()
@@ -86,22 +104,55 @@ namespace _5GAutoTool
             }
 
         }
+        //public void SendCmd(string Cmd, out string respond)
+        //{
+        //    respond = null;
+        //    try
+        //    {
+        //        N5172b.WriteString(Cmd, true);
+        //        object[] tmp;
+        //        tmp = (object[])N5172b.ReadList(Ivi.Visa.Interop.IEEEASCIIType.ASCIIType_Any, ",");
+        //        for (int i = 0; i < tmp.GetLength(0); i++)
+        //        {
+        //            respond += tmp[i].ToString();
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        Log("Connection => FAIL!", LogLevel.ERROR);
+        //    }
+        //}
+
         public void SendCmd(string Cmd, out string respond)
         {
             respond = null;
+
             try
             {
-                N5172b.WriteString(Cmd, true);
-                object[] tmp;
-                tmp = (object[])N5172b.ReadList(Ivi.Visa.Interop.IEEEASCIIType.ASCIIType_Any, ",");
-                for (int i = 0; i < tmp.GetLength(0); i++)
+                if (string.IsNullOrWhiteSpace(Cmd))
+                    return;
+
+                string command = Cmd.Trim();
+
+                N5172b.WriteString(command, true);
+
+                if (command.Contains("?"))
                 {
-                    respond += tmp[i].ToString();
+                    respond = N5172b.ReadString();
+
+                    Log("[N5172B] QUERY: " + command +
+                        " => " + respond, LogLevel.INFO);
+                }
+                else
+                {
+                    Log("[N5172B] WRITE: " + command,
+                        LogLevel.INFO);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Log("Connection => FAIL!", LogLevel.ERROR);
+                Log("[N5172B] SendCmd ERROR: " +
+                    ex.Message, LogLevel.ERROR);
             }
         }
         public void SetFreq(string freqSet)
@@ -627,32 +678,112 @@ namespace _5GAutoTool
         }
 
         // TODO: Phát tín hiệu General IMD
+        //public void GeneralIMDSignal(string Bw)
+        //{
+        //    string positionCmd = $"C:\\test3gpp\\waveforms\\nr5g\\{Bw}mhz\\IMD_GEN_DFT-s-OFDM.scp";
+        //    try
+        //    {
+        //        if (mainForm.measurementBackgroundWorker.CancellationPending) return;
+        //        System.Threading.Thread.Sleep(100);
+        //        Log($"LOG:[IS] N5172B open file IMD_GEN_DFT-s-OFDM.scp {positionCmd}");
+        //        api.OpenSetupFile(positionCmd);
+        //        string err = api.ReadError();
+        //        if (!String.IsNullOrEmpty(err))
+        //        {
+        //            Log($"ERROR: {err}", LogLevel.ERROR);
+        //        }
+        //        else
+        //        {
+        //            Log("LOG:[IS] N5172B load file IMD_GEN_DFT-s-OFDM.scp");
+        //            api.Generate();
+        //            api.Download();
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        Log("ERROR: N5172B load file fail");
+        //    }
+
+        //}
+
         public void GeneralIMDSignal(string Bw)
         {
-            string positionCmd = $"C:\\test3gpp\\waveforms\\nr5g\\{Bw}mhz\\IMD_GEN_DFT-s-OFDM.scp";
+            string positionCmd =
+                $@"C:\test3gpp\waveforms\nr5g\{Bw}mhz\IMD_GEN_DFT-s-OFDM.scp";
+
+            string step = "START";
+
             try
             {
-                if (mainForm.measurementBackgroundWorker.CancellationPending) return;
-                System.Threading.Thread.Sleep(100);
-                Log($"LOG:[IS] N5172B open file IMD_GEN_DFT-s-OFDM.scp {positionCmd}");
-                api.OpenSetupFile(positionCmd);
-                string err = api.ReadError();
-                if (!String.IsNullOrEmpty(err))
-                {
-                    Log($"ERROR: {err}", LogLevel.ERROR);
-                }
-                else
-                {
-                    Log("LOG:[IS] N5172B load file IMD_GEN_DFT-s-OFDM.scp");
-                    api.Generate();
-                    api.Download();
-                }
-            }
-            catch (Exception)
-            {
-                Log("ERROR: N5172B load file fail");
-            }
+                if (mainForm.measurementBackgroundWorker.CancellationPending)
+                    return;
 
+                if (api == null)
+                    throw new InvalidOperationException(
+                        "N7631 API is not initialized.");
+
+                if (!System.IO.File.Exists(positionCmd))
+                    throw new System.IO.FileNotFoundException(
+                        "General IMD state file not found", positionCmd);
+
+                step = "OpenSetupFile";
+
+                Log("[N5172B][GenIMD] START Load State: " + positionCmd,
+                    LogLevel.INFO);
+
+                api.OpenSetupFile(positionCmd);
+
+                Log("[N5172B][GenIMD] OpenSetupFile completed",
+                    LogLevel.INFO);
+
+                step = "ReadError";
+
+                string err = api.ReadError();
+
+                if (!string.IsNullOrWhiteSpace(err))
+                {
+                    throw new InvalidOperationException(
+                        "N7631 API error: " + err);
+                }
+
+                if (mainForm.measurementBackgroundWorker.CancellationPending)
+                    return;
+
+                step = "Generate";
+
+                Log("[N5172B][GenIMD] START Generate",
+                    LogLevel.INFO);
+
+                api.Generate();
+
+                Log("[N5172B][GenIMD] Generate completed",
+                    LogLevel.INFO);
+
+                if (mainForm.measurementBackgroundWorker.CancellationPending)
+                    return;
+
+                step = "Download";
+
+                Log("[N5172B][GenIMD] START Download",
+                    LogLevel.INFO);
+
+                api.Download();
+
+                Log("[N5172B][GenIMD] Download completed",
+                    LogLevel.INFO);
+
+                Log("[N5172B][GenIMD] Load State sequence completed",
+                    LogLevel.SUCCESS);
+            }
+            catch (Exception ex)
+            {
+                Log(
+                    "[N5172B][GenIMD] ERROR at " + step +
+                    ": " + ex.Message,
+                    LogLevel.ERROR);
+
+                throw;
+            }
         }
 
         // phát tín hiệu Narrowband IMD upper edger

@@ -1649,11 +1649,13 @@ namespace _5GAutoTool
                 //N5182b.RFOnOff(0);
                 //System.Threading.Thread.Sleep(500);
                 N5182b.GeneralIMDSignal(Bw);
+                System.Threading.Thread.Sleep(500);
                 N5182b.SetFreq(freqSet);
+                System.Threading.Thread.Sleep(500);
                 N5182b.SetPower(powerSet);
                 System.Threading.Thread.Sleep(500);
-                N5182b.MODOnOff(1);
-                N5182b.RFOnOff(1);
+                //N5182b.MODOnOff(1);
+                //N5182b.RFOnOff(1);
             }
             if (instrumentVSG == "N5172B")
             {
@@ -1661,11 +1663,12 @@ namespace _5GAutoTool
                 //N5182b.RFOnOff(0);
                 //System.Threading.Thread.Sleep(500);
                 N5172b.GeneralIMDSignal(Bw);
+                System.Threading.Thread.Sleep(500);
                 N5172b.SetFreq(freqSet);
                // N5172b.SetPower(powerSet);
                 System.Threading.Thread.Sleep(500);
-                N5172b.MODOnOff(1);
-                N5172b.RFOnOff(1);
+               // N5172b.MODOnOff(1);
+               // N5172b.RFOnOff(1);
             }
             else if (instrumentVSG == "SMW200A")
             {
@@ -1699,11 +1702,12 @@ namespace _5GAutoTool
                 //N5182b.RFOnOff(0);
                 //System.Threading.Thread.Sleep(500);
                 N5172b.NarrowBandUpperIMDSignal(RBOffset, Bw);
+                System.Threading.Thread.Sleep(500);
                 N5172b.SetFreq(freqSet);
                // N5182b.SetPower(powerSet);
                 System.Threading.Thread.Sleep(500);
-                N5172b.MODOnOff(1);
-                N5172b.RFOnOff(1);
+                //N5172b.MODOnOff(1);
+                //N5172b.RFOnOff(1);
             }
             else if (instrumentVSG == "SMW200A")
             {
@@ -1746,11 +1750,12 @@ namespace _5GAutoTool
                 //N5182b.RFOnOff(0);
                 //System.Threading.Thread.Sleep(500);
                 N5172b.NarrowBandLowerIMDSignal(RBOffset, BW);
+                System.Threading.Thread.Sleep(500);
                 N5172b.SetFreq(freqSet);
                 //N5172b.SetPower(powerSet);
                 System.Threading.Thread.Sleep(500);
-                N5172b.MODOnOff(1);
-                N5172b.RFOnOff(1);
+                //N5172b.MODOnOff(1);
+               // N5172b.RFOnOff(1);
             }
 
             else if (instrumentVSG == "SMW200A")
@@ -1773,6 +1778,7 @@ namespace _5GAutoTool
                 //N5182b.RFOnOff(0);
                 //System.Threading.Thread.Sleep(500);
                 N5182b.TXIMDSignal();
+                System.Threading.Thread.Sleep(500);
                 N5182b.SetFreq(freqSet);
                 N5182b.SetPower(powerSet);
                 System.Threading.Thread.Sleep(500);

@@ -324,7 +324,7 @@ namespace _5GAutoTool
             {
                 if (mainForm.measurementBackgroundWorker.CancellationPending) return;
                 System.Threading.Thread.Sleep(100);
-                N5173b.WriteString($":FREQ: {double.Parse(freqSet)/1e6}MHz");
+                N5173b.WriteString($":FREQ {double.Parse(freqSet)/1e6}MHz");
                 //Log("lOG:[IS] N5173B: Load file: FRC-A2-5-51rb_DDDSU.wfm");
                 //N5173b.WriteString(":SOUR:RAD:ARB:STAT ON");
             }
@@ -339,7 +339,7 @@ namespace _5GAutoTool
             {
                 if (mainForm.measurementBackgroundWorker.CancellationPending) return;
                 System.Threading.Thread.Sleep(100);
-                N5173b.WriteString($":POW: {powerSet}");
+                N5173b.WriteString($":POW {powerSet}");
                 //Log("lOG:[IS] N5173B: Load file: FRC-A2-5-51rb_DDDSU.wfm");
                 //N5173b.WriteString(":SOUR:RAD:ARB:STAT ON");
             }

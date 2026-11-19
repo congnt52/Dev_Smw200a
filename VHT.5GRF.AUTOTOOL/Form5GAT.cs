@@ -256,7 +256,7 @@ namespace _5GAutoTool
         string ruPW = "root";
         bool ruConflag = false;
         //private const bool ALLOW_IMD_NO_DEVICE = true;
-        public bool AllowImdNoDevice { get; } = false;
+        public bool AllowImdNoDevice { get; } = true;
         private void btnStart_Click(object sender, EventArgs e)
         {
             //DialogResult confirm = MessageBox.Show(

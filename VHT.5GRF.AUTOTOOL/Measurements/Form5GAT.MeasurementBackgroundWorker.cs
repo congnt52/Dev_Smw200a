@@ -3438,9 +3438,9 @@ namespace _5GAutoTool
                                     string isPower = strISPwr;
                                     string isLowerOffset = isOffsetL;
                                     string isUpperOffset = isOffsetR;
-
-                                    string isFreqLower = Convert.ToString(double.Parse(setFrequency) - (double.Parse(setBandwidth) * 1000000) / 2 - (double.Parse(isLowerOffset) * 1000000));
-                                    string isFreqUpper = Convert.ToString(double.Parse(setFrequency) + (double.Parse(setBandwidth) * 1000000) / 2 + (double.Parse(isUpperOffset) * 1000000));
+                                    string scsNR = "30000";
+                                    string isFreqLower = Convert.ToString(double.Parse(setFrequency) - (double.Parse(setBandwidth) * 1000000) / 2 - (double.Parse(isLowerOffset) * 1000000) + (double.Parse(scsNR)/2));
+                                    string isFreqUpper = Convert.ToString(double.Parse(setFrequency) + (double.Parse(setBandwidth) * 1000000) / 2 + (double.Parse(isUpperOffset) * 1000000) + (double.Parse(scsNR)/2));
                                     string cwLowerOffset = isCWOffsetL;
                                     string cwUpperOffset = isCWOffsetR;
                                     string cwFreqLower = Convert.ToString(double.Parse(setFrequency) - (double.Parse(setBandwidth) * 1000000) / 2 - (double.Parse(cwLowerOffset) * 1000000));
@@ -3462,7 +3462,7 @@ namespace _5GAutoTool
                                         VSG3.Alias = "CW";
                                         VSG3.SetFrequencyValue = double.Parse(cwFreqUpper);
                                         string pathCW = $@"{cwCSVFilePathRX}\CWRX{testingPort}.csv";
-                                        double.TryParse(setFrequency, out double cwfreq);
+                                        double.TryParse(setFrequency, out double cwfreqUpper);
                                         double cwAttSetVal = VSG3.ReadATTfromCSVFile(pathCW, VSG3.SetFrequencyValue);
                                         VSG3.AttenuatorLevel = cwAttSetVal;
                                        // Log($"{VSG3.Alias}: Set ATT_Port{testingPort}={cwAttSetVal} dB at f={VSG3.SetFrequencyValue / 1e6}MHz");
@@ -3472,8 +3472,24 @@ namespace _5GAutoTool
 
                                     if (measurementBackgroundWorker.CancellationPending) return;
                                     System.Threading.Thread.Sleep(1);
-                                    Measurement.threeVSGMode(VSG1, VSG2, VSG3, BBU, "GenIMD", wsOffsetR, IS1RBOffsetR, stepdB, attSetVal.ToString(), testingPort, wsPower, setFrequency, isPower, isFreqUpper, cwFreqUpper, setBandwidth, out tp);
-                                    dataRXIMD[0, testingPort - 1, 0, 2] = tp.ToString();
+                                    //Measurement.threeVSGMode(VSG1, VSG2, VSG3, BBU, "GenIMD", wsOffsetR, IS1RBOffsetR, stepdB, attSetVal.ToString(), testingPort, wsPower, setFrequency, isPower, isFreqUpper, cwFreqUpper, setBandwidth, out tp);
+                                    //dataRXIMD[0, testingPort - 1, 0, 2] = tp.ToString();
+                                    Measurement.threeVSGMode(
+    VSG1, VSG2, VSG3, BBU,
+    "GenIMD", wsOffsetR, IS1RBOffsetR,
+    stepdB, attSetVal.ToString(),
+    testingPort, wsPower, setFrequency,
+    isPower, isFreqUpper, cwFreqUpper,
+    setBandwidth, out tp);
+
+                                    double genImdUpperTP = tp;
+
+                                    dataRXIMD[0, testingPort - 1, 0, 2] =
+                                        double.IsNaN(tp) ? "NOT MEASURED" : tp.ToString();
+
+                                    Log($"[GenIMD] PORT{testingPort} UPPER: " +
+                                        $"IS={isFreqUpper} Hz, CW={cwFreqUpper} Hz, " +
+                                        $"TP={(double.IsNaN(tp) ? "NOT MEASURED" : tp.ToString("F2") + "%")}");
 
                                     if (measurementBackgroundWorker.CancellationPending) return;
                                     System.Threading.Thread.Sleep(1);
@@ -3490,7 +3506,7 @@ namespace _5GAutoTool
                                         VSG3.Alias = "CW";
                                         VSG3.SetFrequencyValue = double.Parse(cwFreqLower);
                                         string pathCW = $@"{isCSVFilePathRX}\CWRX{testingPort}.csv";
-                                        double.TryParse(setFrequency, out double cwfreq);
+                                        double.TryParse(setFrequency, out double cwfreqLower);
                                         double cwAttSetVal = VSG3.ReadATTfromCSVFile(path, VSG3.SetFrequencyValue);
                                         VSG3.AttenuatorLevel = cwAttSetVal;
                                       //  Log($"{VSG3.Alias}: Set ATT_Port{testingPort}={cwAttSetVal} dB at f={VSG3.SetFrequencyValue / 1e6}MHz");
@@ -3500,33 +3516,84 @@ namespace _5GAutoTool
 
                                     if (measurementBackgroundWorker.CancellationPending) return;
                                     System.Threading.Thread.Sleep(1);
-                                    Measurement.threeVSGMode(VSG1, VSG2, VSG3, BBU, "GenIMD", wsOffsetL, IS1RBOffsetL, stepdB, attSetVal.ToString(), testingPort, wsPower, setFrequency, isPower, isFreqLower, cwFreqLower, setBandwidth, out tp);
-                                    dataRXIMD[0, testingPort - 1, 1, 2] = tp.ToString();
+                                    //Measurement.threeVSGMode(VSG1, VSG2, VSG3, BBU, "GenIMD", wsOffsetL, IS1RBOffsetL, stepdB, attSetVal.ToString(), testingPort, wsPower, setFrequency, isPower, isFreqLower, cwFreqLower, setBandwidth, out tp);
+                                    //dataRXIMD[0, testingPort - 1, 1, 2] = tp.ToString();
 
-                                    if (double.Parse(dataRXIMD[0, testingPort - 1, 0, 2]) > double.Parse(dataRXIMD[0, testingPort - 1, 1, 2]))
+                                    //if (double.Parse(dataRXIMD[0, testingPort - 1, 0, 2]) > double.Parse(dataRXIMD[0, testingPort - 1, 1, 2]))
+                                    //{
+                                    //    tp = double.Parse(dataRXIMD[0, testingPort - 1, 1, 2]);
+                                    //}
+                                    //else
+                                    //{
+                                    //    tp = double.Parse(dataRXIMD[0, testingPort - 1, 0, 2]);
+                                    //}
+                                    //if (tp >= 95)
+                                    //{
+                                    //    PassFail = pass;
+                                    //}
+                                    //else
+                                    //{
+                                    //    PassFail = fail;
+                                    //    reTest = true;
+                                    //}
+                                    //result = strISPwr;
+                                    //mode = tp.ToString();
+                                    //dataRXIMD[0, testingPort - 1, 0, 0] = PassFail;  // 0 Result
+                                    //dataRXIMD[0, testingPort - 1, 0, 1] = DateTime.Now.ToString("hh:mm:ss");  // 2 Testing Time
+                                    //dataRXIMD[0, testingPort - 1, 0, 2] = tp.ToString();     // 3 Reading Value
+                                    //dataRXIMD[0, testingPort - 1, 0, 3] = result;     // 4 Reading Value
+                                    Measurement.threeVSGMode(
+    VSG1, VSG2, VSG3, BBU,
+    "GenIMD", wsOffsetL, IS1RBOffsetL,
+    stepdB, attSetVal.ToString(),
+    testingPort, wsPower, setFrequency,
+    isPower, isFreqLower, cwFreqLower,
+    setBandwidth, out tp);
+
+                                    double genImdLowerTP = tp;
+
+                                    dataRXIMD[0, testingPort - 1, 1, 2] =
+                                        double.IsNaN(tp) ? "NOT MEASURED" : tp.ToString();
+
+                                    Log($"[GenIMD] PORT{testingPort} LOWER: " +
+                                        $"IS={isFreqLower} Hz, CW={cwFreqLower} Hz, " +
+                                        $"TP={(double.IsNaN(tp) ? "NOT MEASURED" : tp.ToString("F2") + "%")}");
+
+                                    if (double.IsNaN(genImdUpperTP) ||
+                                        double.IsNaN(genImdLowerTP))
                                     {
-                                        tp = double.Parse(dataRXIMD[0, testingPort - 1, 1, 2]);
+                                        tp = double.NaN;
+                                        PassFail = "ERROR";
+                                        reTest = false;
+                                        mode = "NOT MEASURED";
+                                        isTestcasePass = false;
+                                        failedPorts.Add(testingPort);
                                     }
                                     else
                                     {
-                                        tp = double.Parse(dataRXIMD[0, testingPort - 1, 0, 2]);
+                                        tp = Math.Min(genImdUpperTP, genImdLowerTP);
+
+                                        PassFail = tp >= 95 ? pass : fail;
+                                        reTest = tp < 95;
+                                        mode = tp.ToString();
+
+                                        if (tp < 95)
+                                            isTestcasePass = false;
                                     }
-                                    if (tp >= 95)
-                                    {
-                                        PassFail = pass;
-                                    }
-                                    else
-                                    {
-                                        PassFail = fail;
-                                        reTest = true;
-                                    }
+
                                     result = strISPwr;
-                                    mode = tp.ToString();
-                                    dataRXIMD[0, testingPort - 1, 0, 0] = PassFail;  // 0 Result
-                                    dataRXIMD[0, testingPort - 1, 0, 1] = DateTime.Now.ToString("hh:mm:ss");  // 2 Testing Time
-                                    dataRXIMD[0, testingPort - 1, 0, 2] = tp.ToString();     // 3 Reading Value
-                                    dataRXIMD[0, testingPort - 1, 0, 3] = result;     // 4 Reading Value
 
+                                    dataRXIMD[0, testingPort - 1, 0, 0] = PassFail;
+                                    dataRXIMD[0, testingPort - 1, 0, 1] =
+                                        DateTime.Now.ToString("HH:mm:ss");
+                                    dataRXIMD[0, testingPort - 1, 0, 2] =
+                                        double.IsNaN(tp) ? "NOT MEASURED" : tp.ToString();
+                                    dataRXIMD[0, testingPort - 1, 0, 3] = result;
+
+                                    Log($"[GenIMD] PORT{testingPort} FINAL: " +
+                                        $"Upper={(double.IsNaN(genImdUpperTP) ? "N/A" : genImdUpperTP.ToString("F2") + "%")}, " +
+                                        $"Lower={(double.IsNaN(genImdLowerTP) ? "N/A" : genImdLowerTP.ToString("F2") + "%")}, " +
+                                        $"Result={mode}, Status={PassFail}");
 
                                 }
                                 #endregion
@@ -3606,8 +3673,24 @@ namespace _5GAutoTool
 
                                     if (measurementBackgroundWorker.CancellationPending) return;
                                     System.Threading.Thread.Sleep(1);
-                                    Measurement.threeVSGMode(VSG1, VSG2, VSG3, BBU, "NBIMD", wsOffsetR, IS1RBOffsetR, stepdB, attSetVal.ToString(), testingPort, wsPower, setFrequency, isPower, isFreqUpper, cwFreqUpper, setBandwidth, out tp);
-                                    dataRXIMD[1, testingPort - 1, 0, 2] = tp.ToString();
+                                    //Measurement.threeVSGMode(VSG1, VSG2, VSG3, BBU, "NBIMD", wsOffsetR, IS1RBOffsetR, stepdB, attSetVal.ToString(), testingPort, wsPower, setFrequency, isPower, isFreqUpper, cwFreqUpper, setBandwidth, out tp);
+                                    //dataRXIMD[1, testingPort - 1, 0, 2] = tp.ToString();
+                                    Measurement.threeVSGMode(
+    VSG1, VSG2, VSG3, BBU,
+    "NBIMD", wsOffsetR, IS1RBOffsetR,
+    stepdB, attSetVal.ToString(),
+    testingPort, wsPower, setFrequency,
+    isPower, isFreqUpper, cwFreqUpper,
+    setBandwidth, out tp);
+
+                                    double nbImdUpperTP = tp;
+
+                                    dataRXIMD[1, testingPort - 1, 0, 2] =
+                                        double.IsNaN(tp) ? "NOT MEASURED" : tp.ToString();
+
+                                    Log($"[NBIMD] PORT{testingPort} UPPER: " +
+                                        $"IS={isFreqUpper} Hz, CW={cwFreqUpper} Hz, " +
+                                        $"TP={(double.IsNaN(tp) ? "NOT MEASURED" : tp.ToString("F2") + "%")}");
 
                                     if (measurementBackgroundWorker.CancellationPending) return;
                                     System.Threading.Thread.Sleep(1);
@@ -3637,32 +3720,84 @@ namespace _5GAutoTool
 
                                     if (measurementBackgroundWorker.CancellationPending) return;
                                     System.Threading.Thread.Sleep(1);
-                                    Measurement.threeVSGMode(VSG1, VSG2, VSG3, BBU, "NBIMD", wsOffsetL, IS1RBOffsetL, stepdB, attSetVal.ToString(), testingPort, wsPower, setFrequency, isPower, isFreqLower, cwFreqLower, setBandwidth, out tp);
-                                    dataRXIMD[1, testingPort - 1, 1, 2] = tp.ToString();
+                                    //Measurement.threeVSGMode(VSG1, VSG2, VSG3, BBU, "NBIMD", wsOffsetL, IS1RBOffsetL, stepdB, attSetVal.ToString(), testingPort, wsPower, setFrequency, isPower, isFreqLower, cwFreqLower, setBandwidth, out tp);
+                                    //dataRXIMD[1, testingPort - 1, 1, 2] = tp.ToString();
 
-                                    if (double.Parse(dataRXIMD[1, testingPort - 1, 0, 2]) > double.Parse(dataRXIMD[1, testingPort - 1, 1, 2]))
+                                    //if (double.Parse(dataRXIMD[1, testingPort - 1, 0, 2]) > double.Parse(dataRXIMD[1, testingPort - 1, 1, 2]))
+                                    //{
+                                    //    tp = double.Parse(dataRXIMD[1, testingPort - 1, 1, 2]);
+                                    //}
+                                    //else
+                                    //{
+                                    //    tp = double.Parse(dataRXIMD[1, testingPort - 1, 0, 2]);
+                                    //}
+                                    //if (tp >= 95)
+                                    //{
+                                    //    PassFail = pass;
+                                    //}
+                                    //else
+                                    //{
+                                    //    PassFail = fail;
+                                    //    reTest = true;
+                                    //}
+                                    //result = strISPwr;
+                                    //mode = tp.ToString();
+                                    //dataRXIMD[1, testingPort - 1, 0, 0] = PassFail;  // 0 Result
+                                    //dataRXIMD[1, testingPort - 1, 0, 1] = DateTime.Now.ToString("hh:mm:ss");  // 2 Testing Time
+                                    //dataRXIMD[1, testingPort - 1, 0, 2] = tp.ToString();     // 3 Reading Value
+                                    //dataRXIMD[1, testingPort - 1, 0, 3] = result;     // 4 Reading Value
+                                    Measurement.threeVSGMode(
+    VSG1, VSG2, VSG3, BBU,
+    "NBIMD", wsOffsetL, IS1RBOffsetL,
+    stepdB, attSetVal.ToString(),
+    testingPort, wsPower, setFrequency,
+    isPower, isFreqLower, cwFreqLower,
+    setBandwidth, out tp);
+
+                                    double nbImdLowerTP = tp;
+
+                                    dataRXIMD[1, testingPort - 1, 1, 2] =
+                                        double.IsNaN(tp) ? "NOT MEASURED" : tp.ToString();
+
+                                    Log($"[NBIMD] PORT{testingPort} LOWER: " +
+                                        $"IS={isFreqLower} Hz, CW={cwFreqLower} Hz, " +
+                                        $"TP={(double.IsNaN(tp) ? "NOT MEASURED" : tp.ToString("F2") + "%")}");
+
+                                    if (double.IsNaN(nbImdUpperTP) ||
+                                        double.IsNaN(nbImdLowerTP))
                                     {
-                                        tp = double.Parse(dataRXIMD[1, testingPort - 1, 1, 2]);
+                                        tp = double.NaN;
+                                        PassFail = "ERROR";
+                                        reTest = false;
+                                        mode = "NOT MEASURED";
+                                        isTestcasePass = false;
+                                        failedPorts.Add(testingPort);
                                     }
                                     else
                                     {
-                                        tp = double.Parse(dataRXIMD[1, testingPort - 1, 0, 2]);
+                                        tp = Math.Min(nbImdUpperTP, nbImdLowerTP);
+
+                                        PassFail = tp >= 95 ? pass : fail;
+                                        reTest = tp < 95;
+                                        mode = tp.ToString();
+
+                                        if (tp < 95)
+                                            isTestcasePass = false;
                                     }
-                                    if (tp >= 95)
-                                    {
-                                        PassFail = pass;
-                                    }
-                                    else
-                                    {
-                                        PassFail = fail;
-                                        reTest = true;
-                                    }
+
                                     result = strISPwr;
-                                    mode = tp.ToString();
-                                    dataRXIMD[1, testingPort - 1, 0, 0] = PassFail;  // 0 Result
-                                    dataRXIMD[1, testingPort - 1, 0, 1] = DateTime.Now.ToString("hh:mm:ss");  // 2 Testing Time
-                                    dataRXIMD[1, testingPort - 1, 0, 2] = tp.ToString();     // 3 Reading Value
-                                    dataRXIMD[1, testingPort - 1, 0, 3] = result;     // 4 Reading Value
+
+                                    dataRXIMD[1, testingPort - 1, 0, 0] = PassFail;
+                                    dataRXIMD[1, testingPort - 1, 0, 1] =
+                                        DateTime.Now.ToString("HH:mm:ss");
+                                    dataRXIMD[1, testingPort - 1, 0, 2] =
+                                        double.IsNaN(tp) ? "NOT MEASURED" : tp.ToString();
+                                    dataRXIMD[1, testingPort - 1, 0, 3] = result;
+
+                                    Log($"[NBIMD] PORT{testingPort} FINAL: " +
+                                        $"Upper={(double.IsNaN(nbImdUpperTP) ? "N/A" : nbImdUpperTP.ToString("F2") + "%")}, " +
+                                        $"Lower={(double.IsNaN(nbImdLowerTP) ? "N/A" : nbImdLowerTP.ToString("F2") + "%")}, " +
+                                        $"Result={mode}, Status={PassFail}");
 
                                 }
                                 #endregion
@@ -3742,7 +3877,26 @@ namespace _5GAutoTool
                             TimeSpan tactTime = DateTime.Now - startTime;
                             if (testcaseInTesting.Text != "RX Power Calibration")
                             {
-                                ListViewShow("PORT" + testingPort, testcaseInTesting.Text, strSpec, strMin, result, strMax, mode, PassFail, tactTime.ToString(@"hh\:mm\:ss"));
+                                //ListViewShow("PORT" + testingPort, testcaseInTesting.Text, strSpec, strMin, result, strMax, mode, PassFail, tactTime.ToString(@"hh\:mm\:ss"));
+                                string displayMode = mode;
+
+                                if ((testcaseInTesting.Text == "General intermodulation" ||
+                                     testcaseInTesting.Text == "Narrow-band intermodulation") &&
+                                    double.IsNaN(tp))
+                                {
+                                    displayMode = "NOT MEASURED";
+                                }
+
+                                ListViewShow(
+                                    "PORT" + testingPort,
+                                    testcaseInTesting.Text,
+                                    strSpec,
+                                    strMin,
+                                    result,
+                                    strMax,
+                                    displayMode,
+                                    PassFail,
+                                    tactTime.ToString(@"hh\:mm\:ss"));
                             }
                             // Export CSV: ICS, ACS, INB
                             //if (testcaseInTesting.Text == "In-Channel Selectivity (ICS)" ||
@@ -3758,9 +3912,15 @@ namespace _5GAutoTool
                                 portResult.Values["PARAM"] = "RX Throughput";
                                 portResult.Values["SPECS"] = ">= 95%";
 
-                                portResult.Values["RESULT"] = tp.ToString(
-                                    System.Globalization.CultureInfo.InvariantCulture);
-
+                                //portResult.Values["RESULT"] = tp.ToString(
+                                //    System.Globalization.CultureInfo.InvariantCulture);
+                                portResult.Values["RESULT"] =
+    (testcaseInTesting.Text == "General intermodulation" ||
+     testcaseInTesting.Text == "Narrow-band intermodulation") &&
+    double.IsNaN(tp)
+        ? "NOT MEASURED"
+        : tp.ToString(
+            System.Globalization.CultureInfo.InvariantCulture);
                                 portResult.Values["TEST TIME"] =
                                     DateTime.Now.ToString("HH:mm:ss");
 
