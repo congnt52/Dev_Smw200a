@@ -339,7 +339,7 @@ namespace _5GAutoTool
             {
                 if (mainForm.measurementBackgroundWorker.CancellationPending) return;
                 System.Threading.Thread.Sleep(100);
-                N5173b.WriteString($":POW {powerSet}");
+                N5173b.WriteString($":POW {powerSet}dBm");
                 //Log("lOG:[IS] N5173B: Load file: FRC-A2-5-51rb_DDDSU.wfm");
                 //N5173b.WriteString(":SOUR:RAD:ARB:STAT ON");
             }

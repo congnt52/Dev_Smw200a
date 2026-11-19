@@ -130,7 +130,7 @@ namespace _5GAutoTool
                             break;
                         case "ACS":
                             vsg1.SetWSACSWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
-                            vsg2.SetACSWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
+                           vsg2.SetACSWaveform(isPower, isFreq, WsRBOffset, Bandwidth, TriggerDelay);
                             vsg1.TypeOfSignal = "DFT-s-OFDM";
                          //   vsg1.setParameter(1, wsPower, wsFreq,TriggerDelay);
                          //   vsg1.setParameter(2, isPower, isFreq, TriggerDelay);

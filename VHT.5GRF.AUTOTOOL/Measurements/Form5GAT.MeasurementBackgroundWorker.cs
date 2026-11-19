@@ -3054,8 +3054,8 @@ namespace _5GAutoTool
                                         string path = $@"{isCSVFilePathRX}\ISRX{testingPort}.csv";
                                         double.TryParse(setFrequency, out double freq);
                                         VSG2.AttenuatorLevel = VSG2.ReadATTfromCSVFile(path, VSG2.SetFrequencyValue);
-                                        Log($"{VSG2.Alias}: Set ATT_Port{testingPort}={VSG2.AttenuatorLevel} dB at f={VSG2.SetFrequencyValue / 1e6}MHz");
-                                        Log($"{VSG2.Alias}: CSV Path:{VSG2.AttenuatorCSVpath}");
+                                        Log($"{VSG2.Alias}:  f={VSG2.SetFrequencyValue / 1e6}MHz");
+                                     //   Log($"{VSG2.Alias}: CSV Path:{VSG2.AttenuatorCSVpath}");
                                     }
                                     if (arrRBoffsetR.Length > 0)
                                     {
@@ -3397,6 +3397,7 @@ namespace _5GAutoTool
                                 }
                                 #endregion
                                 #region RX-IMD-G
+                                
                                 else if (testcaseInTesting.Text == "General intermodulation")
                                 {
                                     VSG1.SetFrequencyValue = double.Parse(setFrequency);
@@ -3418,7 +3419,7 @@ namespace _5GAutoTool
                                     string deltaFoobMHz = ReadValueByHeader(testcaseInTesting.Parameters, "deltaFoobMHz");
                                     string isCWOffsetL = ReadValueByHeader(testcaseInTesting.Parameters, "ISCWOffsetL");
                                     string isCWOffsetR = ReadValueByHeader(testcaseInTesting.Parameters, "ISCWOffsetR");
-
+                                    //string TriggerDelay = ReadValueByHeader(testcaseInTesting.Parameters, "TriggerDelay(ms)");  
 
 
                                     double.TryParse(strLimMax, out limitMax);
@@ -3548,7 +3549,7 @@ namespace _5GAutoTool
     stepdB, attSetVal.ToString(),
     testingPort, wsPower, setFrequency,
     isPower, isFreqLower, cwFreqLower,
-    setBandwidth, out tp);
+    setBandwidth,out tp);
 
                                     double genImdLowerTP = tp;
 

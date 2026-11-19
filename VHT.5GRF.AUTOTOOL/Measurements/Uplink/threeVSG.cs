@@ -77,7 +77,7 @@ namespace _5GAutoTool
            Log($"{vsg1.Name}: Expected Power Level={_wsPower} dBm");
           Log($"{vsg2.Name}: Expected Power Level={_isPower} dBm");
            Log($"{vsg3.Name}: Expected Power Level={_cwPower} dBm");
-
+            vsg1.SetWSACSWaveform(wsPowerStr, wsFreq, WsRBOffset, Bandwidth);
             string wsPower = (_wsPower + _wsATT).ToString(); //công suất tai cong output cua VSG1 WS
             string isPower = (_isPower + _isATT).ToString(); //công suất tai cong output cua VSG2 IS
             // Set cw power to VSG3
@@ -103,7 +103,8 @@ namespace _5GAutoTool
                     if (mode == "GenIMD")
                     {
                         if (direction == "UPPER")
-                            vsg2.SetGeneralIMDWaveformUpper(
+                         
+                        vsg2.SetGeneralIMDWaveformUpper(
                                 isPower, isFreq, Bandwidth);
                         else
                             vsg2.SetGeneralIMDWaveformLower(

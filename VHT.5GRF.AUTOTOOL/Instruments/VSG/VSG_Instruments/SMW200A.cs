@@ -337,7 +337,7 @@ namespace _5GAutoTool
                 //Log($"SMW200A Set RB Offset at: {rbOffset}");
                 //====================
                 //string path = "/var/user/test3gpp/ICS_DFT-s-OFDM_50rb_30kHz_16QAM_lower_edge.savrcltxt";
-                string path = "/var/user/VHT-32T-n40-QC128/ICS.savrcltxt";
+                string path = "/var/user/VHT-32T-n40-QC128/ICS66.savrcltxt";
                 string cmd = $":SYST:RCL '{path}'";
                 bool tmp = SendCmdStatus(cmd);
                 if (tmp)
@@ -361,7 +361,7 @@ namespace _5GAutoTool
                 ////smw.WriteString($":SOUR2:BB:NR5G:SCH:CELL0:SUBF0:USER0:BWP0:ALL0:RBOF {rbOffset}; *OPC?", true);
                 //Log($"SMW200A Set RB Offset at: {rbOffset}");
                 //====================
-                string path = "/var/user/VHT-32T-n40-QC128/ICS.savrcltxt";
+                string path = "/var/user/VHT-32T-n40-QC128/ICS16.savrcltxt";
                 string cmd = $":SYST:RCL '{path}'";
                 bool tmp = SendCmdStatus(cmd);
                 if (tmp)

@@ -159,7 +159,7 @@ namespace _5GAutoTool
             meas5GtwoVSG.Measurement(vsg1, vsg2, bbu, mode, WsRBOffset, IsRBOffset, step, setAtt, setPort, wsPower, wsFreq, isPower, isFreq, isLowerFreqRange, isUpperFreqRange, isBandwidth,TriggerDelay, out TP);
         }
 
-        public void threeVSGMode(VSG vsg1, VSG vsg2, VSG vsg3, BBU bbu, string mode, string WsRBOffset, string IsRBOffset, double step, string setAtt, int setPort, string wsPower, string wsFreq, string isPower, string is1Freq, string is2Freq, string Bandwidth, out double TP)
+        public void threeVSGMode(VSG vsg1, VSG vsg2, VSG vsg3, BBU bbu, string mode, string WsRBOffset, string IsRBOffset, double step, string setAtt, int setPort, string wsPower, string wsFreq, string isPower, string is1Freq, string is2Freq, string Bandwidth, double TP)
         {
             meas5GthreeVSG.Measurement(vsg1, vsg2, vsg3, bbu, mode, WsRBOffset, IsRBOffset, step, setAtt, setPort, wsPower, wsFreq, isPower, is1Freq, is2Freq, Bandwidth, out TP);
         }
