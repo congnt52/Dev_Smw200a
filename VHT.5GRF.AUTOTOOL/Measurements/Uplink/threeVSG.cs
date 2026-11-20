@@ -34,7 +34,7 @@ namespace _5GAutoTool
             log.Log(title, LogLevel.DASH);
         }
         //==============
-        public void Measurement(VSG vsg1, VSG vsg2, VSG vsg3, BBU bbu, string mode, string WsRBOffset, string IsRBOffset, double step, string setAtt, int setPort, string wsPowerStr, string wsFreq, string isPowerStr, string isFreq, string cwFreq, string Bandwidth, out double TP)
+        public void Measurement(VSG vsg1, VSG vsg2, VSG vsg3, BBU bbu, string mode, string WsRBOffset, string IsRBOffset, double step, string setAtt, int setPort, string wsPowerStr, string wsFreq, string isPowerStr, string isFreq, string cwFreq, string Bandwidth,int rf, out double TP)
 
         {
            // TP = 0;
@@ -73,11 +73,13 @@ namespace _5GAutoTool
             double _wsATT = vsg1.AttenuatorLevel;
             double _isATT = vsg2.AttenuatorLevel;
             double _cwATT = vsg3.AttenuatorLevel;
-
-           Log($"{vsg1.Name}: Expected Power Level={_wsPower} dBm");
+            //vsg1.SetWSIMD(wsPowerStr, isFreq, IsRBOffset, Bandwidth);
+            Log($"{vsg1.Name}: Expected Power Level={_wsPower} dBm");
           Log($"{vsg2.Name}: Expected Power Level={_isPower} dBm");
            Log($"{vsg3.Name}: Expected Power Level={_cwPower} dBm");
-            vsg1.SetWSACSWaveform(wsPowerStr, wsFreq, WsRBOffset, Bandwidth);
+            // vsg1.SetWSACSWaveform(wsPowerStr, wsFreq, WsRBOffset, Bandwidth);
+            // vsg1.SetWSIMD(wsPowerStr, wsFreq, WsRBOffset, Bandwidth);
+           // vsg1.SetWSACSWaveform(wsPowerStr, wsFreq, WsRBOffset, Bandwidth);
             string wsPower = (_wsPower + _wsATT).ToString(); //công suất tai cong output cua VSG1 WS
             string isPower = (_isPower + _isATT).ToString(); //công suất tai cong output cua VSG2 IS
             // Set cw power to VSG3
@@ -98,13 +100,50 @@ namespace _5GAutoTool
                     $"IS={isFreq} Hz, CW={cwFreq} Hz");
 
                 // Configure interfering signal
+                //try
+                //{
+                //    if (mode == "GenIMD")
+                //    {
+                //        if (direction == "UPPER")
+
+                //        vsg2.SetGeneralIMDWaveformUpper(
+                //                isPower, isFreq, Bandwidth);
+                //        else
+                //            vsg2.SetGeneralIMDWaveformLower(
+                //                isPower, isFreq, Bandwidth);
+                //    }
+                //    else if (mode == "NBIMD")
+                //    {
+                //        if (direction == "UPPER")
+                //            vsg2.SetNBUpperIMDWaveform(
+                //                isPower, isFreq, IsRBOffset, Bandwidth);
+                //        else
+                //            vsg2.SetNBLowerIMDWaveform(
+                //                isPower, isFreq, IsRBOffset, Bandwidth);
+                //    }
+
+                //    Log($"[{mode}] PORT{setPort} {direction}: VSG2 configured");
+                //}
+                //catch (Exception ex)
+                //{
+                //    Log($"[{mode}] PORT{setPort} VSG2 ERROR: " +
+                //        ex.Message, LogLevel.ERROR);
+
+                //    if (!mainForm.AllowImdNoDevice)
+                //        return;
+                //}
+                // Configure WS and IS
                 try
                 {
+                    if (direction == "UPPER")
+                        vsg1.LoadIMDUpper();   // WS RB Offset = 82
+                    else
+                        vsg1.LoadIMDLower();   // WS RB Offset = 0
+
                     if (mode == "GenIMD")
                     {
                         if (direction == "UPPER")
-                         
-                        vsg2.SetGeneralIMDWaveformUpper(
+                            vsg2.SetGeneralIMDWaveformUpper(
                                 isPower, isFreq, Bandwidth);
                         else
                             vsg2.SetGeneralIMDWaveformLower(
@@ -120,12 +159,11 @@ namespace _5GAutoTool
                                 isPower, isFreq, IsRBOffset, Bandwidth);
                     }
 
-                    Log($"[{mode}] PORT{setPort} {direction}: VSG2 configured");
+                    Log($"[{mode}] PORT{setPort} {direction}: VSG1 and VSG2 configured");
                 }
                 catch (Exception ex)
                 {
-                    Log($"[{mode}] PORT{setPort} VSG2 ERROR: " +
-                        ex.Message, LogLevel.ERROR);
+                    Log($"[{mode}] PORT{setPort} ERROR: {ex.Message}", LogLevel.ERROR);
 
                     if (!mainForm.AllowImdNoDevice)
                         return;
@@ -137,7 +175,7 @@ namespace _5GAutoTool
                 // Configure CW
                 try
                 {
-                    vsg3.SetCWWaveform(cwPower, cwFreq);
+                    vsg3.SetCWWaveform(cwPower, cwFreq, rf);
 
                     Log($"[{mode}] PORT{setPort} {direction}: VSG3 configured");
                 }

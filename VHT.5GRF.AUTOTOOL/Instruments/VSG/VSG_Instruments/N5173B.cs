@@ -349,6 +349,23 @@ namespace _5GAutoTool
             }
         }
 
+        public void SetCWRFOn(int rf)
+        {
+            try
+            {
+                if (mainForm.measurementBackgroundWorker.CancellationPending) return;
+                System.Threading.Thread.Sleep(100);
+                N5173b.WriteString($":OUTP {rf}");
+                //Log("lOG:[IS] N5173B: Load file: FRC-A2-5-51rb_DDDSU.wfm");
+                //N5173b.WriteString(":SOUR:RAD:ARB:STAT ON");
+            }
+            catch (Exception)
+            {
+                Log("ERROR: N5173B set frequency fail", LogLevel.ERROR);
+            }
+        }
+
+
         //public void LoadGRFA25(string freqSet)
         //{
         //    string positionCmd = "C:\\test3gpp\\waveforms\\G-FRC-A2-5.scp";

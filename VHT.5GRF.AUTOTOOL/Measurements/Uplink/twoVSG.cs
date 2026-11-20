@@ -47,6 +47,7 @@ namespace _5GAutoTool
         {
             log.Log(title, LogLevel.DASH);
         }
+        int rfonoff = 1;
         /// <summary>
         /// THỰC HIỆN CÁC BÀI ĐO CHƯỜNG 7 SỬ DỤNG 1 VSG TẠO TÍN HIỆU WANTED VÀ 1 VSG TẠO TÍN HIỆU NHIỄU
         /// Bao gồm các bài đo: ACS, ICS, NBB, INB, OOB
@@ -1908,7 +1909,7 @@ namespace _5GAutoTool
                 vsg2.TypeOfSignal = "CW";
                 //vsg2.LoadUserCorrDataSGS100A(@"/var/user/RxBlocking");
                 // Configure first VALID frequency before starting BBU measurement.
-                vsg2.SetCWWaveform(isPower, points[0].Item2.ToString(culture));
+                vsg2.SetCWWaveform(isPower, points[0].Item2.ToString(culture),rfonoff);
               // vsg2.LogUserCorrectionSGS100A(isPower, points[0].Item2);
 
                 for (int startAttempt = 0; startAttempt < 2 && !testMacStarted; startAttempt++)
@@ -1940,7 +1941,7 @@ namespace _5GAutoTool
                     if (worker.CancellationPending) return;
                     string freqText = cw.Item2.ToString(culture);
                     double freqMHz = cw.Item2 / 1e6;
-                    vsg2.SetCWWaveform(isPower, freqText);
+                    vsg2.SetCWWaveform(isPower, freqText,rfonoff);
                     if (vsg2.Model == "SGS100A")
                     { vsg2.LogUserCorrectionSGS100A(isPower, cw.Item2); }
                     else if (vsg2.Model == "SMB100A")

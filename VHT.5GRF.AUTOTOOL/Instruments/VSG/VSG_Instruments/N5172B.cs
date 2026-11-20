@@ -39,15 +39,17 @@ namespace _5GAutoTool
         private Keysight.SignalStudio.N7631.Api api;
         public void Connection(string IP, string Cmd, out string Manufacturer, out string Model, out string Serial)
         {
-            api = new Api();
+            //api = new Api();
             Manufacturer = "ERROR";
             Model = "ERROR";
             Serial = "ERROR";
             string ConnectCmd = "TCPIP0::" + IP + "::INSTR";
-            api = new Api();
-            api.New();
+            //api = new Api();
+            //api.New();
             try
             {
+                api = new Api();
+                api.New();
                 N5172b.IO = (Ivi.Visa.Interop.IMessage)rm.Open("TCPIP::" + IP + "::INSTR", Ivi.Visa.Interop.AccessMode.NO_LOCK, 5, " ");
                 //N5172b.WriteString(Cmd, true);
                 //System.Threading.Thread.Sleep(100);
@@ -728,13 +730,13 @@ namespace _5GAutoTool
 
                 step = "OpenSetupFile";
 
-                Log("[N5172B][GenIMD] START Load State: " + positionCmd,
-                    LogLevel.INFO);
+                //Log("[N5172B][GenIMD] START Load State: " + positionCmd,
+                    //LogLevel.INFO);
 
                 api.OpenSetupFile(positionCmd);
 
-                Log("[N5172B][GenIMD] OpenSetupFile completed",
-                    LogLevel.INFO);
+              //  Log("[N5172B][GenIMD] OpenSetupFile completed",
+                   // LogLevel.INFO);
 
                 step = "ReadError";
 
@@ -751,8 +753,8 @@ namespace _5GAutoTool
 
                 step = "Generate";
 
-                Log("[N5172B][GenIMD] START Generate",
-                    LogLevel.INFO);
+              //  Log("[N5172B][GenIMD] START Generate",
+                 //  LogLevel.INFO);
 
                 api.Generate();
 
@@ -764,16 +766,16 @@ namespace _5GAutoTool
 
                 step = "Download";
 
-                Log("[N5172B][GenIMD] START Download",
-                    LogLevel.INFO);
+                //Log("[N5172B][GenIMD] START Download",
+                //    LogLevel.INFO);
 
-                api.Download();
+                //api.Download();
 
-                Log("[N5172B][GenIMD] Download completed",
-                    LogLevel.INFO);
+                //Log("[N5172B][GenIMD] Download completed",
+                //    LogLevel.INFO);
 
-                Log("[N5172B][GenIMD] Load State sequence completed",
-                    LogLevel.SUCCESS);
+                //Log("[N5172B][GenIMD] Load State sequence completed",
+                //    LogLevel.SUCCESS);
             }
             catch (Exception ex)
             {

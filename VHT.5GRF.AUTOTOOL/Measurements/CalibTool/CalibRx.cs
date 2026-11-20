@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +42,7 @@ namespace _5GAutoTool
             double rxPowerMean = 0;
             double rxMinPower = 0;
             double[] attVal = new double[testingportList.Count()];
+            int rfonoff = 1;
 
             foreach (int i in testingportList)
             {
@@ -49,7 +51,7 @@ namespace _5GAutoTool
                 attVal.Append(attVal[testingportList.IndexOf(i)]);             
             }
             bbu.StartRXCalib(out flagStart);
-            vsg1.SetCWWaveform(power, freqSet);
+            vsg1.SetCWWaveform(power, freqSet,rfonoff);
             while (flag)
             {
                 if (flagStart)

@@ -53,7 +53,8 @@ namespace _5GAutoTool
                 string shortName = "";
                 int rruPower = int.Parse(setPower);
                 double attSetVal = 0;
-
+                //bool rf = true; 
+                int rf = 1;
 
                 //process variable
                 bool reTest = false;
@@ -3481,7 +3482,7 @@ namespace _5GAutoTool
     stepdB, attSetVal.ToString(),
     testingPort, wsPower, setFrequency,
     isPower, isFreqUpper, cwFreqUpper,
-    setBandwidth, out tp);
+    setBandwidth, rf,out tp);
 
                                     double genImdUpperTP = tp;
 
@@ -3549,7 +3550,7 @@ namespace _5GAutoTool
     stepdB, attSetVal.ToString(),
     testingPort, wsPower, setFrequency,
     isPower, isFreqLower, cwFreqLower,
-    setBandwidth,out tp);
+    setBandwidth,rf, out tp);
 
                                     double genImdLowerTP = tp;
 
@@ -3682,7 +3683,7 @@ namespace _5GAutoTool
     stepdB, attSetVal.ToString(),
     testingPort, wsPower, setFrequency,
     isPower, isFreqUpper, cwFreqUpper,
-    setBandwidth, out tp);
+    setBandwidth,rf, out tp);
 
                                     double nbImdUpperTP = tp;
 
@@ -3753,7 +3754,7 @@ namespace _5GAutoTool
     stepdB, attSetVal.ToString(),
     testingPort, wsPower, setFrequency,
     isPower, isFreqLower, cwFreqLower,
-    setBandwidth, out tp);
+    setBandwidth,rf, out tp);
 
                                     double nbImdLowerTP = tp;
 

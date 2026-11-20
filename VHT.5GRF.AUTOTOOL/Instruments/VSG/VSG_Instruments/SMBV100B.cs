@@ -479,6 +479,83 @@ namespace _5GAutoTool
                 Log($"ERROR: {Alias} SMW load file fail", LogLevel.ERROR);
             }
         }
+        public void SetIMD0(string rbOffset)
+        {
+            try
+            {
+                //if (mainForm.measurementBackgroundWorker.CancellationPending) return;
+                //System.Threading.Thread.Sleep(100);
+                //smw.WriteString(":SYST:RCL '/var/user/test3gpp/ACS_DFT-s-OFDM_100rb_15kHz_QPSK.savrcltxt'");
+                //Log("SMW200A Recell File: :SYST:RCL '/var/user/test3gpp/ACS_DFT-s-OFDM_100rb_15kHz_QPSK.savrcltxt'");
+                //====================
+                string path = "/var/user/VHT-32T-n40-QC128/ACS0.savrcltxt";
+                string cmd = $":SYST:RCL '{path}'";
+                bool tmp = SendCmdStatus(cmd);
+                if (tmp)
+                {
+                    Log($"{Alias} SMW Recall File: {path}");
+                }
+            }
+            catch (Exception)
+            {
+                Log($"ERROR: {Alias} SMW load file fail", LogLevel.ERROR);
+            }
+        }
+        public void SetIMD82(string rbOffset)
+        {
+            try
+            {
+                //if (mainForm.measurementBackgroundWorker.CancellationPending) return;
+                //System.Threading.Thread.Sleep(100);
+                //smw.WriteString(":SYST:RCL '/var/user/test3gpp/ACS_DFT-s-OFDM_100rb_15kHz_QPSK.savrcltxt'");
+                //Log("SMW200A Recell File: :SYST:RCL '/var/user/test3gpp/ACS_DFT-s-OFDM_100rb_15kHz_QPSK.savrcltxt'");
+                //====================
+                string path = "/var/user/VHT-32T-n40-QC128/ACS82.savrcltxt";
+                string cmd = $":SYST:RCL '{path}'";
+                bool tmp = SendCmdStatus(cmd);
+                if (tmp)
+                {
+                    Log($"{Alias} SMW Recall File: {path}");
+                }
+            }
+            catch (Exception)
+            {
+                Log($"ERROR: {Alias} SMW load file fail", LogLevel.ERROR);
+            }
+        }
+        public void LoadIMDState()
+        {
+            string path = "/var/user/VHT-32T-n40-QC128/ACS.savrcltxt";
+            string cmd = $":SYST:RCL '{path}'";
+
+            if (!SendCmdStatusIBB(cmd))
+                throw new InvalidOperationException(
+                    "SMBV100B Load IMD State failed: " + path);
+
+            Log($"{Alias}: IMD State loaded: {path}");
+        }
+
+        public void LoadIMDUpper()
+        {
+            string path = "/var/user/VHT-32T-n40-QC128/ACS82.savrcltxt";
+            string cmd = $":SYST:RCL '{path}'";
+
+            if (!SendCmdStatusIBB(cmd))
+                throw new Exception("SMBV100B Load IMD Upper failed");
+
+            Log($"{Alias}: IMD Upper State loaded");
+        }
+
+        public void LoadIMDLower()
+        {
+            string path = "/var/user/VHT-32T-n40-QC128/ACS0.savrcltxt";
+            string cmd = $":SYST:RCL '{path}'";
+
+            if (!SendCmdStatusIBB(cmd))
+                throw new Exception("SMBV100B Load IMD Lower failed");
+
+            Log($"{Alias}: IMD Lower State loaded");
+        }
         public void SetOOBLower(string rbOffset)
         {
             try
